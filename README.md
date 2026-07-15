@@ -88,6 +88,94 @@ Prefer the helper scripts, which apply strict channel settings and friendly erro
 > **Recommendation:** use [`mamba`](https://mamba.readthedocs.io/) (or `conda` ≥ 23.10
 > with the libmamba solver) — the environments below solve in seconds instead of minutes.
 
+## Building one "all-in-one" environment (iterative layering)
+
+The environments are designed to be **used separately**. But you *can* merge them into a
+single environment by **layering** the YAML files onto one target env, one after another,
+with `conda env update`. This section documents exactly how — and the trade-offs, because
+an all-in-one env re-introduces the very problems this repo was built to avoid.
+
+### How the layering works
+
+`conda env update -n <target> -f <file>` installs the packages from `<file>` **into an
+existing environment**, solving them against whatever is already there. Passing `-n`
+overrides the `name:` inside each YAML, so every file can target the *same* environment.
+Run it once per file, in order, starting from `01-core`:
+
+```bash
+# Linux / macOS ── build "py312-all" by layering each environment file in sequence
+cd python/3.12
+
+# 1) Create the base from core (‑n names the merged env)
+conda env create -n py312-all -f environments/01-core.yml
+
+# 2) Layer the rest on top, one after another (order: light → heavy)
+conda env update -n py312-all -f environments/02-ml.yml
+conda env update -n py312-all -f environments/03-deep-learning.yml
+conda env update -n py312-all -f environments/04-web.yml
+conda env update -n py312-all -f environments/05-tools.yml
+
+# 3) Verify everything still imports
+conda activate py312-all
+python scripts/verify-env.py --all
+```
+
+```powershell
+# Windows PowerShell ── same sequence
+Set-Location python\3.12
+conda env create -n py312-all -f environments\01-core.yml
+foreach ($f in '02-ml','03-deep-learning','04-web','05-tools') {
+    conda env update -n py312-all -f "environments\$f.yml"
+}
+conda activate py312-all
+python scripts\verify-env.py --all
+```
+
+Or as a loop on Linux/macOS:
+
+```bash
+conda env create -n py312-all -f environments/01-core.yml
+for f in 02-ml 03-deep-learning 04-web 05-tools; do
+  conda env update -n py312-all -f "environments/$f.yml" || {
+    echo "!! layering failed at $f — resolve the conflict before continuing"; break; }
+done
+```
+
+### ⚠️ Rules that make or break this approach
+
+| Rule | Why it matters |
+|------|----------------|
+| **Never pass `--prune`** when layering | `--prune` removes anything not in the *current* file — it would delete every package from the previous layers. (This is why the `update-env.sh` helper, which *does* prune, is **not** used here.) |
+| **Skip `98-legacy.yml`** | It is documentation, not a usable environment. |
+| **Treat `06-tensorflow.yml` as high-risk** | TensorFlow and the PyTorch stack (`03`) pin conflicting low-level libs (`protobuf`, `abseil`, `numpy`). Adding both to one env frequently makes it **unsolvable** or silently downgrades packages. Prefer leaving TF out of the all-in-one; keep it in its own `py312-tf`. |
+| **Go light → heavy** | Starting from `01-core` and adding heavier stacks last gives the solver the best chance and the clearest error if a conflict appears. |
+| **Lock it once it works** | Because the merged env is fragile, capture it immediately: `scripts/export-env.sh py312-all` (snapshot) or generate a `conda-lock` lockfile, so you can rebuild the exact working set. |
+
+### Pros and cons of an all-in-one environment
+
+**Pros**
+- **Convenience** — one env to activate; no switching between `py312-core`, `py312-ml`, etc.
+- **One Jupyter kernel** that can do data work, ML, web, and DL in the same notebook.
+- **Good for open-ended exploration** when you don't yet know which tools you'll reach for.
+- **Simpler mental model** for beginners who find multiple environments confusing.
+
+**Cons** (why we recommend *against* it for anything long-lived)
+- **Fragility / conflicts** — the more you pile in, the higher the chance of an
+  **unsatisfiable** solve. TF + PyTorch is the classic breaker.
+- **Slow solves & updates** — every future change must re-solve a huge dependency graph;
+  installs can take many minutes.
+- **All-or-nothing failures** — one incompatible package can block upgrading *anything*.
+- **Large footprint** — several GB of packages, most unused in any given task.
+- **Harder to reproduce** — big merged envs are more likely to resolve differently over
+  time; locking is essential but heavier.
+- **It recreates the original problem** — this repository was distilled from exactly such
+  a monolithic `base` environment. An all-in-one env drifts back toward that mess.
+
+> **Recommendation:** use the modular environments for day-to-day and reproducible work.
+> Reach for an all-in-one only as a short-lived convenience (a scratch/exploration env),
+> keep TensorFlow out of it, and lock it the moment it works. See
+> [docs/architecture.md](docs/architecture.md) for the reasoning behind the split.
+
 ## GPU / CUDA
 
 Every environment ships **CPU builds** so they solve identically on Linux, Windows,

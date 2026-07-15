@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - `python/3.12/GUIDE.md` — a complete, beginner-friendly walkthrough documenting every
   file in the 3.12 tree and every artifact it generates; linked from both READMEs.
+- README section on building an "all-in-one" environment by iteratively layering the
+  environment YAMLs with `conda env update`, including the `--prune`/TensorFlow caveats
+  and an honest pros/cons analysis.
 
 ## [1.0.0] - 2026-07-15
 
