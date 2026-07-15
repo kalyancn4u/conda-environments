@@ -1,0 +1,91 @@
+# Actually create each environment on each platform and verify imports.
+# This is the real proof that a definition is solvable and usable.
+name: test-environments
+
+on:
+  push:
+    paths:
+      - "python/**"
+      - ".github/workflows/test-environments.yml"
+  pull_request:
+    paths:
+      - "python/**"
+      - ".github/workflows/test-environments.yml"
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: test-environments-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  create-and-verify:
+    name: ${{ matrix.env }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # ubuntu = linux-64, windows = win-64, macos-14 = osx-arm64
+        os: [ubuntu-latest, windows-latest, macos-14]
+        env: [core, ml, dl, web, tools, tf]
+        exclude:
+          # conda-forge has no win-64 TensorFlow build (see docs/compatibility.md).
+          - os: windows-latest
+            env: tf
+
+    defaults:
+      run:
+        # login shell so `conda activate` / `conda run` work on every OS.
+        shell: bash -el {0}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Miniforge (conda-forge, strict priority)
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          python-version: "3.12"
+          channels: conda-forge
+          channel-priority: strict
+          use-mamba: true
+
+      - name: Resolve environment file & name
+        id: resolve
+        run: |
+          set -euo pipefail
+          case "${{ matrix.env }}" in
+            core)  file=01-core.yml;          name=py312-core;  key=core ;;
+            ml)    file=02-ml.yml;            name=py312-ml;    key=ml ;;
+            dl)    file=03-deep-learning.yml; name=py312-dl;    key=dl ;;
+            web)   file=04-web.yml;           name=py312-web;   key=web ;;
+            tools) file=05-tools.yml;         name=py312-tools; key=tools ;;
+            tf)    file=06-tensorflow.yml;    name=py312-tf;    key=tf ;;
+            *) echo "unknown env ${{ matrix.env }}"; exit 1 ;;
+          esac
+          echo "file=python/3.12/environments/$file" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "key=$key"   >> "$GITHUB_OUTPUT"
+
+      - name: Create environment
+        run: mamba env create --yes --file "${{ steps.resolve.outputs.file }}"
+
+      - name: Verify imports
+        run: |
+          conda run -n "${{ steps.resolve.outputs.name }}" \
+            python python/3.12/scripts/verify-env.py --env "${{ steps.resolve.outputs.key }}"
+
+      - name: Check for conda/pip package clashes
+        run: |
+          # Fail if a package was installed by BOTH conda and pip (ABI-clash risk).
+          conda run -n "${{ steps.resolve.outputs.name }}" python - <<'PY'
+          import json, subprocess, sys
+          data = json.loads(subprocess.check_output(["conda", "list", "--json"]))
+          pip_pkgs = {p["name"].lower() for p in data if p.get("channel") == "pypi"}
+          conda_pkgs = {p["name"].lower() for p in data if p.get("channel") != "pypi"}
+          clash = sorted(pip_pkgs & conda_pkgs)
+          if clash:
+              print("conda/pip clash detected:", clash)
+              sys.exit(1)
+          print("no conda/pip clashes")
+          PY

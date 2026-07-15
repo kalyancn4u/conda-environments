@@ -1,0 +1,39 @@
+# =============================================================================
+# 05-tools.yml  —  "py312-tools"  —  developer tooling
+# -----------------------------------------------------------------------------
+# Testing, linting, type-checking, task automation, scraping, and browser
+# automation. This environment is a "toolbox" you activate for development work;
+# it is independent of any single project's runtime environment.
+# =============================================================================
+name: py312-tools
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- Testing & coverage ---------------------------------------------------
+  - coverage
+  - pytest
+  - pytest-cov
+
+  # --- Lint / format / type-check ------------------------------------------
+  - black                 # formatter (ruff-format is an alternative)
+  - mypy
+  - ruff                  # linter + import sorter (replaces flake8/isort/pyupgrade)
+
+  # --- Automation & scaffolding --------------------------------------------
+  - cookiecutter
+  - nox
+  - pre-commit
+  - tox
+
+  # --- Scraping & browser automation ---------------------------------------
+  # playwright needs browser binaries after install: `python -m playwright install`
+  - playwright
+  - scrapy
+  - selenium
+
+  # --- Container tooling ----------------------------------------------------
+  - docker-py             # Docker Engine SDK (import name: docker)
+
+  - pip

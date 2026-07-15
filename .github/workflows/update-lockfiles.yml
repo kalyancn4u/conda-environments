@@ -1,0 +1,101 @@
+# Regenerate per-platform conda-lock lockfiles and open a PR with the result.
+# Runs on demand and on a weekly schedule so lockfiles track conda-forge without
+# forcing pins into the human-readable YAMLs.
+name: update-lockfiles
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Monday 06:00 UTC.
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  lock:
+    name: conda-lock ${{ matrix.env }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 98-legacy is documentation-only and intentionally not locked.
+        env:
+          - 01-core
+          - 02-ml
+          - 03-deep-learning
+          - 04-web
+          - 05-tools
+          - 06-tensorflow
+
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Miniforge
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          channels: conda-forge
+          channel-priority: strict
+          use-mamba: true
+
+      - name: Install conda-lock
+        run: mamba install --yes conda-lock
+
+      - name: Generate lockfiles (per platform)
+        run: |
+          set -euo pipefail
+          src="python/3.12/environments/${{ matrix.env }}.yml"
+
+          # TensorFlow has no conda-forge win-64 build — skip that platform for it.
+          platforms=(--platform linux-64 --platform osx-arm64)
+          if [[ "${{ matrix.env }}" != "06-tensorflow" ]]; then
+            platforms+=(--platform win-64)
+          fi
+
+          for p in linux-64 win-64 osx-arm64; do
+            [[ "${{ matrix.env }}" == "06-tensorflow" && "$p" == "win-64" ]] && continue
+            out="python/3.12/lockfiles/${p}/${{ matrix.env }}.conda.lock"
+            conda-lock lock --file "$src" --platform "$p" \
+              --kind explicit --filename-template "$out" || {
+                echo "::warning::lock failed for ${{ matrix.env }} on $p"; }
+          done
+
+      - name: Upload lockfiles artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lockfiles-${{ matrix.env }}
+          path: python/3.12/lockfiles/**/${{ matrix.env }}.conda.lock
+          if-no-files-found: warn
+
+  open-pr:
+    name: Open PR with refreshed lockfiles
+    needs: lock
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all lockfile artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: python/3.12/lockfiles
+          merge-multiple: true
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/update-lockfiles
+          title: "chore: refresh conda-lock lockfiles"
+          commit-message: "chore: refresh conda-lock lockfiles"
+          body: |
+            Automated lockfile refresh from the `update-lockfiles` workflow.
+
+            Review the version deltas before merging. See
+            `docs/upgrade-strategy.md` for the intent-vs-lock model.
+          add-paths: |
+            python/3.12/lockfiles/**

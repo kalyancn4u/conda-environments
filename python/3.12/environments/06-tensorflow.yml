@@ -1,0 +1,30 @@
+# =============================================================================
+# 06-tensorflow.yml  —  "py312-tf"  —  TensorFlow + Keras 3 (isolated)
+# -----------------------------------------------------------------------------
+# Kept separate from the PyTorch stack (03-deep-learning.yml) on purpose: TF and
+# PyTorch have historically conflicting pins (protobuf, abseil, numpy, CUDA), and
+# few projects need both in one environment.
+#
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ PLATFORM CAVEAT — WINDOWS                                                │
+# │ conda-forge does NOT build `tensorflow` for win-64 (only linux-64,      │
+# │ osx-arm64, linux-aarch64). On Windows, create the env WITHOUT tensorflow │
+# │ and install it via pip instead:                                          │
+# │     conda create -n py312-tf python=3.12 pip                             │
+# │     conda activate py312-tf                                              │
+# │     pip install "tensorflow>=2.19"                                       │
+# │ See docs/compatibility.md for details.                                   │
+# └─────────────────────────────────────────────────────────────────────────┘
+# =============================================================================
+name: py312-tf
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # CPU build of TensorFlow (Linux / macOS-arm64 via conda-forge).
+  - tensorflow
+  - keras                 # Keras 3 (multi-backend); ships with TF but pinned for clarity
+  - tensorboard
+
+  - pip

@@ -1,0 +1,37 @@
+# =============================================================================
+# 04-web.yml  —  "py312-web"  —  web APIs & data applications
+# -----------------------------------------------------------------------------
+# The three mainstream Python web frameworks plus data-app frameworks and the
+# async/WSGI servers to run them. Orchestration (Airflow) lives in
+# templates/mlops.yml, not here — it is a scheduling concern, not a web concern.
+# =============================================================================
+name: py312-web
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- Frameworks -----------------------------------------------------------
+  - django
+  - fastapi
+  - flask
+
+  # --- Servers --------------------------------------------------------------
+  - uvicorn               # ASGI (FastAPI/Starlette)
+  # gunicorn is POSIX-only (no Windows wheels). On Windows use uvicorn workers
+  # or `waitress` for WSGI apps. Kept here for Linux/macOS deployments.
+  - gunicorn
+
+  # --- Data apps ------------------------------------------------------------
+  - dash
+  - gradio
+  - streamlit
+
+  # --- Supporting libraries -------------------------------------------------
+  - alembic               # SQLAlchemy migrations
+  - celery                # distributed task queue
+  - pydantic              # v2 — validation / settings
+  - redis-py              # Redis client (import name: redis)
+  - sqlalchemy
+
+  - pip

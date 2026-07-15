@@ -1,0 +1,14 @@
+# Normalize line endings. Default: let Git handle text automatically.
+* text=auto
+
+# Files that MUST stay LF — CRLF breaks them on Linux/macOS runners & shells.
+*.sh        text eol=lf
+*.py        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+
+# Windows-only scripts stay CRLF.
+*.ps1       text eol=crlf
+
+# Treat lockfiles as generated (collapse diffs, mark in language stats).
+python/**/lockfiles/**  linguist-generated=true

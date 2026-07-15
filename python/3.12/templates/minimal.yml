@@ -1,0 +1,14 @@
+# =============================================================================
+# template: minimal  —  a bare, fast-solving starting point
+# -----------------------------------------------------------------------------
+# Fork this for a new project when you want a clean slate. Rename `py312-min`
+# and add only what the project actually imports.
+# =============================================================================
+name: py312-min
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+  - ipykernel             # so the env shows up as a Jupyter kernel
+  - pip
+  - rich                  # nicer tracebacks/logging out of the box

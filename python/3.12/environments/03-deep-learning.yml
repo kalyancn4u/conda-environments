@@ -1,0 +1,47 @@
+# =============================================================================
+# 03-deep-learning.yml  —  "py312-dl"  —  PyTorch deep-learning stack
+# -----------------------------------------------------------------------------
+# PyTorch + Lightning + the Hugging Face ecosystem, plus vision/NLP tooling and
+# model-interchange formats. TensorFlow is deliberately kept OUT of this file
+# (see 06-tensorflow.yml) so the two frameworks never fight over shared
+# dependencies (protobuf, numpy, abseil, CUDA, ...).
+#
+# GPU: these are CPU builds and portable across Linux/Windows/Apple Silicon.
+#      For CUDA-enabled PyTorch see docs/compatibility.md#cuda-installation-strategy.
+# =============================================================================
+name: py312-dl
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- PyTorch core (CPU) ---------------------------------------------------
+  # conda-forge ships CPU builds by default. To force CPU explicitly you may use
+  # `pytorch=*=cpu*`; we leave it unpinned so the solver stays flexible.
+  - pytorch
+  - torchaudio
+  - torchvision
+  - lightning             # high-level training loops (formerly pytorch-lightning)
+
+  # --- Hugging Face ecosystem ----------------------------------------------
+  - accelerate
+  - datasets
+  - huggingface_hub
+  - safetensors
+  - sentence-transformers
+  - tokenizers
+  - transformers          # modern 4.x — replaces the 2.1.1 found in the source env
+
+  # --- Vision & NLP tooling -------------------------------------------------
+  - albumentations
+  - opencv
+  - pillow
+  - spacy
+  - timm                  # PyTorch image models
+
+  # --- Model interchange & monitoring --------------------------------------
+  - onnx
+  - onnxruntime           # CPU inference runtime
+  - tensorboard           # usable standalone; not a TF dependency here
+
+  - pip
