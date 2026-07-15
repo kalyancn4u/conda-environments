@@ -54,6 +54,10 @@ restructuring** — see [docs/architecture.md](docs/architecture.md).
 Templates for common personas live in [`python/3.12/templates/`](python/3.12/templates/):
 `minimal`, `data-science`, `mlops`, `llm`.
 
+> 🔰 **Brand new to conda?** Start with the
+> [**complete beginner's guide**](python/3.12/GUIDE.md) — it explains every file in the
+> `python/3.12/` tree and every artifact it generates, in plain English.
+
 ## Quick start
 
 ```bash
@@ -92,6 +96,7 @@ See the CUDA strategy in [docs/compatibility.md](docs/compatibility.md#cuda-inst
 
 ## Documentation
 
+- [Beginner's guide](python/3.12/GUIDE.md) — every file & artifact explained for newcomers
 - [Architecture](docs/architecture.md) — design & directory rationale
 - [Package selection](docs/package-selection.md) — the philosophy behind every include/exclude
 - [Compatibility](docs/compatibility.md) — channels, platforms, CUDA

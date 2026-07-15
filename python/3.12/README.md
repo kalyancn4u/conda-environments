@@ -4,6 +4,10 @@ Everything version-specific for **Python 3.12** lives here. See the repository
 [root README](../../README.md) for the big picture and the [docs/](../../docs/) tree
 for architecture and rationale.
 
+> 🔰 **New to conda?** Read [**GUIDE.md**](GUIDE.md) first — a complete, plain-English
+> walkthrough of *every* file in this folder, what it does, when to use it, and what
+> each command produces. No prior knowledge assumed.
+
 ## Contents
 
 | Directory | What's inside |

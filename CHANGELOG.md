@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `python/3.12/GUIDE.md` — a complete, beginner-friendly walkthrough documenting every
+  file in the 3.12 tree and every artifact it generates; linked from both READMEs.
+
 ## [1.0.0] - 2026-07-15
 
 ### Added
