@@ -8,6 +8,10 @@ frozen, hash-pinned list of exact package URLs that rebuilds an environment iden
 on a given OS. They are generated from the loosely-pinned `environments/*.yml` — see
 [`docs/upgrade-strategy.md`](../../../../docs/upgrade-strategy.md) for the intent-vs-lock model.
 
+> 🎓 **New to any of this?** Read [**HOW-IT-WORKS.md**](HOW-IT-WORKS.md) first — a
+> from-first-principles explainer of what lockfiles are and what each generation step
+> actually does. *This* file is the command reference; that one builds the understanding.
+
 ---
 
 ## Method 1 — GitHub Actions ✅ (recommended; no local install)

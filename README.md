@@ -184,6 +184,27 @@ Every environment ships **CPU builds** so they solve identically on Linux, Windo
 and Apple Silicon. GPU acceleration is deliberately **not** baked into the YAMLs.
 See the CUDA strategy in [docs/compatibility.md](docs/compatibility.md#cuda-installation-strategy).
 
+## Lockfiles (exact, reproducible rebuilds)
+
+The `*.yml` files capture **intent** (loosely pinned, so upgrades stay cheap). For
+**byte-for-byte reproducibility**, generate per-platform [`conda-lock`](https://github.com/conda/conda-lock)
+lockfiles under [`python/3.12/lockfiles/`](python/3.12/lockfiles/) — a frozen list of exact
+package URLs + `sha256` hashes that rebuilds an environment identically.
+
+The easiest way (no local install) is the **GitHub Actions** path — it runs on a Linux
+runner and opens a PR with the results:
+
+> Repo → **Actions → update-lockfiles → Run workflow** (defaults to `linux-64`).
+
+Then rebuild from a lock with:
+
+```bash
+conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
+```
+
+- 🎓 **Understand it:** [How lockfile generation works, from zero to mastery](python/3.12/lockfiles/generation/HOW-IT-WORKS.md)
+- 🛠️ **Run it:** [Generation methods — Actions, Docker, WSL](python/3.12/lockfiles/generation/README.md)
+
 ## Documentation
 
 - [Beginner's guide](python/3.12/GUIDE.md) — every file & artifact explained for newcomers
@@ -191,6 +212,8 @@ See the CUDA strategy in [docs/compatibility.md](docs/compatibility.md#cuda-inst
 - [Package selection](docs/package-selection.md) — the philosophy behind every include/exclude
 - [Compatibility](docs/compatibility.md) — channels, platforms, CUDA
 - [Upgrade strategy](docs/upgrade-strategy.md) — how to move versions forward safely
+- [Lockfiles — how generation works](python/3.12/lockfiles/generation/HOW-IT-WORKS.md) — reproducibility from first principles
+- [Lockfiles — generation methods](python/3.12/lockfiles/generation/README.md) — Actions / Docker / WSL commands
 - [Troubleshooting](docs/troubleshooting.md) — when solves fail
 - [FAQ](docs/faq.md)
 

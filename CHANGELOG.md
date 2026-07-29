@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   statsmodels, and ruptures for forecasting & change-point detection.
 - Both added to the verifier (`verify-env.py`), the `test-environments` CI matrix,
   and the `update-lockfiles` workflow; documented in the READMEs and GUIDE.
+- Lockfile documentation: `python/3.12/lockfiles/generation/README.md` (Actions/Docker/WSL
+  command reference) and `HOW-IT-WORKS.md` (a from-first-principles teaching explainer);
+  root README gained a **Lockfiles** section. `update-lockfiles` now defaults manual runs
+  to `linux-64` and is hardened against `conda-lock` filename edge cases.
 - `python/3.12/GUIDE.md` — a complete, beginner-friendly walkthrough documenting every
   file in the 3.12 tree and every artifact it generates; linked from both READMEs.
 - README section on building an "all-in-one" environment by iteratively layering the
