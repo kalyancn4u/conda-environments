@@ -27,6 +27,8 @@ for architecture and rationale.
 | `environments/04-web.yml` | `py312-web` | Web APIs / data apps |
 | `environments/05-tools.yml` | `py312-tools` | Testing, linting, automation |
 | `environments/06-tensorflow.yml` | `py312-tf` | TensorFlow + Keras (isolated) |
+| `environments/07-geospatial.yml` | `py312-geo` | Geospatial vector/raster analysis |
+| `environments/08-timeseries.yml` | `py312-ts` | Forecasting & change-point detection |
 | `environments/98-legacy.yml` | `py312-legacy` | Reference only (deprecated packages) |
 
 ## Common commands

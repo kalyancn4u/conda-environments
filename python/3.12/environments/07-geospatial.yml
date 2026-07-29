@@ -1,0 +1,36 @@
+# =============================================================================
+# 07-geospatial.yml  —  "py312-geo"  —  geospatial data science
+# -----------------------------------------------------------------------------
+# Vector + raster geospatial stack. Added after auditing legacy environments,
+# which showed a recurring geospatial toolset absent from the core modules.
+#
+# All conda-forge, CPU-only, and cross-platform (the GDAL stack is well
+# supported on linux-64 / win-64 / osx-arm64 via conda-forge — installing this
+# stack from conda-forge, never pip, is what keeps GDAL/PROJ/GEOS consistent).
+# =============================================================================
+name: py312-geo
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- Core vector stack ----------------------------------------------------
+  # geopandas pulls shapely/pyproj/fiona, but we list them so intent is explicit.
+  - fiona
+  - geopandas
+  - pyproj
+  - shapely
+
+  # --- Raster ---------------------------------------------------------------
+  - gdal                  # imported as `from osgeo import gdal`
+  - rasterio
+
+  # --- Analysis & mapping ---------------------------------------------------
+  - contextily            # basemap tiles for matplotlib/geopandas plots
+  - folium                # interactive Leaflet maps
+  - mapclassify           # required for geopandas choropleth classification
+
+  # --- Spatial databases (optional; pairs with SQLAlchemy in 01-core) -------
+  - geoalchemy2           # PostGIS/spatial types for SQLAlchemy
+
+  - pip

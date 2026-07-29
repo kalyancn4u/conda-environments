@@ -32,8 +32,17 @@ ENV_IMPORTS: dict[str, list[str]] = {
         "statsmodels", "tqdm", "yaml",
     ],
     "ml": [
-        "catboost", "category_encoders", "feature_engine", "imblearn",
-        "lightgbm", "mlflow", "optuna", "shap", "xgboost",
+        "catboost", "category_encoders", "eli5", "feature_engine", "hdbscan",
+        "imblearn", "lightgbm", "mlflow", "mlxtend", "optuna", "shap", "skops",
+        "umap", "xgboost",
+    ],
+    "geo": [
+        "contextily", "fiona", "folium", "geoalchemy2", "geopandas",
+        "mapclassify", "osgeo", "pyproj", "rasterio", "shapely",
+    ],
+    "ts": [
+        "cmdstanpy", "prophet", "ruptures", "sktime", "statsforecast",
+        "statsmodels",
     ],
     "dl": [
         "accelerate", "albumentations", "cv2", "datasets", "huggingface_hub",

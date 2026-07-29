@@ -50,6 +50,8 @@ python/3.12/
 │   ├── 04-web.yml             web apps & APIs
 │   ├── 05-tools.yml           developer tools (testing, linting)
 │   ├── 06-tensorflow.yml      TensorFlow (kept separate on purpose)
+│   ├── 07-geospatial.yml      maps & geodata (GeoPandas, GDAL, rasterio)
+│   ├── 08-timeseries.yml      forecasting (Prophet, sktime, statsforecast)
 │   ├── 98-legacy.yml          old/retired packages — reference only, NOT for use
 │   └── 99-upgrade-candidates.md   a report: what to upgrade/replace/remove & why
 │
@@ -114,6 +116,8 @@ environment** — see [Part 6](#part-6--every-artifact-that-gets-generated).
 | **`04-web.yml`** | `py312-web` | Web development: FastAPI, Flask, Django, Streamlit, Gradio, Dash, plus servers (Uvicorn/Gunicorn) and helpers (Pydantic, Alembic, Celery, Redis client). | Build an API, a dashboard, or a web app. |
 | **`05-tools.yml`** | `py312-tools` | Developer tooling: pytest, coverage, ruff (linter), black (formatter), mypy (type checks), pre-commit, tox/nox, Selenium/Playwright (browser automation), Scrapy. | Test, lint, format, or automate a browser — a "toolbox" env. |
 | **`06-tensorflow.yml`** | `py312-tf` | **TensorFlow + Keras**, deliberately kept in its own environment (TensorFlow and PyTorch pin conflicting low-level libraries, so mixing them breaks). | Work specifically with TensorFlow/Keras. ⚠️ **Windows note below.** |
+| **`07-geospatial.yml`** | `py312-geo` | **Maps & geographic data**: GeoPandas, Shapely, PyProj, Fiona (vector), GDAL + rasterio (raster), plus folium/contextily for mapping. | Work with shapefiles, coordinates, maps, or satellite/raster data. |
+| **`08-timeseries.yml`** | `py312-ts` | **Forecasting**: Prophet, sktime, statsforecast, statsmodels, plus ruptures for change-point detection. | Forecast future values, or detect shifts/seasonality in time-ordered data. |
 | **`98-legacy.yml`** | (mostly none) | A **documented graveyard**. Almost every line is "commented out" (disabled) with a note explaining why a package is retired and what replaces it. It is *reference material*, not a working environment. | Understand what was removed and why. You will rarely, if ever, create this. |
 
 > ⚠️ **`06-tensorflow.yml` on Windows:** our supplier (conda-forge) does **not** publish a

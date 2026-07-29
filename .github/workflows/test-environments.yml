@@ -27,7 +27,7 @@ jobs:
       matrix:
         # ubuntu = linux-64, windows = win-64, macos-14 = osx-arm64
         os: [ubuntu-latest, windows-latest, macos-14]
-        env: [core, ml, dl, web, tools, tf]
+        env: [core, ml, dl, web, tools, tf, geo, ts]
         exclude:
           # conda-forge has no win-64 TensorFlow build (see docs/compatibility.md).
           - os: windows-latest
@@ -61,6 +61,8 @@ jobs:
             web)   file=04-web.yml;           name=py312-web;   key=web ;;
             tools) file=05-tools.yml;         name=py312-tools; key=tools ;;
             tf)    file=06-tensorflow.yml;    name=py312-tf;    key=tf ;;
+            geo)   file=07-geospatial.yml;    name=py312-geo;   key=geo ;;
+            ts)    file=08-timeseries.yml;    name=py312-ts;    key=ts ;;
             *) echo "unknown env ${{ matrix.env }}"; exit 1 ;;
           esac
           echo "file=python/3.12/environments/$file" >> "$GITHUB_OUTPUT"

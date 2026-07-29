@@ -49,6 +49,8 @@ restructuring** — see [docs/architecture.md](docs/architecture.md).
 | [`04-web.yml`](python/3.12/environments/04-web.yml) | `py312-web` | FastAPI/Flask/Django + data apps + async servers |
 | [`05-tools.yml`](python/3.12/environments/05-tools.yml) | `py312-tools` | Dev tooling: test, lint, type-check, browser automation |
 | [`06-tensorflow.yml`](python/3.12/environments/06-tensorflow.yml) | `py312-tf` | TensorFlow + Keras 3 (isolated from PyTorch) |
+| [`07-geospatial.yml`](python/3.12/environments/07-geospatial.yml) | `py312-geo` | Vector + raster geospatial (GeoPandas, GDAL, rasterio) |
+| [`08-timeseries.yml`](python/3.12/environments/08-timeseries.yml) | `py312-ts` | Forecasting & change-point (Prophet, sktime, statsforecast) |
 | [`98-legacy.yml`](python/3.12/environments/98-legacy.yml) | `py312-legacy` | Documented legacy/deprecated packages — reference only |
 
 Templates for common personas live in [`python/3.12/templates/`](python/3.12/templates/):

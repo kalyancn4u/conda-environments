@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- `07-geospatial.yml` (`py312-geo`) — GeoPandas/Shapely/PyProj/Fiona + GDAL/rasterio
+  vector & raster stack, plus folium/contextily/mapclassify and geoalchemy2.
+- `08-timeseries.yml` (`py312-ts`) — Prophet/cmdstanpy, sktime, statsforecast,
+  statsmodels, and ruptures for forecasting & change-point detection.
+- Both added to the verifier (`verify-env.py`), the `test-environments` CI matrix,
+  and the `update-lockfiles` workflow; documented in the READMEs and GUIDE.
 - `python/3.12/GUIDE.md` — a complete, beginner-friendly walkthrough documenting every
   file in the 3.12 tree and every artifact it generates; linked from both READMEs.
 - README section on building an "all-in-one" environment by iteratively layering the
   environment YAMLs with `conda env update`, including the `--prune`/TensorFlow caveats
   and an honest pros/cons analysis.
+
+### Changed
+- `02-ml.yml` — added clustering/manifold (`hdbscan`, `umap-learn`), extra estimators
+  (`mlxtend`, `skops`), and interpretability (`eli5`), surfaced by auditing 60 legacy
+  environment files against the repo.
 
 ## [1.0.0] - 2026-07-15
 

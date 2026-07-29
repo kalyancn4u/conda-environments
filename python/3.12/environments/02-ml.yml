@@ -24,11 +24,20 @@ dependencies:
   - optuna                # define-by-run hyper-parameter optimization
 
   # --- Interpretability -----------------------------------------------------
+  - eli5                  # inspect/debug classifiers & regressors
   - shap
 
   # --- Tabular feature engineering -----------------------------------------
   - category_encoders
   - feature-engine
   - imbalanced-learn      # resampling for class imbalance (SMOTE, etc.)
+
+  # --- Clustering & dimensionality reduction -------------------------------
+  - hdbscan               # density-based clustering
+  - umap-learn            # manifold learning / embeddings (imported as `umap`)
+
+  # --- Extra estimators & utilities ----------------------------------------
+  - mlxtend               # stacking, association rules, plotting helpers
+  - skops                 # safer model persistence than pickle
 
   - pip

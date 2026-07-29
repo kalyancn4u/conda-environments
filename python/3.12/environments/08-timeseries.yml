@@ -1,0 +1,30 @@
+# =============================================================================
+# 08-timeseries.yml  —  "py312-ts"  —  time-series analysis & forecasting
+# -----------------------------------------------------------------------------
+# Forecasting and change-point/seasonality tooling that recurred across the
+# audited legacy environments (Prophet, cmdstanpy, ruptures, ...) but wasn't in
+# the core modules. `statsmodels` also lives in 01-core; it is repeated here so
+# this environment is usable standalone.
+#
+# CPU-only, conda-forge. NOTE: Prophet compiles Stan models via `cmdstan`, which
+# is heavier to install than a typical pure-Python package.
+# =============================================================================
+name: py312-ts
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- Forecasting ----------------------------------------------------------
+  - cmdstanpy             # Stan interface used by prophet
+  - prophet               # additive forecasting (brings cmdstan)
+  - sktime                # unified time-series ML API (classification/forecasting)
+  - statsforecast         # fast statistical forecasting (numba-accelerated)
+  - statsmodels           # ARIMA/SARIMAX/ETS, also in 01-core
+
+  # --- Change-point / segmentation -----------------------------------------
+  - ruptures
+
+  - pip
+  # Not on conda-forge (or heavier) — add per project if needed:
+  #   pip install pmdarima darts neuralforecast

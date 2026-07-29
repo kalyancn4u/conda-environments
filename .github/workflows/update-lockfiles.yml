@@ -28,6 +28,8 @@ jobs:
           - 04-web
           - 05-tools
           - 06-tensorflow
+          - 07-geospatial
+          - 08-timeseries
 
     defaults:
       run:
