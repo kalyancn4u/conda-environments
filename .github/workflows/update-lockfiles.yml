@@ -1,10 +1,19 @@
 # Regenerate per-platform conda-lock lockfiles and open a PR with the result.
 # Runs on demand and on a weekly schedule so lockfiles track conda-forge without
 # forcing pins into the human-readable YAMLs.
+#
+# Manual runs default to linux-64 only (fast, for quick reference). The weekly
+# schedule locks all supported platforms. Lockfiles are also uploaded as build
+# artifacts, so you get them even if PR creation is restricted by repo settings.
 name: update-lockfiles
 
 on:
   workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Space-separated platforms to lock (linux-64, win-64, osx-arm64)"
+        default: "linux-64"
+        required: false
   schedule:
     # Every Monday 06:00 UTC.
     - cron: "0 6 * * 1"
@@ -38,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Miniforge
+      - name: Set up Miniforge (mamba)
         uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: latest
@@ -49,23 +58,32 @@ jobs:
       - name: Install conda-lock
         run: mamba install --yes conda-lock
 
-      - name: Generate lockfiles (per platform)
+      - name: Generate lockfiles
         run: |
-          set -euo pipefail
+          set -uo pipefail
           src="python/3.12/environments/${{ matrix.env }}.yml"
 
-          # TensorFlow has no conda-forge win-64 build — skip that platform for it.
-          platforms=(--platform linux-64 --platform osx-arm64)
-          if [[ "${{ matrix.env }}" != "06-tensorflow" ]]; then
-            platforms+=(--platform win-64)
-          fi
+          # Manual dispatch supplies platforms; schedule falls back to all three.
+          platforms="${{ github.event.inputs.platforms }}"
+          [ -z "$platforms" ] && platforms="linux-64 win-64 osx-arm64"
+          echo "Locking ${{ matrix.env }} for: $platforms"
 
-          for p in linux-64 win-64 osx-arm64; do
-            [[ "${{ matrix.env }}" == "06-tensorflow" && "$p" == "win-64" ]] && continue
-            out="python/3.12/lockfiles/${p}/${{ matrix.env }}.conda.lock"
-            conda-lock lock --file "$src" --platform "$p" \
-              --kind explicit --filename-template "$out" || {
-                echo "::warning::lock failed for ${{ matrix.env }} on $p"; }
+          for p in $platforms; do
+            # TensorFlow has no conda-forge win-64 build.
+            if [[ "${{ matrix.env }}" == "06-tensorflow" && "$p" == "win-64" ]]; then
+              echo "::notice::skipping tensorflow on win-64 (no conda-forge build)"
+              continue
+            fi
+            mkdir -p "python/3.12/lockfiles/$p"
+            rm -f "conda-$p.lock"
+            # Use conda-lock's default output name, then move it into place.
+            if conda-lock lock --file "$src" --platform "$p" --kind explicit; then
+              mv -f "conda-$p.lock" "python/3.12/lockfiles/$p/${{ matrix.env }}.conda.lock"
+              n=$(grep -c '^https' "python/3.12/lockfiles/$p/${{ matrix.env }}.conda.lock" || true)
+              echo "::notice::wrote lockfiles/$p/${{ matrix.env }}.conda.lock ($n packages)"
+            else
+              echo "::warning::conda-lock failed for ${{ matrix.env }} on $p"
+            fi
           done
 
       - name: Upload lockfiles artifact
