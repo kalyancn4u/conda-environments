@@ -213,8 +213,8 @@ Then rebuild from a lock with:
 conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
 ```
 
-- 🎓 **Understand it:** [How lockfile generation works, from zero to mastery](python/3.12/lockfiles/generation/HOW-IT-WORKS.md)
-- 🛠️ **Run it:** [Generation methods — Actions, Docker, WSL](python/3.12/lockfiles/generation/README.md)
+- 🎓 **Understand it:** [How lockfile generation works, from zero to mastery](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md)
+- 🛠️ **Run it:** [Lockfiles overview & generation methods — Actions, Docker, WSL](python/3.12/lockfiles/README.md)
 
 ## Documentation
 
@@ -223,8 +223,8 @@ conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.con
 - [Package selection](docs/package-selection.md) — the philosophy behind every include/exclude
 - [Compatibility](docs/compatibility.md) — channels, platforms, CUDA
 - [Upgrade strategy](docs/upgrade-strategy.md) — how to move versions forward safely
-- [Lockfiles — how generation works](python/3.12/lockfiles/generation/HOW-IT-WORKS.md) — reproducibility from first principles
-- [Lockfiles — generation methods](python/3.12/lockfiles/generation/README.md) — Actions / Docker / WSL commands
+- [Lockfiles — explained](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md) — reproducibility from first principles
+- [Lockfiles — overview & generation methods](python/3.12/lockfiles/README.md) — Actions / Docker / WSL commands
 - [Troubleshooting](docs/troubleshooting.md) — when solves fail
 - [FAQ](docs/faq.md)
 

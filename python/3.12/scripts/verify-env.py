@@ -56,8 +56,10 @@ ENV_IMPORTS: dict[str, list[str]] = {
         "pydantic", "redis", "sqlalchemy", "streamlit", "uvicorn",
     ],
     "tools": [
+        # NOTE: `ruff` is a standalone CLI with no importable Python module, so it
+        # is intentionally not listed here (importing it would always fail).
         "cookiecutter", "coverage", "docker", "mypy", "nox", "playwright",
-        "pytest", "ruff", "scrapy", "selenium", "tox",
+        "pytest", "scrapy", "selenium", "tox",
     ],
     "llm": [
         "accelerate", "datasets", "faiss", "fastapi", "huggingface_hub",

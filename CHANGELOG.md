@@ -18,15 +18,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   learning framework each (they can't coexist), with rationale in the file headers and
   prominent caveats. Added matching `allinone-pytorch` / `allinone-tflow` verifier sets
   and threaded both through the READMEs, GUIDE, FAQ, and architecture docs.
-- Lockfile documentation: `python/3.12/lockfiles/generation/README.md` (Actions/Docker/WSL
-  command reference) and `HOW-IT-WORKS.md` (a from-first-principles teaching explainer);
-  root README gained a **Lockfiles** section. `update-lockfiles` now defaults manual runs
-  to `linux-64` and is hardened against `conda-lock` filename edge cases.
+- Lockfile documentation consolidated into `python/3.12/lockfiles/`: `README.md` (overview
+  + Actions/Docker/WSL command reference) and `LOCKFILES-EXPLAINED.md` (a from-first-
+  principles teaching explainer); the `generation/` subfolder was removed. Root README
+  gained a **Lockfiles** section. `update-lockfiles` now defaults manual runs to
+  `linux-64` and is hardened against `conda-lock` filename edge cases.
 - `python/3.12/GUIDE.md` — a complete, beginner-friendly walkthrough documenting every
   file in the 3.12 tree and every artifact it generates; linked from both READMEs.
 - README section on building an "all-in-one" environment by iteratively layering the
   environment YAMLs with `conda env update`, including the `--prune`/TensorFlow caveats
   and an honest pros/cons analysis.
+
+### Fixed
+- CI `tools` job: dropped `ruff` from the `verify-env.py` import checks — it's a
+  standalone CLI with no importable module, so `import ruff` always failed.
+- CI `dl` job: install `libgl1`/`libglib2.0-0` in the test container so `opencv`
+  (`cv2`) imports in the headless deep-learning environment.
 
 ### Changed
 - `02-ml.yml` — added clustering/manifold (`hdbscan`, `umap-learn`), extra estimators

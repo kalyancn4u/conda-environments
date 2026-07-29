@@ -1,15 +1,23 @@
 # Lockfiles
 
-Generated, per-platform, **exact-rebuild** artifacts. These freeze a known-good
-resolution of each environment (versions + builds + hashes) so a rebuild is
-byte-for-byte reproducible — independent of when or where it runs.
+Generated, per-platform, **exact-rebuild** artifacts. A lockfile freezes a known-good
+resolution of one environment (exact versions + builds + `sha256` hashes) so a rebuild is
+byte-for-byte reproducible — independent of when or where it runs. They are **explicit**
+[`conda-lock`](https://github.com/conda/conda-lock) files generated from the
+loosely-pinned `../environments/*.yml`.
 
 ```text
 lockfiles/
-├── linux-64/
-├── win-64/
-└── osx-arm64/
+├── linux-64/     ← exact recipes for Linux
+├── win-64/       ← exact recipes for Windows
+└── osx-arm64/    ← exact recipes for Apple-Silicon Macs
 ```
+
+> 🎓 **New to any of this?** Read [**LOCKFILES-EXPLAINED.md**](LOCKFILES-EXPLAINED.md)
+> first — a from-first-principles explainer of what lockfiles are and what each generation
+> step actually does. *This* file is the command reference; that one builds understanding.
+> See also [`docs/upgrade-strategy.md`](../../../docs/upgrade-strategy.md) for the
+> intent-vs-state model.
 
 ## Rules
 
@@ -20,18 +28,88 @@ lockfiles/
 - **One PR at a time.** Keep intent changes and lockfile refreshes in separate PRs so
   reviews stay legible.
 
-## Generating locally
+---
 
-Uses [`conda-lock`](https://github.com/conda/conda-lock):
+## Method 1 — GitHub Actions ✅ (recommended; no local install)
+
+Runs Miniforge + `mamba` + `conda-lock` on GitHub's Linux runners. Nothing is installed
+on your machine.
+
+1. Repo on GitHub → **Actions** tab → **update-lockfiles** workflow.
+2. **Run workflow**. The `platforms` input defaults to **`linux-64`** (fast, quick
+   reference). Enter `linux-64 win-64 osx-arm64` to lock all platforms.
+3. When it finishes:
+   - **Lockfiles** arrive as a **pull request** (`chore/update-lockfiles`) adding the
+     files under `lockfiles/<platform>/`. Review the version deltas and merge.
+   - They are **also** attached to the run as downloadable **artifacts**
+     (`lockfiles-<env>`), a fallback if PR creation is restricted by org settings.
+   - **Logs**: open the run → each `conda-lock <env>` job shows the full solver output.
+     Download via **⋯ → Download log archive**, or with the CLI:
+     ```bash
+     gh run view <run-id> --log > linux-64-conda-lock.log
+     ```
+
+> CLI trigger (needs `gh auth login`):
+> ```bash
+> gh workflow run update-lockfiles.yml -f platforms="linux-64"
+> gh run watch   # follow it live
+> ```
+
+---
+
+## Method 2 — Docker + Miniforge (canonical local)
+
+Requires Docker Desktop running (after a Docker update, **reboot first** or the engine
+won't start). Pulls the `condaforge/miniforge3` image (~500 MB) — nothing installed
+outside the container.
 
 ```bash
-pip install conda-lock   # or: conda install -c conda-forge conda-lock
-
-conda-lock lock \
-  --file ../environments/01-core.yml \
-  --platform linux-64 --platform win-64 --platform osx-arm64
+docker run --rm -v "$(pwd)":/work -w /work condaforge/miniforge3:latest bash -c '
+  set -e
+  mamba install -y -n base conda-lock
+  cd python/3.12
+  for e in 01-core 02-ml 03-deep-learning 04-web 05-tools 06-tensorflow 07-geospatial 08-timeseries; do
+    echo "=== $e ==="
+    mkdir -p lockfiles/linux-64
+    conda-lock lock --file environments/$e.yml --platform linux-64 --kind explicit \
+      && mv -f conda-linux-64.lock lockfiles/linux-64/$e.conda.lock
+  done
+' | tee python/3.12/lockfiles/linux-64-conda-lock.log
 ```
 
-In CI this is handled by the [`update-lockfiles`](../../../.github/workflows/update-lockfiles.yml)
-workflow. See [docs/upgrade-strategy.md](../../../docs/upgrade-strategy.md) for how
-lockfiles fit the intent-vs-state model.
+---
+
+## Method 3 — WSL + micromamba (small-footprint local, Windows)
+
+If you want it local without a full Miniforge install, `micromamba` is a single ~30 MB
+static binary. From WSL Ubuntu (paths via `/mnt/c/...`):
+
+```bash
+# one-time: fetch the micromamba binary (no system install)
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+eval "$(./bin/micromamba shell hook -s bash)"
+micromamba create -y -n lock -c conda-forge conda-lock
+micromamba activate lock
+
+cd /mnt/c/Users/<you>/.../conda-environments/python/3.12
+for e in 01-core 02-ml 03-deep-learning 04-web 05-tools 06-tensorflow 07-geospatial 08-timeseries; do
+  conda-lock lock --file environments/$e.yml --platform linux-64 --kind explicit \
+    && mv -f conda-linux-64.lock lockfiles/linux-64/$e.conda.lock
+done
+```
+
+---
+
+## Using a lockfile
+
+```bash
+# Rebuild an environment EXACTLY from its linux-64 lock:
+conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
+```
+
+## Logs
+
+Run logs can be saved here as `*-conda-lock.log` (Methods 2/3) or downloaded from the
+Actions run (Method 1). They are reference material — the authoritative artifacts are the
+lockfiles themselves under `<platform>/`. In CI, generation is handled by the
+[`update-lockfiles`](../../../.github/workflows/update-lockfiles.yml) workflow.

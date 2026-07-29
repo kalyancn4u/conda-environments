@@ -1,6 +1,7 @@
 # How Lockfile Generation Works — From Zero to Mastery
 
-> A teaching companion to [`README.md`](README.md) (which lists the *commands*). This
+> A teaching companion to [`README.md`](README.md) in this folder (which lists the
+> *commands*). This
 > document builds the **mental model**: what a lockfile really is, why it exists, what
 > happens at each step of generating one, and how to reason about it with confidence.
 > No prior conda knowledge assumed — read it once, top to bottom.

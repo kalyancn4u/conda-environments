@@ -40,12 +40,13 @@ jobs:
         shell: bash -el {0}
 
     steps:
-      # The Miniforge image is minimal and ships without git, which
-      # actions/checkout needs when steps run inside a container.
-      - name: Install git (required by checkout inside the container)
+      # The Miniforge image is minimal: it lacks `git` (needed by actions/checkout
+      # in-container) and the system OpenGL/glib libs that `opencv` (cv2) loads at
+      # import time in the headless deep-learning environments.
+      - name: Install system deps (git for checkout; libGL for opencv)
         run: |
           apt-get update -qq
-          apt-get install -y --no-install-recommends git
+          apt-get install -y --no-install-recommends git libgl1 libglib2.0-0
           rm -rf /var/lib/apt/lists/*
 
       - uses: actions/checkout@v4
