@@ -32,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   matrix to save CI minutes), and `update-lockfiles` uses the same container.
 - Added `scripts/test-env.sh` / `test-env.ps1` to reproduce the CI build+verify locally
   in that container; documented in the READMEs, GUIDE, and compatibility docs.
+- `docs/architecture.md` — expanded the environment matrix into a full table covering
+  every environment YAML (env name, concern, headline packages, CPU/GPU, platforms,
+  rationale) plus a companion templates table.
 
 ## [1.0.0] - 2026-07-15
 

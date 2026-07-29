@@ -38,18 +38,32 @@ and references version-specific details where needed.
 
 ## The environment matrix
 
-| Env | Concern | Why it is separate |
-|-----|---------|--------------------|
-| `01-core` | Scientific Python daily driver | The 80–90% case; kept small and stable |
-| `02-ml` | Classical ML | Boosting/tuning trees are heavy and evolve independently |
-| `03-deep-learning` | PyTorch + Hugging Face | Large binary deps; framework-specific |
-| `06-tensorflow` | TensorFlow + Keras | **Isolated from PyTorch** to avoid protobuf/abseil/numpy contention |
-| `04-web` | Web APIs & data apps | Server/runtime concerns, different release cadence |
-| `05-tools` | Dev tooling | A "toolbox" independent of any project runtime |
-| `98-legacy` | Deprecated packages | Reference/documentation only |
+Every file in `python/3.12/environments/`, what it contains, and why it stands alone:
+
+| File | Env name | Concern | Headline packages | CPU/GPU | Platforms | Why it is separate |
+|------|----------|---------|-------------------|---------|-----------|--------------------|
+| `01-core.yml` | `py312-core` | Scientific-Python daily driver | jupyterlab, numpy, pandas, polars, pyarrow, scipy, scikit-learn, statsmodels, matplotlib, seaborn, plotly, duckdb, sqlalchemy, requests, httpx | CPU | linux-64 · win-64 · osx-arm64 | The 80–90% case; kept small and stable so it always solves fast |
+| `02-ml.yml` | `py312-ml` | Classical / tabular ML | xgboost, lightgbm, catboost, optuna, mlflow, shap, eli5, imbalanced-learn, category_encoders, feature-engine, hdbscan, umap-learn, mlxtend, skops | CPU | linux-64 · win-64 · osx-arm64 | Boosting/tuning stacks are heavy and evolve on their own cadence |
+| `03-deep-learning.yml` | `py312-dl` | Deep learning (PyTorch) | pytorch, torchvision, torchaudio, lightning, transformers, datasets, accelerate, sentence-transformers, spacy, opencv, timm, onnx, onnxruntime | CPU | linux-64 · win-64 · osx-arm64 | Large binary deps; **kept apart from TensorFlow** (see below) |
+| `04-web.yml` | `py312-web` | Web APIs & data apps | fastapi, flask, django, uvicorn, gunicorn, streamlit, gradio, dash, pydantic, alembic, celery, redis-py | CPU | linux-64 · win-64* · osx-arm64 | Server/runtime concerns on a different release cadence |
+| `05-tools.yml` | `py312-tools` | Developer tooling | pytest, pytest-cov, coverage, ruff, black, mypy, pre-commit, tox, nox, playwright, selenium, scrapy, cookiecutter, docker-py | CPU | linux-64 · win-64 · osx-arm64 | A "toolbox" independent of any project's runtime |
+| `06-tensorflow.yml` | `py312-tf` | Deep learning (TensorFlow) | tensorflow, keras, tensorboard | CPU | linux-64 · **osx-arm64** | **Isolated from PyTorch** to avoid protobuf/abseil/numpy contention; no conda-forge win-64 build |
+| `07-geospatial.yml` | `py312-geo` | Geospatial (vector + raster) | geopandas, shapely, pyproj, fiona, gdal, rasterio, contextily, folium, mapclassify, geoalchemy2 | CPU | linux-64 · win-64 · osx-arm64 | GDAL/GEOS/PROJ stack is heavy and best pinned together |
+| `08-timeseries.yml` | `py312-ts` | Time series & forecasting | prophet, cmdstanpy, sktime, statsforecast, statsmodels, ruptures | CPU | linux-64 · win-64 · osx-arm64 | Prophet/Stan compilation is heavy; forecasting stack evolves independently |
+| `98-legacy.yml` | `py312-legacy` | Deprecated / compatibility | *(mostly commented out)* gensim, nltk, docopt… | CPU | n/a | Reference/documentation only — records what was removed and its replacement |
+
+\* `gunicorn` in `04-web` is POSIX-only; on Windows use `uvicorn`/`waitress`. Full
+platform/CUDA details are in [compatibility.md](compatibility.md).
 
 Templates (`minimal`, `data-science`, `mlops`, `llm`) are **compositions** for common
-personas — convenience supersets you fork and trim, not additional modules to maintain.
+personas — convenience supersets you fork and trim, not additional modules to maintain:
+
+| Template | Env name | For |
+|----------|----------|-----|
+| `templates/minimal.yml` | `py312-min` | The smallest useful clean slate to build a new project on |
+| `templates/data-science.yml` | `py312-ds` | A single env combining `01-core` + the most-used `02-ml` pieces |
+| `templates/mlops.yml` | `py312-mlops` | Orchestration & ops: Apache Airflow, MLflow, wandb, DVC, cloud SDKs |
+| `templates/llm.yml` | `py312-llm` | LLM app development: transformers, sentence-transformers, faiss, a small API server |
 
 ### Why split TensorFlow and PyTorch?
 
