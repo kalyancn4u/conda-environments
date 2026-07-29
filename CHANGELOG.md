@@ -30,13 +30,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   and an honest pros/cons analysis.
 
 ### Fixed
-- CI `ml` job (env-solve failure): `02-ml.yml` (and both all-in-one templates) used
-  `feature-engine`, which does not exist on conda-forge — the package is `feature_engine`
-  (underscore). Verified via a linux-64 solve: fixed, the env resolves cleanly.
-- CI `tools` job: dropped `ruff` from the `verify-env.py` import checks — it's a
-  standalone CLI with no importable module, so `import ruff` always failed.
-- CI `dl` job: install `libgl1`/`libglib2.0-0` in the test container so `opencv`
-  (`cv2`) imports in the headless deep-learning environment.
+All three diagnosed by reproducing the linux-64 solves/imports locally with a throwaway
+micromamba (no permanent install).
+- CI `ml` (env-solve): `02-ml.yml` and both all-in-one templates used `feature-engine`,
+  which does not exist on conda-forge — the package is `feature_engine` (underscore; the
+  PyPI/pip name is `feature-engine`). Fixed; verified it resolves cleanly.
+- CI `tools` (verify-imports): the conda-forge `playwright` package is the browser
+  *driver*, not the importable Python API, so `import playwright` failed — moved
+  `playwright` to a `pip:` install. Also dropped `ruff` from the `verify-env.py` checks
+  (a CLI with no importable module).
+- CI `dl` (verify-imports): removed `albumentations` — its conda-forge build is broken
+  (`albucore` hard-imports `simsimd`, which conda-forge doesn't reliably provide); pip
+  would clash with conda `opencv`. Documented the pip-in-venv alternative. (The test
+  container also installs `libgl1`/`libglib2.0-0` for `opencv`.)
+
+### Changed (continued)
+- Moved `xlrd` from `01-core` to `98-legacy` (reads only the obsolete `.xls` format;
+  use `openpyxl`/`pandas` for `.xlsx`). Documented the `feature_engine`↔`feature-engine`
+  and other conda-forge/PyPI/import name quirks in `docs/package-selection.md`.
 
 ### Changed
 - `02-ml.yml` — added clustering/manifold (`hdbscan`, `umap-learn`), extra estimators

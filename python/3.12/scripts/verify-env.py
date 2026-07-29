@@ -45,7 +45,9 @@ ENV_IMPORTS: dict[str, list[str]] = {
         "statsmodels",
     ],
     "dl": [
-        "accelerate", "albumentations", "cv2", "datasets", "huggingface_hub",
+        # NOTE: `albumentations` is omitted — its conda-forge build is broken
+        # (albucore -> simsimd import failure). See 03-deep-learning.yml.
+        "accelerate", "cv2", "datasets", "huggingface_hub",
         "lightning", "onnx", "onnxruntime", "PIL", "safetensors",
         "sentence_transformers", "spacy", "timm", "tokenizers", "torch",
         "torchaudio", "torchvision", "transformers",

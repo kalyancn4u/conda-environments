@@ -63,7 +63,7 @@ dependencies:
   - catboost
   - category_encoders
   - eli5
-  - feature_engine
+  - feature_engine       # conda-forge name; PyPI/pip name is "feature-engine"
   - hdbscan
   - imbalanced-learn
   - lightgbm
@@ -77,7 +77,7 @@ dependencies:
 
   # --- Deep learning: TensorFlow + framework-agnostic tooling --------------
   # (torch-only packages intentionally excluded — see header)
-  - albumentations
+  # (albumentations omitted — conda-forge build is broken via albucore->simsimd)
   - datasets
   - huggingface_hub
   - keras
@@ -112,7 +112,6 @@ dependencies:
   - docker-py
   - mypy
   - nox
-  - playwright
   - pre-commit
   - pytest
   - pytest-cov
@@ -141,3 +140,6 @@ dependencies:
   - statsforecast
 
   - pip
+  - pip:
+      # conda-forge `playwright` is the driver, not the importable Python API.
+      - playwright

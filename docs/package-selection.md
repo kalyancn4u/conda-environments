@@ -37,7 +37,23 @@ serving) is a different concern and lives elsewhere — that is what keeps core 
 | `ruff` in tools | One fast tool replacing several linters/formatters. |
 | `beautifulsoup4`, never `bs4` | `bs4` on PyPI is an empty shim; the real package is `beautifulsoup4`. |
 | `redis-py` (imports as `redis`) | The conda-forge package name differs from the import name — noted in the YAML. |
+| `feature_engine` (conda) = `feature-engine` (pip) | conda-forge uses the **underscore**; the PyPI/pip name uses a hyphen. Using the hyphen in a conda YAML fails to solve. |
+| `playwright` via **pip** | The conda-forge `playwright` package is the browser *driver*, not the importable Python API — the bindings come from PyPI. |
 | Keras 3 over `tf-keras` | Multi-backend Keras is the supported path; the shim is legacy. |
+
+### Package-naming quirks (conda-forge vs. PyPI)
+
+A recurring footgun: a package's conda-forge name, its PyPI/pip name, and its **import**
+name can all differ. Get the conda-forge name wrong and the environment simply won't solve.
+
+| conda-forge name | PyPI / pip name | import name |
+|------------------|-----------------|-------------|
+| `feature_engine` | `feature-engine` | `feature_engine` |
+| `beautifulsoup4` | `beautifulsoup4` | `bs4` |
+| `redis-py` | `redis` | `redis` |
+| `docker-py` | `docker` | `docker` |
+| `pytorch` | `torch` | `torch` |
+| `opencv` | `opencv-python` | `cv2` |
 
 ## What we deliberately excluded (and why)
 
@@ -49,6 +65,12 @@ serving) is a different concern and lives elsewhere — that is what keeps core 
   source, making it non-portable. Install per project when GPU is required.
 - **Ancient/incompatible pins** — e.g. `transformers==2.1.1`; see
   [`99-upgrade-candidates.md`](../python/3.12/environments/99-upgrade-candidates.md).
+- **`albumentations`** — its current conda-forge build is broken: it pulls `albucore`,
+  which hard-imports `simsimd`, a dependency conda-forge does not reliably provide, so
+  `import albumentations` fails. Pip-installing it would drag in `opencv-python-headless`
+  and clash with conda `opencv`. Add it in a project venv (`pip install albumentations`)
+  if you need it.
+- **`xlrd`** — moved to `98-legacy.yml`; it reads only the obsolete `.xls` format.
 
 ## Adding a package: the checklist
 

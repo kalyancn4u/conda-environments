@@ -33,8 +33,12 @@ dependencies:
   - transformers          # modern 4.x — replaces the 2.1.1 found in the source env
 
   # --- Vision & NLP tooling -------------------------------------------------
-  - albumentations
-  - opencv
+  # NOTE: `albumentations` is intentionally NOT here. Its conda-forge build pulls
+  # `albucore`, which hard-imports `simsimd`; that dependency is not reliably
+  # provided on conda-forge, so `import albumentations` fails. Installing it via
+  # pip would drag in `opencv-python-headless` and clash with conda `opencv`.
+  # If you need it, add it in a project-specific venv: `pip install albumentations`.
+  - opencv                # provides `cv2`
   - pillow
   - spacy
   - timm                  # PyTorch image models

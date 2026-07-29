@@ -41,3 +41,5 @@ dependencies:
   # These are safe to use, just not part of the curated core modules:
   # - gensim             # topic models / word2vec -> often replaced by sentence-transformers
   # - nltk               # classic NLP -> spaCy for production pipelines
+  # - xlrd               # reads ONLY the old .xls format (dropped .xlsx in v2.0);
+  #                      # moved here from 01-core -> use openpyxl / pandas for .xlsx

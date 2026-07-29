@@ -28,8 +28,6 @@ dependencies:
   - tox
 
   # --- Scraping & browser automation ---------------------------------------
-  # playwright needs browser binaries after install: `python -m playwright install`
-  - playwright
   - scrapy
   - selenium
 
@@ -37,3 +35,8 @@ dependencies:
   - docker-py             # Docker Engine SDK (import name: docker)
 
   - pip
+  - pip:
+      # The conda-forge `playwright` package is the browser *driver*, not the
+      # importable Python bindings — install those from PyPI. Afterwards run
+      # `python -m playwright install` to download the browser binaries.
+      - playwright

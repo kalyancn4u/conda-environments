@@ -33,7 +33,8 @@ dependencies:
   - duckdb                # in-process OLAP SQL over Parquet/pandas/Arrow
   - openpyxl              # .xlsx read/write
   - sqlalchemy            # DB toolkit / ORM core
-  - xlrd                  # legacy .xls reading (kept for interop)
+  # xlrd moved to 98-legacy: it reads only the old .xls format (dropped .xlsx in
+  # v2.0). Use openpyxl / pandas for modern spreadsheets.
 
   # --- Visualization --------------------------------------------------------
   - matplotlib
