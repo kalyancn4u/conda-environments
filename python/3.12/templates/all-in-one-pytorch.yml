@@ -1,0 +1,144 @@
+# =============================================================================
+# template: all-in-one-pytorch  —  "py312-all-pytorch"  —  kitchen sink (PyTorch)
+# -----------------------------------------------------------------------------
+# One environment with (almost) everything, using **PyTorch** as the deep-learning
+# framework. Paired with all-in-one-tflow.yml (the TensorFlow variant).
+#
+# WHY TWO ALL-IN-ONE FILES?
+#   TensorFlow and PyTorch pin protobuf / abseil / numpy in mutually incompatible
+#   ways, so a single environment cannot reliably contain both. Each all-in-one
+#   therefore commits to ONE framework:
+#     • this file            → PyTorch (torch, lightning, transformers, timm, …)
+#     • all-in-one-tflow.yml  → TensorFlow (tensorflow, keras, …)
+#   Everything else (core, classical ML, web, tools, geospatial, time series) is
+#   identical between the two variants.
+#
+# ┌───────────────────────────────────────────────────────────────────────────┐
+# │ READ BEFORE USING — this is the environment MOST LIKELY to hit dependency  │
+# │ conflicts and to solve slowly. Prefer the modular environments for daily   │
+# │ and reproducible/production work; treat this as a scratch/exploration env  │
+# │ and LOCK IT once it works (scripts/export-env.sh or a conda-lock lockfile).│
+# │ `gunicorn` is omitted (POSIX-only); `uvicorn` is included.                 │
+# └───────────────────────────────────────────────────────────────────────────┘
+# CPU-only, conda-forge only. GPU: see docs/compatibility.md.
+# =============================================================================
+name: py312-all-pytorch
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12.*
+
+  # --- Core scientific stack (from 01-core) --------------------------------
+  - beautifulsoup4
+  - duckdb
+  - httpx
+  - ipykernel
+  - ipywidgets
+  - jupyterlab
+  - lxml
+  - matplotlib
+  - notebook
+  - numpy
+  - openpyxl
+  - pandas
+  - plotly
+  - polars
+  - pyarrow
+  - python-dotenv
+  - pyyaml
+  - requests
+  - rich
+  - scikit-learn
+  - scipy
+  - seaborn
+  - sqlalchemy
+  - statsmodels
+  - tqdm
+  - xlrd
+
+  # --- Classical ML (from 02-ml) -------------------------------------------
+  - catboost
+  - category_encoders
+  - eli5
+  - feature-engine
+  - hdbscan
+  - imbalanced-learn
+  - lightgbm
+  - mlflow
+  - mlxtend
+  - optuna
+  - shap
+  - skops
+  - umap-learn
+  - xgboost
+
+  # --- Deep learning: PyTorch (from 03-deep-learning) ----------------------
+  - accelerate
+  - albumentations
+  - datasets
+  - huggingface_hub
+  - lightning
+  - onnx
+  - onnxruntime
+  - opencv
+  - pillow
+  - pytorch
+  - safetensors
+  - sentence-transformers
+  - spacy
+  - tensorboard
+  - timm
+  - tokenizers
+  - torchaudio
+  - torchvision
+  - transformers
+
+  # --- Web & data apps (from 04-web; gunicorn omitted — POSIX-only) --------
+  - alembic
+  - celery
+  - dash
+  - django
+  - fastapi
+  - flask
+  - gradio
+  - pydantic
+  - redis-py
+  - streamlit
+  - uvicorn
+
+  # --- Developer tooling (from 05-tools) -----------------------------------
+  - black
+  - cookiecutter
+  - coverage
+  - docker-py
+  - mypy
+  - nox
+  - playwright
+  - pre-commit
+  - pytest
+  - pytest-cov
+  - ruff
+  - scrapy
+  - selenium
+  - tox
+
+  # --- Geospatial (from 07-geospatial) -------------------------------------
+  - contextily
+  - fiona
+  - folium
+  - gdal
+  - geoalchemy2
+  - geopandas
+  - mapclassify
+  - pyproj
+  - rasterio
+  - shapely
+
+  # --- Time series & forecasting (from 08-timeseries) ----------------------
+  - cmdstanpy
+  - prophet
+  - ruptures
+  - sktime
+  - statsforecast
+
+  - pip

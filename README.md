@@ -54,7 +54,8 @@ restructuring** — see [docs/architecture.md](docs/architecture.md).
 | [`98-legacy.yml`](python/3.12/environments/98-legacy.yml) | `py312-legacy` | Documented legacy/deprecated packages — reference only |
 
 Templates for common personas live in [`python/3.12/templates/`](python/3.12/templates/):
-`minimal`, `data-science`, `mlops`, `llm`.
+`minimal`, `data-science`, `mlops`, `llm`, and two kitchen-sink variants —
+`all-in-one-pytorch` and `all-in-one-tflow`.
 
 > 🔰 **Brand new to conda?** Start with the
 > [**complete beginner's guide**](python/3.12/GUIDE.md) — it explains every file in the
@@ -93,9 +94,19 @@ Prefer the helper scripts, which apply strict channel settings and friendly erro
 ## Building one "all-in-one" environment (iterative layering)
 
 The environments are designed to be **used separately**. But you *can* merge them into a
-single environment by **layering** the YAML files onto one target env, one after another,
-with `conda env update`. This section documents exactly how — and the trade-offs, because
-an all-in-one env re-introduces the very problems this repo was built to avoid.
+single environment. The quickest way is a ready-made kitchen-sink template — pick the
+deep-learning framework you want (they can't reliably coexist):
+
+```bash
+# PyTorch variant (env py312-all-pytorch)
+conda env create -f python/3.12/templates/all-in-one-pytorch.yml
+# …or the TensorFlow variant (env py312-all-tflow)
+conda env create -f python/3.12/templates/all-in-one-tflow.yml
+```
+
+Alternatively you can **layer** the individual YAML files onto one target env, one after
+another, with `conda env update` (shown below). Either way, read the trade-offs — an
+all-in-one env re-introduces the very problems this repo was built to avoid.
 
 ### How the layering works
 

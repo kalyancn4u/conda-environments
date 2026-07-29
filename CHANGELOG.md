@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   statsmodels, and ruptures for forecasting & change-point detection.
 - Both added to the verifier (`verify-env.py`), the `test-environments` CI matrix,
   and the `update-lockfiles` workflow; documented in the READMEs and GUIDE.
+- Two kitchen-sink templates — `all-in-one-pytorch.yml` (`py312-all-pytorch`) and
+  `all-in-one-tflow.yml` (`py312-all-tflow`) — unioning the modular stacks with one deep
+  learning framework each (they can't coexist), with rationale in the file headers and
+  prominent caveats. Added matching `allinone-pytorch` / `allinone-tflow` verifier sets
+  and threaded both through the READMEs, GUIDE, FAQ, and architecture docs.
 - Lockfile documentation: `python/3.12/lockfiles/generation/README.md` (Actions/Docker/WSL
   command reference) and `HOW-IT-WORKS.md` (a from-first-principles teaching explainer);
   root README gained a **Lockfiles** section. `update-lockfiles` now defaults manual runs

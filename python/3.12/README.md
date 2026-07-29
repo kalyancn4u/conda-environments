@@ -13,7 +13,7 @@ for architecture and rationale.
 | Directory | What's inside |
 |-----------|---------------|
 | [`environments/`](environments/) | The seven modular environment definitions + the upgrade report |
-| [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm` |
+| [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
 | [`scripts/`](scripts/) | Create / update / export / clean / compare / verify helpers |
 | [`lockfiles/`](lockfiles/) | Generated per-platform exact-rebuild lockfiles (CI-maintained) |
 

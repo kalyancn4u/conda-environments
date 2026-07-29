@@ -59,7 +59,9 @@ python/3.12/
 │   ├── minimal.yml            the smallest useful environment
 │   ├── data-science.yml       core + ML combined into one
 │   ├── mlops.yml              orchestration & experiment-tracking (Airflow, MLflow…)
-│   └── llm.yml                large-language-model app development
+│   ├── llm.yml                large-language-model app development
+│   ├── all-in-one-pytorch.yml kitchen-sink env, PyTorch deep-learning stack
+│   └── all-in-one-tflow.yml   kitchen-sink env, TensorFlow deep-learning stack
 │
 ├── scripts/             ← helper programs so you don't memorize conda commands
 │   ├── create-env.sh / .ps1   build an environment from a .yml
@@ -148,6 +150,8 @@ what you actually need.
 | **`data-science.yml`** | `py312-ds` | Prefer **one** environment that combines the core stack *and* the most-used ML tools, instead of juggling `01-core` + `02-ml`. |
 | **`mlops.yml`** | `py312-mlops` | Need workflow orchestration & experiment ops: Apache Airflow, MLflow, Weights & Biases, DVC, cloud SDKs. (Heavy; Airflow is Linux/macOS-oriented.) |
 | **`llm.yml`** | `py312-llm` | Are building with large language models: Transformers, Sentence-Transformers, embeddings/vector search, plus a small API server. |
+| **`all-in-one-pytorch.yml`** | `py312-all-pytorch` | Want *one* env with (almost) everything and **PyTorch** as the DL framework — core + ML + PyTorch + web + tools + geospatial + time series. **Heavy & conflict-prone;** best as a scratch env, lock it once it works. |
+| **`all-in-one-tflow.yml`** | `py312-all-tflow` | Same kitchen sink but with **TensorFlow/Keras** instead of PyTorch (the two can't coexist). Heavy & conflict-prone; no conda-forge win-64 TF build (pip on Windows). |
 
 **How to use a template:** copy it into your own project, change the `name:`, delete
 what you don't need, add what you do, then create it with the same `create-env` script

@@ -64,6 +64,8 @@ personas — convenience supersets you fork and trim, not additional modules to 
 | `templates/data-science.yml` | `py312-ds` | A single env combining `01-core` + the most-used `02-ml` pieces |
 | `templates/mlops.yml` | `py312-mlops` | Orchestration & ops: Apache Airflow, MLflow, wandb, DVC, cloud SDKs |
 | `templates/llm.yml` | `py312-llm` | LLM app development: transformers, sentence-transformers, faiss, a small API server |
+| `templates/all-in-one-pytorch.yml` | `py312-all-pytorch` | Kitchen-sink convenience env unioning the modular stacks with the **PyTorch** DL framework; heavy & conflict-prone — a scratch env, not for production |
+| `templates/all-in-one-tflow.yml` | `py312-all-tflow` | Same kitchen sink but with **TensorFlow/Keras** instead of PyTorch (the two can't coexist); no conda-forge win-64 TF build |
 
 ### Why split TensorFlow and PyTorch?
 

@@ -7,6 +7,17 @@ reason about and reproduce. One monolithic env — like the `base` this repo was
 distilled from — eventually becomes unsolvable. See
 [architecture.md](architecture.md).
 
+### Is there a single "everything" environment?
+
+Yes — two, one per deep-learning framework (they can't reliably coexist):
+[`all-in-one-pytorch.yml`](../python/3.12/templates/all-in-one-pytorch.yml) (`py312-all-pytorch`)
+and [`all-in-one-tflow.yml`](../python/3.12/templates/all-in-one-tflow.yml) (`py312-all-tflow`).
+Each unions the modular stacks (core + ML + web + tools + geospatial + time series) and
+adds one DL framework. They're convenience/scratch envs: heavier, slower to solve, and
+more conflict-prone than the modular environments — lock one once it works and don't rely
+on it for reproducible/production work. The reasoning and a manual layering alternative
+are in the README's "Building one all-in-one environment" section.
+
 ### Should I install these into `base`?
 
 **No.** Keep `base` minimal (just conda/mamba). Create named environments from the

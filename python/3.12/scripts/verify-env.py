@@ -65,6 +65,22 @@ ENV_IMPORTS: dict[str, list[str]] = {
     ],
 }
 
+# The all-in-one templates union the modular environments but each picks ONE deep
+# learning framework (TF and PyTorch cannot reliably coexist). Derived here so they
+# stay in sync automatically.
+_TORCH_ONLY = {"accelerate", "lightning", "sentence_transformers", "timm",
+               "torch", "torchaudio", "torchvision"}
+_COMMON = ("core", "ml", "web", "tools", "geo", "ts")
+# all-in-one-pytorch.yml → everything incl. the full PyTorch stack.
+ENV_IMPORTS["allinone-pytorch"] = sorted(
+    set().union(*(ENV_IMPORTS[k] for k in (*_COMMON, "dl")))
+)
+# all-in-one-tflow.yml → TensorFlow + the framework-agnostic subset of `dl`.
+ENV_IMPORTS["allinone-tflow"] = sorted(
+    set().union(*(ENV_IMPORTS[k] for k in (*_COMMON, "tf")))
+    | (set(ENV_IMPORTS["dl"]) - _TORCH_ONLY)
+)
+
 
 def check_python(min_minor: int = 12) -> bool:
     """Warn (not fail) if the interpreter is not the expected 3.12 line."""
