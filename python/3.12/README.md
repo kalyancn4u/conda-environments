@@ -49,7 +49,16 @@ python scripts/verify-env.py --env core
 # Compare two environments / list upgradable packages
 ./scripts/compare-envs.sh py312-core py312-ds
 ./scripts/compare-envs.sh --outdated py312-core
+
+# Reproduce CI locally: build + verify an env in the Miniforge container (needs Docker)
+./scripts/test-env.sh 01-core        # one env      (Windows: .\scripts\test-env.ps1 01-core)
+./scripts/test-env.sh --all          # every env
 ```
+
+> CI (`test-environments`) builds every environment on the free **Linux** runner inside
+> the `condaforge/miniforge3` container. `test-env.sh` runs that exact job on your
+> machine. See [docs/compatibility.md](../../docs/compatibility.md) for why CI is
+> Linux-only.
 
 ## Before you start
 

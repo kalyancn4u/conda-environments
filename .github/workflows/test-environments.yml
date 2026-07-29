@@ -1,5 +1,11 @@
-# Actually create each environment on each platform and verify imports.
-# This is the real proof that a definition is solvable and usable.
+# Build each environment on Linux and verify it imports.
+#
+# Runs INSIDE the conda-forge Miniforge container (mamba preinstalled) on the
+# free `ubuntu-latest` runner. We deliberately test Linux only:
+#   * Public repos get unlimited free Linux minutes.
+#   * Private repos bill Linux ×1 vs Windows ×2 / macOS ×10 against the free quota.
+# The intended cross-platform support (win-64 / osx-arm64) is documented in
+# docs/compatibility.md; Linux is the CI proof-of-solvability.
 name: test-environments
 
 on:
@@ -20,35 +26,29 @@ concurrency:
 
 jobs:
   create-and-verify:
-    name: ${{ matrix.env }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.env }} (linux-64)
+    runs-on: ubuntu-latest
+    container: condaforge/miniforge3:latest
     strategy:
       fail-fast: false
       matrix:
-        # ubuntu = linux-64, windows = win-64, macos-14 = osx-arm64
-        os: [ubuntu-latest, windows-latest, macos-14]
+        # 98-legacy is documentation-only and intentionally not built.
         env: [core, ml, dl, web, tools, tf, geo, ts]
-        exclude:
-          # conda-forge has no win-64 TensorFlow build (see docs/compatibility.md).
-          - os: windows-latest
-            env: tf
 
     defaults:
       run:
-        # login shell so `conda activate` / `conda run` work on every OS.
         shell: bash -el {0}
 
     steps:
-      - uses: actions/checkout@v4
+      # The Miniforge image is minimal and ships without git, which
+      # actions/checkout needs when steps run inside a container.
+      - name: Install git (required by checkout inside the container)
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends git
+          rm -rf /var/lib/apt/lists/*
 
-      - name: Set up Miniforge (conda-forge, strict priority)
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          python-version: "3.12"
-          channels: conda-forge
-          channel-priority: strict
-          use-mamba: true
+      - uses: actions/checkout@v4
 
       - name: Resolve environment file & name
         id: resolve
@@ -69,21 +69,23 @@ jobs:
           echo "name=$name" >> "$GITHUB_OUTPUT"
           echo "key=$key"   >> "$GITHUB_OUTPUT"
 
-      - name: Create environment
+      - name: Create environment (mamba)
         run: mamba env create --yes --file "${{ steps.resolve.outputs.file }}"
 
       - name: Verify imports
-        run: |
-          conda run -n "${{ steps.resolve.outputs.name }}" \
-            python python/3.12/scripts/verify-env.py --env "${{ steps.resolve.outputs.key }}"
+        run: >
+          conda run --no-capture-output -n "${{ steps.resolve.outputs.name }}"
+          python python/3.12/scripts/verify-env.py --env "${{ steps.resolve.outputs.key }}"
 
       - name: Check for conda/pip package clashes
+        env:
+          ENV_NAME: ${{ steps.resolve.outputs.name }}
         run: |
-          # Fail if a package was installed by BOTH conda and pip (ABI-clash risk).
-          conda run -n "${{ steps.resolve.outputs.name }}" python - <<'PY'
-          import json, subprocess, sys
-          data = json.loads(subprocess.check_output(["conda", "list", "--json"]))
-          pip_pkgs = {p["name"].lower() for p in data if p.get("channel") == "pypi"}
+          python - <<'PY'
+          import json, os, subprocess, sys
+          name = os.environ["ENV_NAME"]
+          data = json.loads(subprocess.check_output(["conda", "list", "-n", name, "--json"]))
+          pip_pkgs   = {p["name"].lower() for p in data if p.get("channel") == "pypi"}
           conda_pkgs = {p["name"].lower() for p in data if p.get("channel") != "pypi"}
           clash = sorted(pip_pkgs & conda_pkgs)
           if clash:

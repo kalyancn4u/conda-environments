@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `02-ml.yml` — added clustering/manifold (`hdbscan`, `umap-learn`), extra estimators
   (`mlxtend`, `skops`), and interpretability (`eli5`), surfaced by auditing 60 legacy
   environment files against the repo.
+- CI standardized on the `condaforge/miniforge3` container on the free Linux runner:
+  `test-environments` now builds/verifies **Linux-only** (dropped the Windows/macOS
+  matrix to save CI minutes), and `update-lockfiles` uses the same container.
+- Added `scripts/test-env.sh` / `test-env.ps1` to reproduce the CI build+verify locally
+  in that container; documented in the READMEs, GUIDE, and compatibility docs.
 
 ## [1.0.0] - 2026-07-15
 

@@ -67,7 +67,8 @@ python/3.12/
 │   ├── export-env.sh          save an exact snapshot of an environment
 │   ├── clean-env.sh           free disk space (safe cache cleanup)
 │   ├── compare-envs.sh / .ps1 diff two environments / find upgradable packages
-│   └── verify-env.py          quick check that an environment's packages import
+│   ├── verify-env.py          quick check that an environment's packages import
+│   └── test-env.sh / .ps1     reproduce the CI build+verify in a Docker container
 │
 └── lockfiles/           ← auto-generated "exact recipes" for perfect rebuilds
     ├── linux-64/  win-64/  osx-arm64/   (one folder per operating system)
@@ -250,6 +251,18 @@ SUCCESS: all imports succeeded.
 If a package is broken you'll see `!!  <name>  IMPORT FAILED: …` and the script exits
 with an error — which is why the CI can use it as a pass/fail gate.
 
+### `test-env.sh` / `test-env.ps1` — reproduce CI in Docker
+
+**What it does:** builds an environment **and** runs `verify-env.py` inside the same
+`condaforge/miniforge3` Docker container that GitHub Actions uses — so "passes on my
+machine" means the same thing as "passes in CI." Requires Docker.
+
+```bash
+./scripts/test-env.sh 01-core      # one environment  (Windows: .\scripts\test-env.ps1 01-core)
+./scripts/test-env.sh --all        # all of them
+```
+A cached Docker volume keeps downloaded packages between runs, so repeats are fast.
+
 ---
 
 ## Part 5 — The lockfiles (`lockfiles/`)
@@ -314,7 +327,7 @@ here's what they do in plain terms. They run automatically on GitHub whenever fi
 | Workflow | When it runs | What it checks / produces (in plain words) |
 |----------|--------------|--------------------------------------------|
 | **`validate.yml`** | On every change to a `.yml` | "Are these environment files well-formed and do they follow our rules?" (valid YAML, `conda-forge`-only, has a Python pin). Fast. |
-| **`test-environments.yml`** | On changes under `python/**` | The real proof: it actually **builds each environment on Linux, Windows, and macOS**, runs `verify-env.py`, and fails if any package was installed by *both* conda and pip (a known source of breakage). |
+| **`test-environments.yml`** | On changes under `python/**` | The real proof: inside the `condaforge/miniforge3` container on the free **Linux** runner, it **builds each environment**, runs `verify-env.py`, and fails if any package was installed by *both* conda and pip (a known source of breakage). Linux-only to stay within free CI minutes. |
 | **`update-lockfiles.yml`** | Weekly, or on demand | Regenerates the lockfiles and opens a pull request with the refreshed versions for you to review. |
 
 When these pass, the green **badges** at the top of the root `README.md` light up.

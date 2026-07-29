@@ -1,8 +1,9 @@
 # Regenerate per-platform conda-lock lockfiles and open a PR with the result.
-# Runs on demand and on a weekly schedule so lockfiles track conda-forge without
-# forcing pins into the human-readable YAMLs.
 #
-# Manual runs default to linux-64 only (fast, for quick reference). The weekly
+# The solver job runs INSIDE the conda-forge Miniforge container (mamba
+# preinstalled) on the free `ubuntu-latest` runner — the same image the
+# test-environments workflow and the local scripts use, for a consistent
+# toolchain. Manual runs default to linux-64 (fast quick-reference); the weekly
 # schedule locks all supported platforms. Lockfiles are also uploaded as build
 # artifacts, so you get them even if PR creation is restricted by repo settings.
 name: update-lockfiles
@@ -26,6 +27,7 @@ jobs:
   lock:
     name: conda-lock ${{ matrix.env }}
     runs-on: ubuntu-latest
+    container: condaforge/miniforge3:latest
     strategy:
       fail-fast: false
       matrix:
@@ -45,15 +47,14 @@ jobs:
         shell: bash -el {0}
 
     steps:
-      - uses: actions/checkout@v4
+      # The Miniforge image ships without git, which checkout needs in-container.
+      - name: Install git (required by checkout inside the container)
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends git
+          rm -rf /var/lib/apt/lists/*
 
-      - name: Set up Miniforge (mamba)
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          channels: conda-forge
-          channel-priority: strict
-          use-mamba: true
+      - uses: actions/checkout@v4
 
       - name: Install conda-lock
         run: mamba install --yes conda-lock

@@ -30,6 +30,12 @@ correct solve does not depend on the user's global config. **Do not** add `defau
 Environments are authored for three primary platforms. Not every package builds for
 every platform — the notable gaps are called out here.
 
+> **CI scope:** the `test-environments` workflow builds and verifies every environment on
+> **Linux only** (inside the `condaforge/miniforge3` container), because Linux CI minutes
+> are free/×1 while Windows is ×2 and macOS ×10 on private repos. The matrix below is the
+> *intended* support; Linux is what CI actively proves. Reproduce it locally with
+> `python/3.12/scripts/test-env.sh`.
+
 | Package / env | linux-64 | win-64 | osx-arm64 | Note |
 |---|:---:|:---:|:---:|---|
 | `01-core`, `02-ml`, `04-web`, `05-tools` | ✅ | ✅ | ✅ | Fully portable |
