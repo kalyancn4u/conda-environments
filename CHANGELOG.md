@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   and an honest pros/cons analysis.
 
 ### Fixed
+- CI `ml` job (env-solve failure): `02-ml.yml` (and both all-in-one templates) used
+  `feature-engine`, which does not exist on conda-forge — the package is `feature_engine`
+  (underscore). Verified via a linux-64 solve: fixed, the env resolves cleanly.
 - CI `tools` job: dropped `ruff` from the `verify-env.py` import checks — it's a
   standalone CLI with no importable module, so `import ruff` always failed.
 - CI `dl` job: install `libgl1`/`libglib2.0-0` in the test container so `opencv`

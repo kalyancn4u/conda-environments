@@ -29,7 +29,7 @@ dependencies:
 
   # --- Tabular feature engineering -----------------------------------------
   - category_encoders
-  - feature-engine
+  - feature_engine       # conda-forge package name uses an underscore
   - imbalanced-learn      # resampling for class imbalance (SMOTE, etc.)
 
   # --- Clustering & dimensionality reduction -------------------------------

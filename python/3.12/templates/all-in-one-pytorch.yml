@@ -60,7 +60,7 @@ dependencies:
   - catboost
   - category_encoders
   - eli5
-  - feature-engine
+  - feature_engine
   - hdbscan
   - imbalanced-learn
   - lightgbm
