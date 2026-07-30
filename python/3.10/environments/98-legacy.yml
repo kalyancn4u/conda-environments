@@ -1,0 +1,45 @@
+# =============================================================================
+# 98-legacy.yml  —  "py310-legacy"  —  DOCUMENTATION, NOT A WORKING ENVIRONMENT
+# -----------------------------------------------------------------------------
+# This file catalogs legacy / deprecated / compatibility packages discovered in
+# the source `base` environment. Almost everything here is COMMENTED OUT on
+# purpose: the point is to record *why* a package is legacy and what replaces it,
+# not to recreate a broken environment.
+#
+# If you genuinely must resurrect one of these (e.g. to load an old pickle),
+# uncomment the single line you need — never the whole file.
+#
+# See environments/99-upgrade-candidates.md for the full upgrade report.
+# =============================================================================
+name: py310-legacy
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+  - pip
+
+  # --- Removed: stdlib backports (already in the 3.10 standard library) -----
+  # - dataclasses        # PEP 557 is stdlib since 3.7 — installing the backport BREAKS 3.10
+  # - typing             # `typing` is stdlib; the PyPI `typing` backport shadows it
+  # - backports.strenum  # `enum.StrEnum` is stdlib since 3.11
+
+  # --- Removed: deprecated / unmaintained -----------------------------------
+  # - backcall           # was an IPython callback shim; unused by modern IPython
+  # - pickleshare        # deprecated IPython dependency; no longer required
+  # - entrypoints        # superseded by importlib.metadata (stdlib)
+  # - keras-preprocessing# folded into Keras/TF; standalone package is dead
+  # - tensorflow-estimator  # Estimator API deprecated; use Keras
+  # - tensorboard-plugin-wit# What-If Tool plugin, unmaintained
+
+  # --- Removed: PyPI shims / one-off CLIs -----------------------------------
+  # - bs4                # empty shim -> use `beautifulsoup4` (in 01-core)
+  # - docopt             # unmaintained arg parser -> `typer` / `click` / argparse
+  # - pip-search         # scrapes PyPI HTML, frequently broken -> use the PyPI website
+  # - pipreqs / yarg     # requirements guessers -> maintain deps explicitly
+
+  # --- Kept but "legacy-adjacent" (still maintained; prefer modern peers) ----
+  # These are safe to use, just not part of the curated core modules:
+  # - gensim             # topic models / word2vec -> often replaced by sentence-transformers
+  # - nltk               # classic NLP -> spaCy for production pipelines
+  # - xlrd               # reads ONLY the old .xls format (dropped .xlsx in v2.0);
+  #                      # moved here from 01-core -> use openpyxl / pandas for .xlsx

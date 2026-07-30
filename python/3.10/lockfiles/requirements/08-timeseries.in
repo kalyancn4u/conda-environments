@@ -1,0 +1,9 @@
+# PyPI intent for py310-ts (uv).
+# CAVEAT: `prophet` compiles Stan models via cmdstan (a native toolchain conda provides);
+# on PyPI you may need to install/build cmdstan yourself. Provided for reference.
+cmdstanpy
+prophet
+ruptures
+sktime
+statsforecast
+statsmodels

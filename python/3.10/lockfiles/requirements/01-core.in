@@ -1,0 +1,26 @@
+# PyPI intent for py310-core (uv). Compile: uv pip compile 01-core.in -o 01-core.txt
+beautifulsoup4
+duckdb
+httpx
+ipykernel
+ipywidgets
+jupyterlab
+lxml
+matplotlib
+notebook
+numpy
+openpyxl
+pandas
+plotly
+polars
+pyarrow
+python-dotenv
+PyYAML
+requests
+rich
+scikit-learn
+scipy
+seaborn
+SQLAlchemy
+statsmodels
+tqdm

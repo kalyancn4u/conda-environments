@@ -1,0 +1,44 @@
+# =============================================================================
+# template: mlops  —  orchestration, tracking, and cloud/ops SDKs
+# -----------------------------------------------------------------------------
+# Home for the heavy orchestration + ops packages that were sprawled across the
+# source `base` env (Apache Airflow, SageMaker, wandb, ...). These do NOT belong
+# in the core modules: they have large, opinionated dependency trees and are best
+# run in a dedicated environment or container.
+#
+# CAVEATS:
+#   * Apache Airflow targets POSIX; on Windows run it under WSL2 or Docker.
+#   * Cloud SDKs (sagemaker/boto3) are optional — trim what you don't use.
+# =============================================================================
+name: py310-mlops
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # --- Experiment tracking & model registry --------------------------------
+  - mlflow
+  - wandb
+
+  # --- Data/model monitoring ------------------------------------------------
+  - evidently
+
+  # --- Orchestration (POSIX; use WSL2/Docker on Windows) -------------------
+  - apache-airflow
+
+  # --- Cloud / storage SDKs -------------------------------------------------
+  - boto3                 # AWS SDK
+  - s3fs                  # S3 as a filesystem for pandas/pyarrow/dask
+
+  # --- Container & pipeline tooling ----------------------------------------
+  - docker-py
+  - dvc                   # data/version control for datasets & models
+
+  - pip
+  - pip:
+      # SageMaker SDK is PyPI-first. Pinned to 2.75.1 for two reasons:
+      #  (a) it's the newest release that co-resolves with apache-airflow/boto3 in this
+      #      environment (uv independently lands on the same version), and
+      #  (b) newer sagemaker pulls torch -> nvidia-cublas CUDA wheels that conda-lock's
+      #      pip solver cannot resolve, which otherwise breaks lockfile generation.
+      - sagemaker==2.75.1

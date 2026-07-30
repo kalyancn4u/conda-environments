@@ -1,0 +1,61 @@
+# =============================================================================
+# 01-core.yml  —  "py310-core"  —  the daily driver
+# -----------------------------------------------------------------------------
+# The carefully curated scientific-Python core that covers ~80–90% of everyday
+# analysis, notebooks, and prototyping. Keep this environment SMALL and STABLE:
+# heavier stacks (ML, DL, web) live in their own files and can be created
+# alongside this one.
+#
+# Channel policy: conda-forge only. Enable strict priority globally:
+#   conda config --add channels conda-forge && conda config --set channel_priority strict
+# Pinning policy: only `python` is pinned. Everything else floats so upgrades stay cheap.
+# =============================================================================
+name: py310-core
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # --- Jupyter / interactive compute ---------------------------------------
+  - ipykernel
+  - ipywidgets            # interactive widgets in JupyterLab/Notebook
+  - jupyterlab
+  - notebook
+
+  # --- Arrays, dataframes, numerics ----------------------------------------
+  - numpy
+  - pandas
+  - polars                # fast, Arrow-native dataframe; modern complement to pandas
+  - pyarrow               # Arrow interchange + Parquet I/O (pandas/polars backend)
+  - scipy
+
+  # --- Analytical storage & spreadsheets -----------------------------------
+  - duckdb                # in-process OLAP SQL over Parquet/pandas/Arrow
+  - openpyxl              # .xlsx read/write
+  - sqlalchemy            # DB toolkit / ORM core
+  # xlrd moved to 98-legacy: it reads only the old .xls format (dropped .xlsx in
+  # v2.0). Use openpyxl / pandas for modern spreadsheets.
+
+  # --- Visualization --------------------------------------------------------
+  - matplotlib
+  - plotly
+  - seaborn
+
+  # --- HTTP & parsing -------------------------------------------------------
+  - beautifulsoup4        # NOTE: the real package; never the PyPI `bs4` shim
+  - httpx                 # modern async-capable HTTP client
+  - lxml
+  - requests
+
+  # --- Light modeling (belongs in the daily driver) ------------------------
+  - scikit-learn
+  - statsmodels
+
+  # --- Everyday utilities ---------------------------------------------------
+  - python-dotenv
+  - pyyaml
+  - rich                  # readable tracebacks, tables, logging
+  - tqdm
+
+  # Keep pip available for the rare PyPI-only extra (prefer conda-forge first).
+  - pip

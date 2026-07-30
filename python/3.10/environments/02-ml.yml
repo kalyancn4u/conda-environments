@@ -1,0 +1,43 @@
+# =============================================================================
+# 02-ml.yml  —  "py310-ml"  —  classical machine learning
+# -----------------------------------------------------------------------------
+# Gradient boosting, hyper-parameter optimization, experiment tracking, and
+# tabular feature engineering. CPU builds only — for GPU boosting see
+# docs/compatibility.md.
+#
+# This environment intentionally re-includes the core scientific stack it needs
+# (numpy/pandas/scikit-learn arrive transitively) so it is usable standalone.
+# =============================================================================
+name: py310-ml
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # --- Gradient boosting (CPU builds) --------------------------------------
+  - catboost
+  - lightgbm              # conda-forge default build is CPU; GPU is a separate build
+  - xgboost               # ""
+
+  # --- Tuning & experiment tracking ----------------------------------------
+  - mlflow                # tracking server + model registry
+  - optuna                # define-by-run hyper-parameter optimization
+
+  # --- Interpretability -----------------------------------------------------
+  - eli5                  # inspect/debug classifiers & regressors
+  - shap
+
+  # --- Tabular feature engineering -----------------------------------------
+  - category_encoders
+  - feature_engine       # conda-forge name (underscore); PyPI/pip name is "feature-engine"
+  - imbalanced-learn      # resampling for class imbalance (SMOTE, etc.)
+
+  # --- Clustering & dimensionality reduction -------------------------------
+  - hdbscan               # density-based clustering
+  - umap-learn            # manifold learning / embeddings (imported as `umap`)
+
+  # --- Extra estimators & utilities ----------------------------------------
+  - mlxtend               # stacking, association rules, plotting helpers
+  - skops                 # safer model persistence than pickle
+
+  - pip

@@ -28,16 +28,20 @@ is the antidote — a set of **small, single-purpose environments** that are:
 conda-environments/
 ├── docs/                     # Architecture & operational documentation
 ├── python/
-│   └── 3.12/                 # Everything targeting Python 3.12
-│       ├── environments/     # The modular environment definitions
-│       ├── templates/        # Ready-to-fork starting points
-│       ├── scripts/          # Cross-platform create/update/verify helpers
-│       └── lockfiles/        # Generated per-platform lockfiles (CI-maintained)
+│   ├── 3.10/                 # Python 3.10 (validated ready; lockfiles on demand)
+│   ├── 3.12/                 # Everything targeting Python 3.12 (primary, fully locked)
+│   │   ├── environments/     # The modular environment definitions
+│   │   ├── templates/        # Ready-to-fork starting points
+│   │   ├── scripts/          # Cross-platform create/update/verify helpers
+│   │   └── lockfiles/        # conda lockfiles + uv requirements
+│   └── …                     # add python/3.13, 3.14, … by copying 3.12 and bumping pins
 └── .github/workflows/        # Validation, environment tests, lockfile refresh
 ```
 
-The `python/3.12/` prefix is intentional: adding `python/3.13/` later requires **no
-restructuring** — see [docs/architecture.md](docs/architecture.md).
+The `python/<version>/` prefix is intentional: [`python/3.10/`](python/3.10/) was added by
+**copying `3.12` and bumping the pins — no restructuring** (see
+[docs/architecture.md](docs/architecture.md)). It's validated ready (all 8 environments +
+6 templates solve on conda-forge); 3.12 remains the fully-locked primary target.
 
 ## The environments
 

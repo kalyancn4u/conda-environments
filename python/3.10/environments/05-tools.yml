@@ -1,0 +1,42 @@
+# =============================================================================
+# 05-tools.yml  —  "py310-tools"  —  developer tooling
+# -----------------------------------------------------------------------------
+# Testing, linting, type-checking, task automation, scraping, and browser
+# automation. This environment is a "toolbox" you activate for development work;
+# it is independent of any single project's runtime environment.
+# =============================================================================
+name: py310-tools
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # --- Testing & coverage ---------------------------------------------------
+  - coverage
+  - pytest
+  - pytest-cov
+
+  # --- Lint / format / type-check ------------------------------------------
+  - black                 # formatter (ruff-format is an alternative)
+  - mypy
+  - ruff                  # linter + import sorter (replaces flake8/isort/pyupgrade)
+
+  # --- Automation & scaffolding --------------------------------------------
+  - cookiecutter
+  - nox
+  - pre-commit
+  - tox
+
+  # --- Scraping & browser automation ---------------------------------------
+  - scrapy
+  - selenium
+
+  # --- Container tooling ----------------------------------------------------
+  - docker-py             # Docker Engine SDK (import name: docker)
+
+  - pip
+  - pip:
+      # The conda-forge `playwright` package is the browser *driver*, not the
+      # importable Python bindings — install those from PyPI. Afterwards run
+      # `python -m playwright install` to download the browser binaries.
+      - playwright

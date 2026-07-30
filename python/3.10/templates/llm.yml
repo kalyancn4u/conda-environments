@@ -1,0 +1,39 @@
+# =============================================================================
+# template: llm  —  language-model application development (CPU)
+# -----------------------------------------------------------------------------
+# A focused environment for building with transformer models and embeddings:
+# inference, RAG, fine-tuning experiments. CPU by default; add CUDA-enabled
+# PyTorch per docs/compatibility.md for GPU training/inference.
+# =============================================================================
+name: py310-llm
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # --- Model runtime (CPU PyTorch) -----------------------------------------
+  - pytorch
+  - accelerate
+
+  # --- Hugging Face ---------------------------------------------------------
+  - datasets
+  - huggingface_hub
+  - safetensors
+  - sentence-transformers
+  - tokenizers
+  - transformers
+
+  # --- Retrieval / embeddings ----------------------------------------------
+  - faiss                 # similarity search (CPU build)
+
+  # --- Serving & utilities --------------------------------------------------
+  - fastapi
+  - httpx
+  - pydantic
+  - tqdm
+  - uvicorn
+
+  - pip
+  - pip:
+      # PyPI-only helpers commonly needed for LLM apps:
+      - tiktoken           # BPE tokenizer used by several model families

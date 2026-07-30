@@ -1,0 +1,4 @@
+# PyPI intent for py310-tf (uv). CPU-oriented; GPU builds/CUDA come from conda or vendor wheels.
+tensorflow
+keras
+tensorboard

@@ -1,0 +1,15 @@
+# PyPI intent for py310-ml (uv). NOTE: conda `feature_engine` == PyPI `feature-engine`.
+catboost
+category-encoders
+eli5
+feature-engine
+hdbscan
+imbalanced-learn
+lightgbm
+mlflow
+mlxtend
+optuna
+shap
+skops
+umap-learn
+xgboost

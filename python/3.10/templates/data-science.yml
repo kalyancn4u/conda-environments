@@ -1,0 +1,44 @@
+# =============================================================================
+# template: data-science  —  core scientific stack + classical ML, in one env
+# -----------------------------------------------------------------------------
+# A convenient superset of 01-core + the most-used pieces of 02-ml for people who
+# prefer a single "analysis" environment over composing modules. If solves get
+# slow or conflicts appear, split back into 01-core and 02-ml.
+# =============================================================================
+name: py310-ds
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10.*
+
+  # Core scientific stack
+  - duckdb
+  - ipykernel
+  - ipywidgets
+  - jupyterlab
+  - matplotlib
+  - numpy
+  - openpyxl
+  - pandas
+  - plotly
+  - polars
+  - pyarrow
+  - scipy
+  - seaborn
+  - sqlalchemy
+
+  # Classical ML essentials
+  - lightgbm
+  - mlflow
+  - optuna
+  - scikit-learn
+  - shap
+  - statsmodels
+  - xgboost
+
+  # Utilities
+  - python-dotenv
+  - requests
+  - rich
+  - tqdm
+  - pip
