@@ -1,0 +1,129 @@
+adagio==0.2.6
+    # via fugue
+cloudpickle==3.1.2
+    # via statsforecast
+cmdstanpy==1.3.0
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+    #   prophet
+contourpy==1.3.3
+    # via matplotlib
+coreforecast==0.0.18
+    # via statsforecast
+cycler==0.12.1
+    # via matplotlib
+fonttools==4.63.0
+    # via matplotlib
+fsspec==2026.7.0
+    # via triad
+fugue==0.9.7
+    # via statsforecast
+holidays==0.101
+    # via prophet
+importlib-resources==7.1.0
+    # via prophet
+joblib==1.5.3
+    # via
+    #   scikit-learn
+    #   sktime
+kiwisolver==1.5.0
+    # via matplotlib
+matplotlib==3.11.1
+    # via prophet
+narwhals==2.24.0
+    # via utilsforecast
+numpy==2.4.6
+    # via
+    #   cmdstanpy
+    #   contourpy
+    #   coreforecast
+    #   matplotlib
+    #   pandas
+    #   patsy
+    #   prophet
+    #   ruptures
+    #   scikit-learn
+    #   scipy
+    #   sktime
+    #   stanio
+    #   statsforecast
+    #   statsmodels
+    #   triad
+    #   utilsforecast
+packaging==26.2
+    # via
+    #   matplotlib
+    #   sktime
+    #   statsmodels
+    #   utilsforecast
+pandas==2.3.3
+    # via
+    #   cmdstanpy
+    #   fugue
+    #   prophet
+    #   sktime
+    #   statsforecast
+    #   statsmodels
+    #   triad
+    #   utilsforecast
+patsy==1.0.2
+    # via statsmodels
+pillow==12.3.0
+    # via matplotlib
+prophet==1.3.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+pyarrow==25.0.0
+    # via triad
+pyparsing==3.3.2
+    # via matplotlib
+python-dateutil==2.9.0.post0
+    # via
+    #   holidays
+    #   matplotlib
+    #   pandas
+pytz==2026.3.post1
+    # via pandas
+ruptures==1.1.10
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+scikit-base==1.0.2
+    # via sktime
+scikit-learn==1.7.2
+    # via sktime
+scipy==1.18.0
+    # via
+    #   ruptures
+    #   scikit-learn
+    #   sktime
+    #   statsforecast
+    #   statsmodels
+six==1.17.0
+    # via
+    #   python-dateutil
+    #   triad
+sktime==1.1.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+stanio==0.5.1
+    # via cmdstanpy
+statsforecast==2.1.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+statsmodels==0.14.6
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/08-timeseries.in
+    #   statsforecast
+threadpoolctl==3.6.0
+    # via
+    #   scikit-learn
+    #   statsforecast
+tqdm==4.70.0
+    # via
+    #   cmdstanpy
+    #   prophet
+    #   statsforecast
+triad==1.0.2
+    # via
+    #   adagio
+    #   fugue
+tzdata==2026.3
+    # via pandas
+utilsforecast==0.2.16
+    # via statsforecast

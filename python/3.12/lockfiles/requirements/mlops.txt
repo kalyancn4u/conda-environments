@@ -1,0 +1,963 @@
+a2wsgi==1.10.10
+    # via apache-airflow-core
+aiobotocore==3.8.0
+    # via s3fs
+aiohappyeyeballs==2.7.1
+    # via aiohttp
+aiohttp==3.14.3
+    # via
+    #   aiobotocore
+    #   aiohttp-retry
+    #   fsspec
+    #   mlflow
+    #   s3fs
+aiohttp-retry==2.9.1
+    # via
+    #   dvc-http
+    #   scmrepo
+aioitertools==0.13.0
+    # via aiobotocore
+aiosignal==1.4.0
+    # via aiohttp
+aiosmtplib==5.1.2
+    # via apache-airflow-providers-smtp
+aiosqlite==0.21.0
+    # via apache-airflow-core
+alembic==1.18.5
+    # via
+    #   apache-airflow-core
+    #   mlflow
+amqp==5.3.1
+    # via kombu
+annotated-doc==0.0.5
+    # via
+    #   fastapi
+    #   typer
+annotated-types==0.8.0
+    # via pydantic
+antlr4-python3-runtime==4.9.3
+    # via
+    #   hydra-core
+    #   omegaconf
+anyio==4.14.2
+    # via
+    #   httpx
+    #   litestar
+    #   starlette
+    #   watchfiles
+apache-airflow==3.3.0
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+    #   apache-airflow-providers-common-compat
+    #   apache-airflow-providers-common-io
+    #   apache-airflow-providers-common-sql
+    #   apache-airflow-providers-smtp
+    #   apache-airflow-providers-standard
+apache-airflow-core==3.3.0
+    # via
+    #   apache-airflow
+    #   apache-airflow-task-sdk
+apache-airflow-providers-common-compat==1.17.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-providers-common-io
+    #   apache-airflow-providers-common-sql
+    #   apache-airflow-providers-smtp
+    #   apache-airflow-providers-standard
+apache-airflow-providers-common-io==1.8.0
+    # via apache-airflow-core
+apache-airflow-providers-common-sql==2.0.3
+    # via apache-airflow-core
+apache-airflow-providers-smtp==3.0.2
+    # via apache-airflow-core
+apache-airflow-providers-standard==1.16.0
+    # via apache-airflow-core
+apache-airflow-task-sdk==1.3.0
+    # via
+    #   apache-airflow
+    #   apache-airflow-core
+appdirs==1.4.4
+    # via iterative-telemetry
+argcomplete==3.7.0
+    # via apache-airflow-core
+arrow==1.4.0
+    # via isoduration
+asgiref==3.12.1
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-providers-common-compat
+    #   apache-airflow-task-sdk
+asyncssh==2.24.0
+    # via scmrepo
+atpublic==7.0.0
+    # via flufl-lock
+attrs==26.1.0
+    # via
+    #   aiohttp
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   dvc
+    #   dvc-data
+    #   jsonschema
+    #   outcome
+    #   referencing
+    #   sagemaker
+    #   sqltrie
+    #   svcs
+babel==2.18.0
+    # via apache-airflow-task-sdk
+billiard==4.2.4
+    # via celery
+blinker==1.9.0
+    # via flask
+boto3==1.43.46
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+    #   sagemaker
+botocore==1.43.46
+    # via
+    #   aiobotocore
+    #   boto3
+    #   s3transfer
+cachetools==7.1.6
+    # via
+    #   apache-airflow-core
+    #   mlflow-skinny
+    #   mlflow-tracing
+cadwyn==7.0.0
+    # via apache-airflow-core
+celery==5.6.3
+    # via
+    #   dvc
+    #   dvc-task
+certifi==2026.7.22
+    # via
+    #   evidently
+    #   httpcore
+    #   httpx
+    #   requests
+    #   sentry-sdk
+cffi==2.1.0
+    # via
+    #   cryptography
+    #   pygit2
+charset-normalizer==3.4.9
+    # via requests
+click==8.4.2
+    # via
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
+    #   flask
+    #   gto
+    #   litestar
+    #   mlflow-skinny
+    #   nltk
+    #   rich-click
+    #   rich-toolkit
+    #   uvicorn
+    #   wandb
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.3.0
+    # via celery
+cloudpickle==3.1.2
+    # via mlflow-skinny
+colorama==0.4.6
+    # via dvc
+colorlog==6.12.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+configobj==5.0.9
+    # via dvc
+contourpy==1.3.3
+    # via matplotlib
+cron-descriptor==2.1.0
+    # via apache-airflow-core
+croniter==6.2.4
+    # via apache-airflow-core
+cryptography==48.0.1
+    # via
+    #   apache-airflow-core
+    #   asyncssh
+    #   evidently
+    #   google-auth
+    #   mlflow
+cycler==0.12.1
+    # via matplotlib
+databricks-sdk==0.67.0
+    # via
+    #   mlflow-skinny
+    #   mlflow-tracing
+defusedxml==0.7.1
+    # via nltk
+deprecated==1.3.1
+    # via apache-airflow-core
+deprecation==2.1.0
+    # via evidently
+dictdiffer==0.10.0
+    # via dvc-data
+dill==0.4.1
+    # via
+    #   apache-airflow-core
+    #   multiprocess
+    #   pathos
+diskcache==5.6.3
+    # via dvc-data
+distro==1.9.0
+    # via
+    #   dvc
+    #   iterative-telemetry
+dnspython==2.8.0
+    # via email-validator
+docker==7.2.0
+    # via mlflow
+dpath==2.2.0
+    # via dvc
+dulwich==1.2.12
+    # via
+    #   dvc
+    #   dvc-studio-client
+    #   scmrepo
+dvc==3.67.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+dvc-data==3.18.3
+    # via dvc
+dvc-http==2.32.0
+    # via dvc
+dvc-objects==5.2.0
+    # via
+    #   dvc
+    #   dvc-data
+dvc-render==1.0.2
+    # via dvc
+dvc-studio-client==0.23.0
+    # via dvc
+dvc-task==0.40.2
+    # via dvc
+dynaconf==3.3.4
+    # via evidently
+email-validator==2.3.0
+    # via fastapi
+entrypoints==0.4
+    # via gto
+evidently==0.7.21
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+faker==40.36.0
+    # via polyfactory
+fastapi==0.136.3
+    # via
+    #   apache-airflow-core
+    #   cadwyn
+    #   mlflow-skinny
+fastapi-cli==0.0.32
+    # via fastapi
+filelock==3.32.2
+    # via iterative-telemetry
+flask==3.1.3
+    # via
+    #   flask-cors
+    #   mlflow
+flask-cors==6.0.5
+    # via mlflow
+flatten-dict==0.5.0
+    # via dvc
+flufl-lock==9.1.0
+    # via dvc
+fonttools==4.63.0
+    # via matplotlib
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
+fsspec==2026.7.0
+    # via
+    #   apache-airflow-task-sdk
+    #   dvc
+    #   dvc-data
+    #   dvc-http
+    #   dvc-objects
+    #   evidently
+    #   s3fs
+    #   scmrepo
+    #   universal-pathlib
+funcy==2.0
+    # via
+    #   dvc
+    #   dvc-task
+    #   gto
+gitdb==4.0.12
+    # via gitpython
+gitpython==3.1.57
+    # via
+    #   mlflow-skinny
+    #   scmrepo
+google-auth==2.56.2
+    # via databricks-sdk
+google-pasta==0.2.0
+    # via sagemaker
+googleapis-common-protos==1.75.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+grandalf==0.8
+    # via dvc
+graphene==3.4.3
+    # via mlflow
+graphql-core==3.2.11
+    # via
+    #   graphene
+    #   graphql-relay
+graphql-relay==3.2.0
+    # via graphene
+greenback==1.3.0
+    # via apache-airflow-task-sdk
+greenlet==3.5.4
+    # via
+    #   greenback
+    #   sqlalchemy
+grpcio==1.83.0
+    # via opentelemetry-exporter-otlp-proto-grpc
+gto==1.10.1
+    # via dvc
+gunicorn==26.0.0
+    # via mlflow
+h11==0.16.0
+    # via
+    #   httpcore
+    #   uvicorn
+httpcore==1.0.9
+    # via httpx
+httptools==0.8.0
+    # via uvicorn
+httpx==0.28.1
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   fastapi
+    #   litestar
+huey==3.3.0
+    # via mlflow
+hydra-core==1.3.4
+    # via dvc
+idna==3.18
+    # via
+    #   anyio
+    #   email-validator
+    #   httpx
+    #   requests
+    #   yarl
+importlib-metadata==9.0.0
+    # via
+    #   apache-airflow-core
+    #   mlflow-skinny
+    #   sagemaker
+isoduration==20.11.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+iterative-telemetry==0.0.10
+    # via
+    #   dvc
+    #   evidently
+itsdangerous==2.2.0
+    # via
+    #   apache-airflow-core
+    #   flask
+jinja2==3.1.6
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   cadwyn
+    #   fastapi
+    #   flask
+jmespath==1.1.0
+    # via
+    #   aiobotocore
+    #   boto3
+    #   botocore
+joblib==1.5.3
+    # via
+    #   nltk
+    #   scikit-learn
+jsonschema==4.26.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+jsonschema-specifications==2025.9.1
+    # via jsonschema
+kiwisolver==1.5.0
+    # via matplotlib
+kombu==5.6.2
+    # via
+    #   celery
+    #   dvc
+    #   dvc-task
+lazy-object-proxy==1.12.0
+    # via apache-airflow-core
+libcst==1.9.0
+    # via apache-airflow-core
+linkify-it-py==2.1.0
+    # via apache-airflow-core
+litestar==2.24.0
+    # via evidently
+litestar-htmx==0.5.0
+    # via litestar
+lockfile==0.12.2
+    # via
+    #   apache-airflow-core
+    #   python-daemon
+mako==1.3.12
+    # via alembic
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via
+    #   flask
+    #   jinja2
+    #   mako
+    #   werkzeug
+matplotlib==3.11.1
+    # via mlflow
+mdurl==0.1.2
+    # via markdown-it-py
+methodtools==0.4.7
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-providers-common-sql
+    #   apache-airflow-task-sdk
+mlflow==3.14.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+mlflow-skinny==3.14.0
+    # via mlflow
+mlflow-tracing==3.14.0
+    # via mlflow
+more-itertools==11.1.0
+    # via apache-airflow-providers-common-sql
+msgspec==0.21.1
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   litestar
+multidict==6.7.1
+    # via
+    #   aiobotocore
+    #   aiohttp
+    #   litestar
+    #   yarl
+multipart==2.0.0
+    # via litestar
+multiprocess==0.70.19
+    # via pathos
+mypy-extensions==1.1.0
+    # via typing-inspect
+narwhals==2.24.0
+    # via scikit-learn
+natsort==8.4.0
+    # via apache-airflow-core
+networkx==3.6.1
+    # via dvc
+nltk==3.10.0
+    # via evidently
+numpy==2.5.1
+    # via
+    #   contourpy
+    #   evidently
+    #   matplotlib
+    #   mlflow
+    #   pandas
+    #   patsy
+    #   sagemaker
+    #   scikit-learn
+    #   scipy
+    #   skops
+    #   statsmodels
+omegaconf==2.3.1
+    # via
+    #   dvc
+    #   hydra-core
+opentelemetry-api==1.44.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-sdk
+    #   opentelemetry-semantic-conventions
+opentelemetry-exporter-otlp==1.44.0
+    # via apache-airflow-core
+opentelemetry-exporter-otlp-proto-common==1.44.0
+    # via
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-exporter-otlp-proto-grpc==1.44.0
+    # via opentelemetry-exporter-otlp
+opentelemetry-exporter-otlp-proto-http==1.44.0
+    # via opentelemetry-exporter-otlp
+opentelemetry-proto==1.44.0
+    # via
+    #   apache-airflow-core
+    #   evidently
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   opentelemetry-exporter-otlp-proto-common
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-sdk==1.44.0
+    # via
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+opentelemetry-semantic-conventions==0.65b0
+    # via opentelemetry-sdk
+orjson==3.11.9
+    # via
+    #   dvc-data
+    #   sqltrie
+outcome==1.3.0.post0
+    # via greenback
+packaging==26.2
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   deprecation
+    #   dvc
+    #   gunicorn
+    #   hydra-core
+    #   kombu
+    #   matplotlib
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   plotly
+    #   sagemaker
+    #   skops
+    #   statsmodels
+    #   wandb
+pandas==2.3.3
+    # via
+    #   evidently
+    #   mlflow
+    #   sagemaker
+    #   statsmodels
+pathlib-abc==0.5.2
+    # via universal-pathlib
+pathos==0.3.5
+    # via sagemaker
+pathspec==1.1.1
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   dvc
+    #   scmrepo
+patsy==1.0.2
+    # via statsmodels
+pendulum==3.2.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+pillow==12.3.0
+    # via matplotlib
+platformdirs==4.11.0
+    # via
+    #   dvc
+    #   wandb
+plotly==5.24.1
+    # via evidently
+pluggy==1.6.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+polyfactory==3.3.0
+    # via litestar
+pox==0.3.7
+    # via pathos
+ppft==1.7.8
+    # via pathos
+prettytable==3.18.0
+    # via skops
+prompt-toolkit==3.0.53
+    # via click-repl
+propcache==0.5.2
+    # via
+    #   aiohttp
+    #   yarl
+protobuf==7.35.1
+    # via
+    #   googleapis-common-protos
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   opentelemetry-proto
+    #   protobuf3-to-dict
+    #   sagemaker
+    #   wandb
+protobuf3-to-dict==0.1.5
+    # via sagemaker
+psutil==7.2.2
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   dvc
+    #   flufl-lock
+pyarrow==24.0.0
+    # via
+    #   mlflow
+    #   pandas
+pyasn1==0.6.4
+    # via pyasn1-modules
+pyasn1-modules==0.4.2
+    # via google-auth
+pycparser==3.0
+    # via cffi
+pydantic==2.13.4
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   cadwyn
+    #   evidently
+    #   fastapi
+    #   gto
+    #   mlflow-skinny
+    #   mlflow-tracing
+    #   pydantic-extra-types
+    #   pydantic-settings
+    #   wandb
+pydantic-core==2.46.4
+    # via pydantic
+pydantic-extra-types==2.11.1
+    # via fastapi
+pydantic-settings==2.14.2
+    # via
+    #   fastapi
+    #   gto
+pydot==4.0.1
+    # via dvc
+pygit2==1.19.3
+    # via scmrepo
+pygments==2.20.0
+    # via
+    #   apache-airflow-core
+    #   rich
+pygtrie==2.5.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   dvc
+    #   dvc-data
+    #   scmrepo
+    #   sqltrie
+pyjwt==2.13.0
+    # via apache-airflow-core
+pyparsing==3.3.2
+    # via
+    #   dvc
+    #   grandalf
+    #   matplotlib
+    #   pydot
+python-daemon==3.1.2
+    # via apache-airflow-core
+python-dateutil==2.9.0.post0
+    # via
+    #   aiobotocore
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   arrow
+    #   botocore
+    #   celery
+    #   croniter
+    #   graphene
+    #   matplotlib
+    #   pandas
+    #   pendulum
+python-dotenv==1.2.2
+    # via
+    #   mlflow-skinny
+    #   pydantic-settings
+    #   uvicorn
+python-multipart==0.0.32
+    # via fastapi
+python-slugify==8.0.4
+    # via apache-airflow-core
+pytz==2026.3.post1
+    # via pandas
+pyyaml==6.0.3
+    # via
+    #   apache-airflow-core
+    #   evidently
+    #   libcst
+    #   litestar
+    #   mlflow-skinny
+    #   omegaconf
+    #   uvicorn
+    #   wandb
+referencing==0.37.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+regex==2026.7.19
+    # via nltk
+requests==2.34.2
+    # via
+    #   apache-airflow-core
+    #   databricks-sdk
+    #   docker
+    #   dvc
+    #   dvc-studio-client
+    #   evidently
+    #   iterative-telemetry
+    #   mlflow-skinny
+    #   opentelemetry-exporter-otlp-proto-http
+    #   wandb
+rich==15.0.0
+    # via
+    #   apache-airflow-core
+    #   dvc
+    #   evidently
+    #   gto
+    #   litestar
+    #   rich-argparse
+    #   rich-click
+    #   rich-toolkit
+    #   typer
+rich-argparse==1.8.0
+    # via apache-airflow-core
+rich-click==1.9.8
+    # via litestar
+rich-toolkit==0.20.3
+    # via fastapi-cli
+rpds-py==2026.6.3
+    # via
+    #   jsonschema
+    #   referencing
+ruamel-yaml==0.19.1
+    # via
+    #   dvc
+    #   gto
+s3fs==2026.7.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+s3transfer==0.19.2
+    # via boto3
+sagemaker==2.75.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+scikit-learn==1.9.0
+    # via
+    #   evidently
+    #   mlflow
+    #   skops
+scipy==1.18.0
+    # via
+    #   evidently
+    #   mlflow
+    #   scikit-learn
+    #   skops
+    #   statsmodels
+scmrepo==3.6.2
+    # via
+    #   dvc
+    #   gto
+semver==3.0.4
+    # via gto
+sentry-sdk==2.66.1
+    # via wandb
+setproctitle==1.3.7
+    # via apache-airflow-core
+setuptools==83.0.0
+    # via zc-lockfile
+shellingham==1.5.4
+    # via typer
+shortuuid==1.0.13
+    # via
+    #   dvc
+    #   dvc-task
+shtab==1.8.1
+    # via dvc
+six==1.17.0
+    # via
+    #   google-pasta
+    #   protobuf3-to-dict
+    #   python-dateutil
+    #   wirerope
+skops==0.14.0
+    # via mlflow
+smdebug-rulesconfig==1.0.1
+    # via sagemaker
+smmap==5.0.3
+    # via gitdb
+sniffio==1.3.1
+    # via
+    #   greenback
+    #   litestar
+sqlalchemy==2.0.51
+    # via
+    #   alembic
+    #   apache-airflow-core
+    #   mlflow
+sqlparse==0.5.5
+    # via
+    #   apache-airflow-providers-common-sql
+    #   mlflow-skinny
+sqltrie==0.11.2
+    # via dvc-data
+starlette==1.3.1
+    # via
+    #   apache-airflow-core
+    #   cadwyn
+    #   fastapi
+    #   mlflow-skinny
+statsmodels==0.14.6
+    # via evidently
+structlog==26.1.0
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+svcs==26.1.0
+    # via apache-airflow-core
+tabulate==0.10.0
+    # via
+    #   apache-airflow-core
+    #   dvc
+    #   gto
+tenacity==9.1.4
+    # via
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   plotly
+termcolor==3.3.0
+    # via apache-airflow-core
+text-unidecode==1.3
+    # via python-slugify
+threadpoolctl==3.6.0
+    # via scikit-learn
+tomlkit==0.15.1
+    # via dvc
+tqdm==4.70.0
+    # via
+    #   dvc
+    #   dvc-data
+    #   fsspec
+    #   nltk
+    #   scmrepo
+typer==0.27.0
+    # via
+    #   evidently
+    #   fastapi-cli
+typing-extensions==4.16.0
+    # via
+    #   aiohttp
+    #   aiosignal
+    #   aiosqlite
+    #   alembic
+    #   anyio
+    #   apache-airflow-core
+    #   apache-airflow-task-sdk
+    #   asyncssh
+    #   cadwyn
+    #   cron-descriptor
+    #   fastapi
+    #   graphene
+    #   grpcio
+    #   litestar
+    #   mlflow-skinny
+    #   opentelemetry-api
+    #   opentelemetry-exporter-otlp-proto-grpc
+    #   opentelemetry-exporter-otlp-proto-http
+    #   opentelemetry-sdk
+    #   opentelemetry-semantic-conventions
+    #   polyfactory
+    #   pydantic
+    #   pydantic-core
+    #   pydantic-extra-types
+    #   referencing
+    #   rich-toolkit
+    #   sqlalchemy
+    #   starlette
+    #   svcs
+    #   typing-inspect
+    #   typing-inspection
+    #   wandb
+typing-inspect==0.9.0
+    # via evidently
+typing-inspection==0.4.2
+    # via
+    #   cadwyn
+    #   fastapi
+    #   pydantic
+    #   pydantic-settings
+tzdata==2026.3
+    # via
+    #   arrow
+    #   kombu
+    #   pandas
+    #   pendulum
+tzlocal==5.4.4
+    # via celery
+uc-micro-py==2.0.0
+    # via linkify-it-py
+ujson==5.13.0
+    # via evidently
+universal-pathlib==0.3.10
+    # via apache-airflow-core
+urllib3==2.7.0
+    # via
+    #   botocore
+    #   docker
+    #   dulwich
+    #   evidently
+    #   requests
+    #   sentry-sdk
+uuid6==2025.0.1
+    # via
+    #   apache-airflow-core
+    #   evidently
+uvicorn==0.52.0
+    # via
+    #   apache-airflow-core
+    #   evidently
+    #   fastapi
+    #   fastapi-cli
+    #   mlflow-skinny
+uvloop==0.22.1
+    # via uvicorn
+vine==5.1.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
+voluptuous==0.16.0
+    # via
+    #   dvc
+    #   dvc-studio-client
+wandb==0.28.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/mlops.in
+watchdog==6.0.0
+    # via evidently
+watchfiles==1.2.0
+    # via uvicorn
+wcwidth==0.8.2
+    # via
+    #   prettytable
+    #   prompt-toolkit
+websockets==17.0
+    # via uvicorn
+werkzeug==3.1.8
+    # via
+    #   flask
+    #   flask-cors
+wirerope==1.0.0
+    # via methodtools
+wrapt==2.3.0
+    # via
+    #   aiobotocore
+    #   deprecated
+yarl==1.24.5
+    # via aiohttp
+zc-lockfile==4.0
+    # via dvc
+zipp==4.1.0
+    # via importlib-metadata

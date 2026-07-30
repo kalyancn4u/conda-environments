@@ -1,0 +1,14 @@
+# PyPI intent for py312-web (uv). conda `redis-py`->`redis`.
+alembic
+celery
+dash
+Django
+fastapi
+Flask
+gradio
+gunicorn
+pydantic
+redis
+SQLAlchemy
+streamlit
+uvicorn

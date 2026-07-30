@@ -1,0 +1,19 @@
+# PyPI intent for py312-dl (uv). conda `pytorch`->`torch`, `opencv`->`opencv-python-headless`.
+accelerate
+datasets
+huggingface-hub
+lightning
+onnx
+onnxruntime
+opencv-python-headless
+pillow
+safetensors
+sentence-transformers
+spacy
+tensorboard
+timm
+tokenizers
+torch
+torchaudio
+torchvision
+transformers

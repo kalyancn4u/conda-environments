@@ -8,10 +8,15 @@ loosely-pinned `../environments/*.yml`.
 
 ```text
 lockfiles/
-├── linux-64/     ← exact recipes for Linux
-├── win-64/       ← exact recipes for Windows
-└── osx-arm64/    ← exact recipes for Apple-Silicon Macs
+├── linux-64/     ← exact conda recipes for Linux
+├── win-64/       ← exact conda recipes for Windows
+├── osx-arm64/    ← exact conda recipes for Apple-Silicon Macs
+└── requirements/ ← PyPI-only requirements.txt (uv) for production / CI-CD
 ```
+
+> **conda lockfiles** (`<platform>/`) reproduce the full *development* env (Python + native
+> libs). **[`requirements/`](requirements/)** holds uv-compiled `requirements.txt` for
+> *production* (PyPI wheels only). See [`docs/conda-vs-uv.md`](../../../docs/conda-vs-uv.md).
 
 > 🎓 **New to any of this?** Read [**LOCKFILES-EXPLAINED.md**](LOCKFILES-EXPLAINED.md)
 > first — a from-first-principles explainer of what lockfiles are and what each generation

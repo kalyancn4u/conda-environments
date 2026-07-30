@@ -1,0 +1,273 @@
+argcomplete==3.7.0
+    # via nox
+arrow==1.4.0
+    # via cookiecutter
+ast-serialize==0.6.0
+    # via mypy
+attrs==26.1.0
+    # via
+    #   nox
+    #   outcome
+    #   service-identity
+    #   trio
+    #   twisted
+automat==25.4.16
+    # via twisted
+binaryornot==0.6.0
+    # via cookiecutter
+black==26.5.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+cachetools==7.1.6
+    # via tox
+certifi==2026.7.22
+    # via
+    #   requests
+    #   selenium
+cffi==2.1.0
+    # via cryptography
+cfgv==3.5.0
+    # via pre-commit
+charset-normalizer==3.4.9
+    # via requests
+click==8.4.2
+    # via
+    #   black
+    #   cookiecutter
+colorama==0.4.6
+    # via tox
+colorlog==6.12.0
+    # via nox
+constantly==23.10.4
+    # via twisted
+cookiecutter==2.7.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+coverage==7.15.2
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+    #   pytest-cov
+cryptography==49.0.0
+    # via
+    #   pyopenssl
+    #   scrapy
+    #   service-identity
+cssselect==1.5.0
+    # via
+    #   parsel
+    #   scrapy
+defusedxml==0.7.1
+    # via scrapy
+dependency-groups==1.3.1
+    # via nox
+distlib==0.4.3
+    # via virtualenv
+docker==7.2.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+filelock==3.32.2
+    # via
+    #   python-discovery
+    #   tldextract
+    #   tox
+    #   virtualenv
+greenlet==3.5.4
+    # via playwright
+h11==0.16.0
+    # via wsproto
+humanize==4.16.0
+    # via nox
+hyperlink==21.0.0
+    # via twisted
+identify==2.6.19
+    # via pre-commit
+idna==3.18
+    # via
+    #   hyperlink
+    #   requests
+    #   tldextract
+    #   trio
+incremental==24.11.0
+    # via twisted
+iniconfig==2.3.0
+    # via pytest
+itemadapter==0.13.1
+    # via
+    #   itemloaders
+    #   scrapy
+itemloaders==1.4.0
+    # via scrapy
+jinja2==3.1.6
+    # via cookiecutter
+jmespath==1.1.0
+    # via
+    #   itemloaders
+    #   parsel
+librt==0.13.0
+    # via mypy
+lxml==6.1.1
+    # via
+    #   parsel
+    #   scrapy
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via jinja2
+mdurl==0.1.2
+    # via markdown-it-py
+mypy==2.3.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+mypy-extensions==1.1.0
+    # via
+    #   black
+    #   mypy
+nodeenv==1.10.0
+    # via pre-commit
+nox==2026.7.11
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+outcome==1.3.0.post0
+    # via
+    #   trio
+    #   trio-websocket
+packaging==26.2
+    # via
+    #   black
+    #   dependency-groups
+    #   incremental
+    #   nox
+    #   parsel
+    #   pyproject-api
+    #   pytest
+    #   scrapy
+    #   tox
+parsel==1.11.0
+    # via
+    #   itemloaders
+    #   scrapy
+pathspec==1.1.1
+    # via
+    #   black
+    #   mypy
+platformdirs==4.11.0
+    # via
+    #   black
+    #   python-discovery
+    #   tox
+    #   virtualenv
+playwright==1.61.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+pluggy==1.6.0
+    # via
+    #   pytest
+    #   pytest-cov
+    #   tox
+pre-commit==4.6.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+protego==0.6.2
+    # via scrapy
+pycparser==3.0
+    # via cffi
+pydispatcher==2.0.7
+    # via scrapy
+pyee==13.0.1
+    # via playwright
+pygments==2.20.0
+    # via
+    #   pytest
+    #   rich
+pyopenssl==26.3.0
+    # via scrapy
+pyproject-api==1.11.0
+    # via tox
+pysocks==1.7.1
+    # via urllib3
+pytest==9.1.1
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+    #   pytest-cov
+pytest-cov==7.1.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+python-dateutil==2.9.0.post0
+    # via arrow
+python-discovery==1.5.0
+    # via
+    #   tox
+    #   virtualenv
+python-slugify==8.0.4
+    # via cookiecutter
+pytokens==0.4.1
+    # via black
+pyyaml==6.0.3
+    # via
+    #   cookiecutter
+    #   pre-commit
+queuelib==1.9.0
+    # via scrapy
+requests==2.34.2
+    # via
+    #   cookiecutter
+    #   docker
+    #   requests-file
+    #   tldextract
+requests-file==3.0.1
+    # via tldextract
+rich==15.0.0
+    # via cookiecutter
+ruff==0.16.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+scrapy==2.17.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+selenium==4.46.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+service-identity==26.1.0
+    # via scrapy
+six==1.17.0
+    # via python-dateutil
+sniffio==1.3.1
+    # via trio
+sortedcontainers==2.4.0
+    # via trio
+text-unidecode==1.3
+    # via python-slugify
+tldextract==5.3.1
+    # via scrapy
+tomli-w==1.2.0
+    # via tox
+tox==4.58.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.12/lockfiles/requirements/05-tools.in
+trio==0.33.0
+    # via
+    #   selenium
+    #   trio-websocket
+trio-websocket==0.12.2
+    # via selenium
+twisted==26.4.0
+    # via scrapy
+typing-extensions==4.16.0
+    # via
+    #   mypy
+    #   pyee
+    #   pyopenssl
+    #   selenium
+    #   twisted
+tzdata==2026.3
+    # via arrow
+urllib3==2.7.0
+    # via
+    #   docker
+    #   requests
+    #   selenium
+virtualenv==21.7.0
+    # via
+    #   nox
+    #   pre-commit
+    #   tox
+w3lib==2.4.1
+    # via
+    #   parsel
+    #   scrapy
+websocket-client==1.9.0
+    # via selenium
+wsproto==1.3.2
+    # via trio-websocket
+zope-interface==8.5
+    # via
+    #   scrapy
+    #   twisted

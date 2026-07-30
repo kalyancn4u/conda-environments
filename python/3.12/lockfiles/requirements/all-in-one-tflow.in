@@ -1,0 +1,103 @@
+# PyPI intent for the all-in-one-tflow template (uv).
+# CAVEAT: includes the geospatial stack (GDAL) which needs system libs to build on PyPI,
+# so this may not resolve/install cleanly without system GDAL. Prefer conda for the full
+# kitchen sink; this file is for reference. PyTorch-only packages excluded (uses TensorFlow).
+# core
+beautifulsoup4
+duckdb
+httpx
+ipykernel
+ipywidgets
+jupyterlab
+lxml
+matplotlib
+notebook
+numpy
+openpyxl
+pandas
+plotly
+polars
+pyarrow
+python-dotenv
+PyYAML
+requests
+rich
+scikit-learn
+scipy
+seaborn
+SQLAlchemy
+statsmodels
+tqdm
+# classical ML
+catboost
+category-encoders
+eli5
+feature-engine
+hdbscan
+imbalanced-learn
+lightgbm
+mlflow
+mlxtend
+optuna
+shap
+skops
+umap-learn
+xgboost
+# deep learning (TensorFlow + framework-agnostic tooling)
+datasets
+huggingface-hub
+keras
+onnx
+onnxruntime
+opencv-python-headless
+pillow
+safetensors
+spacy
+tensorboard
+tensorflow
+tokenizers
+transformers
+# web
+alembic
+celery
+dash
+Django
+fastapi
+Flask
+gradio
+pydantic
+redis
+streamlit
+uvicorn
+# dev tools
+black
+cookiecutter
+coverage
+docker
+mypy
+nox
+playwright
+pre-commit
+pytest
+pytest-cov
+ruff
+Scrapy
+selenium
+tox
+# geospatial
+GDAL
+GeoAlchemy2
+contextily
+fiona
+folium
+geopandas
+mapclassify
+pyproj
+rasterio
+shapely
+# time series
+cmdstanpy
+prophet
+ruptures
+sktime
+statsforecast

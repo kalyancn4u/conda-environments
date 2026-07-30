@@ -1,0 +1,15 @@
+# PyPI intent for py312-geo (uv).
+# CAVEAT: the PyPI geospatial stack (GDAL especially) needs system GDAL/GEOS/PROJ headers
+# and libraries to build; wheels are inconsistent across platforms. In production prefer
+# the CONDA environment (or system-installed GDAL). This file is provided for reference.
+# conda `gdal`->`GDAL`, `geoalchemy2`->`GeoAlchemy2`.
+GDAL
+GeoAlchemy2
+contextily
+fiona
+folium
+geopandas
+mapclassify
+pyproj
+rasterio
+shapely

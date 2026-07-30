@@ -1,0 +1,15 @@
+# PyPI intent for py312-tools (uv). conda `docker-py`->`docker`; playwright already PyPI.
+black
+cookiecutter
+coverage
+docker
+mypy
+nox
+playwright
+pre-commit
+pytest
+pytest-cov
+ruff
+Scrapy
+selenium
+tox

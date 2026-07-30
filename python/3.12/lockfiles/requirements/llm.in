@@ -1,0 +1,16 @@
+# PyPI intent for the llm template (uv). conda `faiss`->`faiss-cpu` on PyPI.
+accelerate
+datasets
+faiss-cpu
+fastapi
+httpx
+huggingface-hub
+pydantic
+safetensors
+sentence-transformers
+tiktoken
+tokenizers
+torch
+tqdm
+transformers
+uvicorn

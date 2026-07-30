@@ -216,6 +216,21 @@ conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.con
 - 🎓 **Understand it:** [How lockfile generation works, from zero to mastery](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md)
 - 🛠️ **Run it:** [Lockfiles overview & generation methods — Actions, Docker, WSL](python/3.12/lockfiles/README.md)
 
+### Production installs with uv
+
+For **production / CI-CD**, this repo also ships fully-pinned, PyPI-only
+[`requirements.txt`](python/3.12/lockfiles/requirements/) files (one per environment &
+template), resolved with [uv](https://github.com/astral-sh/uv):
+
+```bash
+uv pip install -r python/3.12/lockfiles/requirements/04-web.txt
+```
+
+**When to use which:** develop with **conda/mamba** (Python + native libraries like GDAL,
+CUDA); ship with **uv** when the service's dependencies are pure-PyPI. Full novice-friendly
+explanation — including why CD favors uv — in
+[docs/conda-vs-uv.md](docs/conda-vs-uv.md).
+
 ## Documentation
 
 - [Beginner's guide](python/3.12/GUIDE.md) — every file & artifact explained for newcomers
@@ -225,6 +240,7 @@ conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.con
 - [Upgrade strategy](docs/upgrade-strategy.md) — how to move versions forward safely
 - [Lockfiles — explained](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md) — reproducibility from first principles
 - [Lockfiles — overview & generation methods](python/3.12/lockfiles/README.md) — Actions / Docker / WSL commands
+- [conda/mamba vs. uv](docs/conda-vs-uv.md) — which tool when, and why CD uses uv (beginner-friendly)
 - [Troubleshooting](docs/troubleshooting.md) — when solves fail
 - [FAQ](docs/faq.md)
 
