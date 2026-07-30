@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **uv production requirements**: `python/3.12/lockfiles/requirements/` with a
   `requirements.in` (PyPI-name intent) and uv-compiled, fully-pinned `requirements.txt`
   for every environment and template (14 each), for production/CI-CD installs with uv.
+- `docs/conda-vs-uv.md` safety section: **how to stop uv/pip from overwriting a conda
+  environment** — uv installs into an active conda env by default (verified; no built-in
+  guard), so keep conda envs conda-only, target a venv explicitly (`--python`), avoid
+  `uv pip sync` on conda, plus an optional `~/.bashrc` guard function.
 - `docs/conda-vs-uv.md` — a beginner-friendly explainer of conda/mamba vs. **venv** + pip/uv:
   what a virtual environment is, the `venv` lifecycle, conda-env-vs-venv comparison, `uv venv`,
   the dev-vs-prod split, why CD favors uv, and the conda↔PyPI name gotchas. Linked from the

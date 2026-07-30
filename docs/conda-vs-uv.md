@@ -159,6 +159,43 @@ uv pip install -r python/3.12/lockfiles/requirements/04-web.txt   # fills it, fa
 download Python interpreters with `uv python install`, edging into conda's territory, but
 it still never manages native system libraries.)
 
+### ⚠️ Safety: don't let uv (or pip) modify a conda environment
+
+**uv installs into whatever environment is *active* — and it treats an activated conda
+env as a valid target** (it honors `CONDA_PREFIX`). So if a conda env is active and you run
+`uv pip install …`, uv installs **into that conda env**, mixing pip into conda — the exact
+ABI clash to avoid. (Verified with uv 0.12; there is **no** built-in "refuse if conda"
+guard — even `UV_REQUIRE_VIRTUALENV=1` is ignored.) Keep them apart:
+
+1. **Golden rule — conda envs stay conda-only.** Before any `uv`/`pip` work,
+   `conda deactivate`. Do PyPI work only inside a **venv**.
+2. **Target a venv explicitly** so it can't reach conda:
+   ```bash
+   uv venv .venv && source .venv/bin/activate         # VIRTUAL_ENV set → uv uses .venv
+   uv pip install --python .venv/bin/python -r requirements.txt   # explicit, ignores active env
+   ```
+3. **Never `uv pip sync` against a conda env** — `sync` *removes* anything not listed,
+   which would gut the environment.
+4. **Optional hard guard** (in `~/.bashrc`) — refuse installs when a conda env is active
+   and no venv is set:
+   ```bash
+   uv() {
+     if [ -n "$CONDA_PREFIX" ] && [ -z "$VIRTUAL_ENV" ]; then
+       case "$1 $2" in "pip install"*|"pip sync"*|"pip uninstall"*)
+         echo "refusing uv: conda env active, no venv. run 'conda deactivate' first." >&2
+         return 1 ;;
+       esac
+     fi
+     command uv "$@"
+   }
+   ```
+5. **Containers / CD** — build from a conda-free base and `uv pip install --system`; there
+   is no conda env to clobber.
+6. **Detect accidental mixing** — inside a conda env, this should print **nothing**:
+   ```bash
+   conda list | grep pypi
+   ```
+
 ---
 
 ## 6. When to use which — the decision guide
@@ -310,6 +347,8 @@ You've mastered this when you can explain, in your own words:
 - [ ] That `uv venv` is just a faster `venv`, and `uv pip install` a faster `pip install`.
 - [ ] That **mamba** = faster `conda`, and **micromamba** = a tiny standalone binary for
       CI/automation — all three build the same environment from the same `.yml`.
+- [ ] Why running `uv`/`pip` while a **conda env is active** is dangerous (uv installs into
+      it), and how to prevent it (`conda deactivate`; target a venv with `--python`).
 - [ ] Why **CD** installs a pinned `requirements.txt` with uv (speed, size, reproducibility)
       — into a venv locally or `--system` in a container.
 - [ ] Which of this repo's envs **must** stay on conda (geospatial, prophet, GPU).
