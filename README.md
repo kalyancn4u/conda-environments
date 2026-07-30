@@ -235,7 +235,8 @@ novice-friendly explanation — `venv` vs. conda environments, and why CD favors
 ## Documentation — a learning path (novice → mastery)
 
 New here? Read these **in order** — each builds on the last, and they take you from "never
-used conda" to "can maintain the whole system." No prior knowledge assumed.
+used conda" to "can maintain the whole system." No prior knowledge assumed. This map also
+lives at [`docs/README.md`](docs/README.md).
 
 **① Start — get productive**
 1. [Beginner's guide](python/3.12/GUIDE.md) — what every file & generated artifact is, in plain English, with a first-session walkthrough.

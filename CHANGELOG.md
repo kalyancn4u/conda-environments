@@ -69,6 +69,8 @@ micromamba (no permanent install).
   container also installs `libgl1`/`libglib2.0-0` for `opencv`.)
 
 ### Changed
+- Added `docs/README.md` — a landing page/index for the `docs/` folder mirroring the
+  learning path, so `docs/` is self-navigating on GitHub (linked from the root README).
 - Directory READMEs act as proper landing pages: added breadcrumb navigation to the
   `python/3.12`, `lockfiles`, and `requirements` READMEs; fixed a stale "seven
   environments" count and surfaced the uv `requirements.txt` in the `python/3.12` index.
