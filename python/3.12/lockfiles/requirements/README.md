@@ -7,12 +7,19 @@ for installing with [uv](https://github.com/astral-sh/uv) (or pip) in production
 - `<name>.txt` — the **pinned lock**, produced by `uv pip compile` (Python 3.12, linux).
 
 ```bash
-# install a pinned set into the current venv / container
-uv pip install -r 04-web.txt
+# create an isolated environment, then install a pinned set into it
+python -m venv .venv && source .venv/bin/activate    # or: uv venv
+uv pip install -r 04-web.txt                          # or: pip install -r 04-web.txt
+
+# in a container you can skip the venv and install into the system Python:
+#   uv pip install --system -r 04-web.txt
 
 # regenerate a lock from its intent (after editing the .in)
 uv pip compile 04-web.in -o 04-web.txt --python-version 3.12 --python-platform linux
 ```
+
+> New to virtual environments? [`docs/conda-vs-uv.md`](../../../../docs/conda-vs-uv.md)
+> explains `venv` vs. conda environments from scratch.
 
 ## conda lockfiles vs. these
 

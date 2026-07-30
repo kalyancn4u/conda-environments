@@ -223,12 +223,13 @@ For **production / CI-CD**, this repo also ships fully-pinned, PyPI-only
 template), resolved with [uv](https://github.com/astral-sh/uv):
 
 ```bash
+python -m venv .venv && source .venv/bin/activate   # or: uv venv   (isolated env)
 uv pip install -r python/3.12/lockfiles/requirements/04-web.txt
 ```
 
 **When to use which:** develop with **conda/mamba** (Python + native libraries like GDAL,
-CUDA); ship with **uv** when the service's dependencies are pure-PyPI. Full novice-friendly
-explanation — including why CD favors uv — in
+CUDA); ship with a **`venv` + uv** when the service's dependencies are pure-PyPI. Full
+novice-friendly explanation — `venv` vs. conda environments, and why CD favors uv — in
 [docs/conda-vs-uv.md](docs/conda-vs-uv.md).
 
 ## Documentation
@@ -240,7 +241,7 @@ explanation — including why CD favors uv — in
 - [Upgrade strategy](docs/upgrade-strategy.md) — how to move versions forward safely
 - [Lockfiles — explained](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md) — reproducibility from first principles
 - [Lockfiles — overview & generation methods](python/3.12/lockfiles/README.md) — Actions / Docker / WSL commands
-- [conda/mamba vs. uv](docs/conda-vs-uv.md) — which tool when, and why CD uses uv (beginner-friendly)
+- [Environments & installers: conda/mamba vs. venv + pip/uv](docs/conda-vs-uv.md) — which tool when, venv basics, why CD uses uv (beginner-friendly)
 - [Troubleshooting](docs/troubleshooting.md) — when solves fail
 - [FAQ](docs/faq.md)
 

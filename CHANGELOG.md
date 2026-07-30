@@ -12,9 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **uv production requirements**: `python/3.12/lockfiles/requirements/` with a
   `requirements.in` (PyPI-name intent) and uv-compiled, fully-pinned `requirements.txt`
   for every environment and template (14 each), for production/CI-CD installs with uv.
-- `docs/conda-vs-uv.md` — a beginner-friendly explainer of conda/mamba vs. uv: which tool
-  when, the dev-vs-prod split, why CD favors uv, and the conda↔PyPI name gotchas. Linked
-  from the README and the lockfiles docs.
+- `docs/conda-vs-uv.md` — a beginner-friendly explainer of conda/mamba vs. **venv** + pip/uv:
+  what a virtual environment is, the `venv` lifecycle, conda-env-vs-venv comparison, `uv venv`,
+  the dev-vs-prod split, why CD favors uv, and the conda↔PyPI name gotchas. Linked from the
+  README and the lockfiles/requirements docs.
 - `07-geospatial.yml` (`py312-geo`) — GeoPandas/Shapely/PyProj/Fiona + GDAL/rasterio
   vector & raster stack, plus folium/contextily/mapclassify and geoalchemy2.
 - `08-timeseries.yml` (`py312-ts`) — Prophet/cmdstanpy, sktime, statsforecast,
