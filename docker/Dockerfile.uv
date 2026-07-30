@@ -1,0 +1,54 @@
+# syntax=docker/dockerfile:1
+# =============================================================================
+# Dockerfile.uv — slim, PyPI-only image for a pure-Python service (production/CD)
+# -----------------------------------------------------------------------------
+# Installs one of this repo's fully-pinned requirements files with uv into the
+# container's SYSTEM python (the container itself is the isolation, so no venv
+# is needed). This is the "ship it" image described in docs/conda-vs-uv.md §7.
+#
+# Build context is the REPO ROOT (so the lockfiles are in scope):
+#
+#   docker build -f docker/Dockerfile.uv \
+#     --build-arg PYVER=3.12 --build-arg REQUIREMENTS=04-web \
+#     -t conda-environments/web:uv .
+#
+#   docker run --rm -p 8000:8000 conda-environments/web:uv \
+#     uvicorn app:app --host 0.0.0.0 --port 8000
+#
+# Not for GDAL/CUDA/Prophet stacks — those need native libs; use Dockerfile.conda.
+# =============================================================================
+ARG PYTHON_VERSION=3.12
+
+# ---- builder: resolve + install into a throwaway prefix ---------------------
+FROM python:${PYTHON_VERSION}-slim AS builder
+
+# Pull the uv binaries from the official image (pinned tag recommended in prod).
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+ARG PYVER=3.12
+ARG REQUIREMENTS=04-web
+
+# Install into an isolated prefix we can copy wholesale into the runtime stage.
+ENV UV_NO_CACHE=1
+COPY python/${PYVER}/lockfiles/requirements/${REQUIREMENTS}.txt /tmp/requirements.txt
+RUN uv pip install \
+      --python /usr/local/bin/python \
+      --prefix /install \
+      --no-cache \
+      -r /tmp/requirements.txt
+
+# ---- runtime: copy only the installed site-packages -------------------------
+FROM python:${PYTHON_VERSION}-slim AS runtime
+
+# A non-root user is best practice for service containers.
+RUN useradd --create-home --uid 10001 appuser
+COPY --from=builder /install /usr/local
+WORKDIR /app
+COPY . /app
+USER appuser
+
+# Sanity: fail the build early if the interpreter/site-packages are broken.
+RUN python -c "import sys; print('python', sys.version)"
+
+# Override CMD per service (e.g. uvicorn/gunicorn/celery). Default: a REPL.
+CMD ["python"]

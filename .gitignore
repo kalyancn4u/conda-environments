@@ -4,6 +4,15 @@ envs/
 .conda/
 *.conda
 *.tar.bz2
+# ...but the Docker build file legitimately ends in ".conda" — keep tracking it.
+!docker/Dockerfile.conda
+
+# Local micromamba root prefix created by scripts/micromamba-env.* (zero-install path)
+.micromamba/
+
+# Virtual environments created by scripts/setup-venv.* (venv/uv path)
+.venv/
+.venv-*/
 
 # Exported "current state" dumps (regenerate on demand, do not track)
 python/**/exports/

@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1
+# =============================================================================
+# Dockerfile.conda — reproducible scientific image built with micromamba
+# -----------------------------------------------------------------------------
+# Builds one of this repo's conda environments (or templates) into a container.
+# Use this when the stack needs NATIVE libraries conda provides — GDAL/GEOS/PROJ
+# (07-geospatial), cmdstan (08-timeseries/Prophet), MKL, OpenCV, etc. — where the
+# slim uv image (Dockerfile.uv) can't easily go.
+#
+# Build context is the REPO ROOT. Pick the env file with build args:
+#
+#   # a modular environment (environments/01-core.yml):
+#   docker build -f docker/Dockerfile.conda \
+#     --build-arg PYVER=3.12 --build-arg KIND=environments --build-arg ENVFILE=01-core \
+#     -t conda-environments/core:conda .
+#
+#   # a template (templates/data-science.yml):
+#   docker build -f docker/Dockerfile.conda \
+#     --build-arg KIND=templates --build-arg ENVFILE=data-science \
+#     -t conda-environments/ds:conda .
+#
+#   docker run --rm conda-environments/core:conda python -c "import pandas; print(pandas.__version__)"
+#
+# The env is installed into `base`, so it is active by default (no activation
+# dance). For a fully pinned rebuild, point ENVFILE at a lockfile instead (see
+# the lockfiles docs) — the YAMLs capture intent, not exact versions.
+# =============================================================================
+# Pin to a specific tag (e.g. mambaorg/micromamba:2.0.5) for reproducible builds.
+FROM mambaorg/micromamba:latest AS base
+
+ARG PYVER=3.12
+ARG KIND=environments      # environments | templates
+ARG ENVFILE=01-core        # file stem under python/<PYVER>/<KIND>/<ENVFILE>.yml
+
+# opencv (cv2), used by the deep-learning stacks, dlopen's system OpenGL/glib at
+# import time — mirror what CI installs so those images run headless. Harmless
+# for envs that don't use it.
+USER root
+RUN apt-get update -qq \
+ && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 \
+ && rm -rf /var/lib/apt/lists/*
+USER $MAMBA_USER
+
+# Solve + install the environment into `base`, then strip caches to keep it slim.
+COPY --chown=$MAMBA_USER:$MAMBA_USER python/${PYVER}/${KIND}/${ENVFILE}.yml /tmp/env.yml
+RUN micromamba install --yes --name base --file /tmp/env.yml \
+ && micromamba clean --all --yes
+
+# Make the base env available to every subsequent RUN and to the entrypoint.
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+
+WORKDIR /app
+COPY . /app
+
+# Sanity check at build time (fails fast if the solve produced a broken env).
+RUN python -c "import sys; print('python', sys.version)"
+
+# mambaorg/micromamba sets an ENTRYPOINT that activates `base`; keep the default
+# CMD a REPL and override it per workload:
+#   docker run ... conda-environments/core:conda python your_script.py
+CMD ["python"]

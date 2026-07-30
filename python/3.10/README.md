@@ -38,7 +38,7 @@ environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-
 |-----------|---------------|
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
-| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers |
+| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers, plus `doctor`, `setup-venv`, `audit-env`, `micromamba-env`, `register-kernel` (see [docs/workflows.md](../../docs/workflows.md)) |
 | [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles per platform **and** uv `requirements.txt` for production |
 
 ## Environments at a glance
@@ -78,6 +78,20 @@ python scripts/verify-env.py --env core
 ./scripts/test-env.sh 01-core        # one env      (Windows: .\scripts\test-env.ps1 01-core)
 ./scripts/test-env.sh --all          # every env
 ```
+
+Wider workflows — the venv/uv, micromamba, security, and Jupyter helpers:
+
+```bash
+./scripts/doctor.sh                   # what's installed & configured? (read-only preflight)
+./scripts/setup-venv.sh 04-web        # venv + pinned requirements (PyPI/production)
+./scripts/micromamba-env.sh 01-core   # zero-install create + verify
+./scripts/audit-env.sh --name py310-web   # security: CVE scan + conda/pip clash check
+./scripts/register-kernel.sh py310-ml     # expose an env as a Jupyter kernel
+```
+
+> Full, novice-friendly walkthroughs of every scenario (dev, notebooks, production,
+> containers, testing/QA, security, CI/CD, MLOps) live in
+> [docs/workflows.md](../../docs/workflows.md).
 
 > CI (`test-environments`) builds every environment on the free **Linux** runner inside
 > the `condaforge/miniforge3` container. `test-env.sh` runs that exact job on your
