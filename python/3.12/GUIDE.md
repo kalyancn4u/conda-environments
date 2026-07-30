@@ -363,8 +363,25 @@ When you're done, `conda deactivate` returns you to normal. To remove an environ
 entirely later: `conda env remove -n py312-core`.
 
 That's it — you now understand every file in `python/3.12/`, what it does, and what each
-action produces. For the *why* behind the design, continue to
-[`../../docs/architecture.md`](../../docs/architecture.md).
+action produces.
+
+### Where to go next (your path to mastery)
+
+1. **The *why* behind the design** → [`docs/architecture.md`](../../docs/architecture.md).
+2. **Environments & installers — conda vs. venv vs. uv, and mamba/micromamba** →
+   [`docs/conda-vs-uv.md`](../../docs/conda-vs-uv.md). This is the big one: it explains
+   virtual environments from scratch, when to use each tool, how production/CD differs from
+   development, and how to keep uv from clobbering a conda env.
+3. **Reproducibility (lockfiles), from first principles** →
+   [`lockfiles/LOCKFILES-EXPLAINED.md`](lockfiles/LOCKFILES-EXPLAINED.md), then the
+   command reference in [`lockfiles/README.md`](lockfiles/README.md).
+4. **Why each package was chosen** → [`docs/package-selection.md`](../../docs/package-selection.md);
+   **moving versions forward** → [`docs/upgrade-strategy.md`](../../docs/upgrade-strategy.md);
+   **when things break** → [`docs/troubleshooting.md`](../../docs/troubleshooting.md) and
+   the [`docs/faq.md`](../../docs/faq.md).
+
+Work through those in order and you'll go from "can create an environment" to "understand
+and can maintain the whole system."
 
 ---
 

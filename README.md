@@ -232,18 +232,28 @@ CUDA); ship with a **`venv` + uv** when the service's dependencies are pure-PyPI
 novice-friendly explanation — `venv` vs. conda environments, and why CD favors uv — in
 [docs/conda-vs-uv.md](docs/conda-vs-uv.md).
 
-## Documentation
+## Documentation — a learning path (novice → mastery)
 
-- [Beginner's guide](python/3.12/GUIDE.md) — every file & artifact explained for newcomers
-- [Architecture](docs/architecture.md) — design & directory rationale
-- [Package selection](docs/package-selection.md) — the philosophy behind every include/exclude
-- [Compatibility](docs/compatibility.md) — channels, platforms, CUDA
-- [Upgrade strategy](docs/upgrade-strategy.md) — how to move versions forward safely
-- [Lockfiles — explained](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md) — reproducibility from first principles
-- [Lockfiles — overview & generation methods](python/3.12/lockfiles/README.md) — Actions / Docker / WSL commands
-- [Environments & installers: conda/mamba vs. venv + pip/uv](docs/conda-vs-uv.md) — which tool when, venv basics, why CD uses uv (beginner-friendly)
-- [Troubleshooting](docs/troubleshooting.md) — when solves fail
-- [FAQ](docs/faq.md)
+New here? Read these **in order** — each builds on the last, and they take you from "never
+used conda" to "can maintain the whole system." No prior knowledge assumed.
+
+**① Start — get productive**
+1. [Beginner's guide](python/3.12/GUIDE.md) — what every file & generated artifact is, in plain English, with a first-session walkthrough.
+2. [Environments & installers: conda / mamba / micromamba vs. venv + pip / uv](docs/conda-vs-uv.md) — the tools themselves: virtual environments from scratch, which to use when, dev-vs-production, why CD uses uv, and how to keep uv from clobbering a conda env.
+
+**② Understand — the design**
+3. [Architecture](docs/architecture.md) — why it's split this way; the environment matrix.
+4. [Package selection](docs/package-selection.md) — the philosophy behind every include/exclude, and the conda↔PyPI name gotchas.
+5. [Compatibility](docs/compatibility.md) — channels, per-platform support, and the CUDA/GPU strategy.
+
+**③ Reproduce — lockfiles & production**
+6. [Lockfiles — explained](python/3.12/lockfiles/LOCKFILES-EXPLAINED.md) — reproducibility from first principles.
+7. [Lockfiles — overview & generation methods](python/3.12/lockfiles/README.md) — Actions / Docker / WSL commands, and how to *use* a lock.
+8. [uv requirements](python/3.12/lockfiles/requirements/README.md) — pinned PyPI installs for production/CI-CD.
+
+**④ Maintain — keep it healthy**
+9. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
+10. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
 
 ## Contributing
 

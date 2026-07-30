@@ -68,12 +68,12 @@ micromamba (no permanent install).
   would clash with conda `opencv`. Documented the pip-in-venv alternative. (The test
   container also installs `libgl1`/`libglib2.0-0` for `opencv`.)
 
-### Changed (continued)
+### Changed
 - Moved `xlrd` from `01-core` to `98-legacy` (reads only the obsolete `.xls` format;
   use `openpyxl`/`pandas` for `.xlsx`). Documented the `feature_engine`↔`feature-engine`
   and other conda-forge/PyPI/import name quirks in `docs/package-selection.md`.
-
-### Changed
+- `mlops` template: pinned `sagemaker==2.75.1` so it co-resolves (with airflow/boto3) and
+  can be conda-locked (newer releases pull unresolvable torch/nvidia-cublas wheels).
 - `02-ml.yml` — added clustering/manifold (`hdbscan`, `umap-learn`), extra estimators
   (`mlxtend`, `skops`), and interpretability (`eli5`), surfaced by auditing 60 legacy
   environment files against the repo.
