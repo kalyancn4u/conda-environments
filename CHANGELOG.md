@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- **conda `linux-64` lockfiles** for all 8 environments **and 5 templates** under
+- **conda `linux-64` lockfiles** for all 8 environments **and all 6 templates** under
   `lockfiles/linux-64/` (explicit `conda-lock` files) for exact reproducible rebuilds.
-  (`mlops` has no conda lock — its pip `sagemaker` pulls CUDA wheels conda-lock can't
-  resolve; use its uv requirements.txt.) The `update-lockfiles` workflow now covers
-  templates too, and skips TensorFlow templates on win-64.
+  `mlops` is included by pinning `sagemaker==2.75.1` — newer releases pull `torch →
+  nvidia-cublas` CUDA wheels that conda-lock's pip solver can't resolve (and 2.75.1 is the
+  newest version that co-resolves with airflow/boto3, matching uv). The `update-lockfiles`
+  workflow now covers templates too, and skips TensorFlow templates on win-64.
 - Verified the linux-64 locks install end-to-end (via micromamba/conda-lock) and
   documented the install-method nuance: **conda-only locks use `conda create --file`;
   locks carrying `# pip` lines (05-tools, llm, all-in-one-*) use `conda-lock install`** so

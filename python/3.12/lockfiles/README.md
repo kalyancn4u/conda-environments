@@ -26,7 +26,7 @@ lockfiles/
 #   07-geospatial, 08-timeseries, data-science, minimal):
 conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
 
-#   locks that ALSO carry pip deps (05-tools, llm, all-in-one-pytorch,
+#   locks that ALSO carry pip deps (05-tools, llm, mlops, all-in-one-pytorch,
 #   all-in-one-tflow) must use conda-lock, which processes the `# pip …` lines
 #   (plain `conda create --file` silently skips them):
 conda-lock install --name py312-tools python/3.12/lockfiles/linux-64/05-tools.conda.lock
@@ -37,12 +37,13 @@ uv pip install -r python/3.12/lockfiles/requirements/04-web.txt
 
 > **Why two DEV commands?** These are *explicit* conda locks. Any `pip:` dependency is
 > recorded as a `# pip <pkg> @ …#sha256=` line, which `conda create --file` treats as a
-> comment and ignores — so use **`conda-lock install`** for the four locks above to get the
+> comment and ignores — so use **`conda-lock install`** for the five locks above to get the
 > pip packages too. (Verified: installing `05-tools` this way yields a working `playwright`.)
 
-> **Note:** the `mlops` template has **no conda lockfile** — its `pip:` dependency
-> `sagemaker` pulls CUDA wheels (`nvidia-cublas`) that `conda-lock`'s pip solver cannot
-> resolve for linux-64. Use its uv `requirements.txt`, or create it from the YAML directly.
+> **Note on `mlops`:** its `sagemaker` dependency is pinned to `2.75.1` in the template —
+> newer releases pull `torch → nvidia-cublas` CUDA wheels that conda-lock's pip solver
+> can't resolve, and 2.75.1 is anyway the newest version that co-resolves with
+> apache-airflow/boto3 here. Install it with `conda-lock install` (it carries pip deps).
 
 > 🎓 **New to any of this?** Read [**LOCKFILES-EXPLAINED.md**](LOCKFILES-EXPLAINED.md)
 > first — a from-first-principles explainer of what lockfiles are and what each generation

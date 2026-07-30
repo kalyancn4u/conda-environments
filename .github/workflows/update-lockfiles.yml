@@ -32,9 +32,8 @@ jobs:
       fail-fast: false
       matrix:
         # 98-legacy is documentation-only and intentionally not locked.
-        # NOTE: templates/mlops may fail — its pip `sagemaker` pulls CUDA wheels
-        # (nvidia-cublas) that conda-lock's pip solver can't resolve; that is warned,
-        # not fatal (use its uv requirements.txt instead).
+        # (templates/mlops now locks fine — its `sagemaker` is pinned to 2.75.1 to avoid
+        #  newer releases' torch/nvidia-cublas wheels that conda-lock can't resolve.)
         target:
           - environments/01-core
           - environments/02-ml
