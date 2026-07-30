@@ -1,0 +1,155 @@
+affine==2.4.0
+    # via rasterio
+attrs==26.1.0
+    # via
+    #   fiona
+    #   rasterio
+branca==0.8.2
+    # via folium
+certifi==2026.7.22
+    # via
+    #   fiona
+    #   pyogrio
+    #   pyproj
+    #   rasterio
+    #   requests
+charset-normalizer==3.4.9
+    # via requests
+click==8.4.2
+    # via
+    #   click-plugins
+    #   cligj
+    #   fiona
+    #   mercantile
+    #   rasterio
+click-plugins==1.1.1.2
+    # via
+    #   fiona
+    #   rasterio
+cligj==0.7.2
+    # via
+    #   fiona
+    #   rasterio
+contextily==1.7.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+contourpy==1.3.2
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
+fiona==1.10.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+folium==0.20.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+fonttools==4.63.0
+    # via matplotlib
+gdal==3.13.2
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+geoalchemy2==0.20.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+geographiclib==2.1
+    # via geopy
+geopandas==1.1.4
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+geopy==2.5.0
+    # via contextily
+greenlet==3.5.4
+    # via sqlalchemy
+idna==3.18
+    # via requests
+jinja2==3.1.6
+    # via
+    #   branca
+    #   folium
+joblib==1.5.3
+    # via
+    #   contextily
+    #   scikit-learn
+kiwisolver==1.5.0
+    # via matplotlib
+mapclassify==2.8.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+markupsafe==3.0.3
+    # via jinja2
+matplotlib==3.10.9
+    # via contextily
+mercantile==1.2.1
+    # via contextily
+networkx==3.4.2
+    # via mapclassify
+numpy==2.2.6
+    # via
+    #   contourpy
+    #   folium
+    #   geopandas
+    #   mapclassify
+    #   matplotlib
+    #   pandas
+    #   pyogrio
+    #   rasterio
+    #   scikit-learn
+    #   scipy
+    #   shapely
+packaging==26.2
+    # via
+    #   geoalchemy2
+    #   geopandas
+    #   matplotlib
+    #   pyogrio
+pandas==2.3.3
+    # via
+    #   geopandas
+    #   mapclassify
+pillow==12.3.0
+    # via
+    #   contextily
+    #   matplotlib
+pyogrio==0.13.0
+    # via geopandas
+pyparsing==3.3.2
+    # via
+    #   matplotlib
+    #   rasterio
+pyproj==3.7.1
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+    #   geopandas
+python-dateutil==2.9.0.post0
+    # via
+    #   matplotlib
+    #   pandas
+pytz==2026.3.post1
+    # via pandas
+rasterio==1.4.4
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+    #   contextily
+requests==2.34.2
+    # via
+    #   contextily
+    #   folium
+scikit-learn==1.7.2
+    # via mapclassify
+scipy==1.15.3
+    # via
+    #   mapclassify
+    #   scikit-learn
+shapely==2.1.2
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/07-geospatial.in
+    #   geopandas
+six==1.17.0
+    # via python-dateutil
+sqlalchemy==2.0.51
+    # via geoalchemy2
+threadpoolctl==3.6.0
+    # via scikit-learn
+typing-extensions==4.16.0
+    # via sqlalchemy
+tzdata==2026.3
+    # via pandas
+urllib3==2.7.0
+    # via requests
+xyzservices==2026.3.0
+    # via
+    #   contextily
+    #   folium

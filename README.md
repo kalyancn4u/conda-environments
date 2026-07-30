@@ -28,7 +28,7 @@ is the antidote — a set of **small, single-purpose environments** that are:
 conda-environments/
 ├── docs/                     # Architecture & operational documentation
 ├── python/
-│   ├── 3.10/                 # Python 3.10 (validated ready; lockfiles on demand)
+│   ├── 3.10/                 # Python 3.10 (validated; linux-64 locks + uv requirements)
 │   ├── 3.12/                 # Everything targeting Python 3.12 (primary, fully locked)
 │   │   ├── environments/     # The modular environment definitions
 │   │   ├── templates/        # Ready-to-fork starting points
@@ -40,8 +40,9 @@ conda-environments/
 
 The `python/<version>/` prefix is intentional: [`python/3.10/`](python/3.10/) was added by
 **copying `3.12` and bumping the pins — no restructuring** (see
-[docs/architecture.md](docs/architecture.md)). It's validated ready (all 8 environments +
-6 templates solve on conda-forge); 3.12 remains the fully-locked primary target.
+[docs/architecture.md](docs/architecture.md)). All 8 environments + 6 templates solve on
+conda-forge, and it now ships **`linux-64` conda lockfiles + uv `requirements.txt`** (at
+parity with 3.12); 3.12 remains the primary reference.
 
 ## The environments
 

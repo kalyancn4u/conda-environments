@@ -1,0 +1,106 @@
+absl-py==2.5.0
+    # via
+    #   keras
+    #   tensorboard
+    #   tensorflow
+astunparse==1.6.3
+    # via tensorflow
+certifi==2026.7.22
+    # via requests
+charset-normalizer==3.4.9
+    # via requests
+flatbuffers==25.12.19
+    # via tensorflow
+gast==0.7.0
+    # via tensorflow
+google-pasta==0.2.0
+    # via tensorflow
+grpcio==1.83.0
+    # via
+    #   tensorboard
+    #   tensorflow
+h5py==3.14.0
+    # via
+    #   keras
+    #   tensorflow
+idna==3.18
+    # via requests
+keras==3.12.4
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/06-tensorflow.in
+    #   tensorflow
+libclang==18.1.1
+    # via tensorflow
+markdown==3.10.2
+    # via tensorboard
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via werkzeug
+mdurl==0.1.2
+    # via markdown-it-py
+ml-dtypes==0.5.4
+    # via
+    #   keras
+    #   tensorflow
+namex==0.1.0
+    # via keras
+numpy==2.2.6
+    # via
+    #   h5py
+    #   keras
+    #   ml-dtypes
+    #   tensorboard
+    #   tensorflow
+opt-einsum==3.4.0
+    # via tensorflow
+optree==0.19.1
+    # via keras
+packaging==26.2
+    # via
+    #   keras
+    #   tensorboard
+    #   tensorflow
+    #   wheel
+pillow==12.3.0
+    # via tensorboard
+protobuf==7.35.1
+    # via
+    #   tensorboard
+    #   tensorflow
+pygments==2.20.0
+    # via rich
+requests==2.34.2
+    # via tensorflow
+rich==15.0.0
+    # via keras
+setuptools==83.0.0
+    # via
+    #   tensorboard
+    #   tensorflow
+six==1.17.0
+    # via
+    #   astunparse
+    #   google-pasta
+    #   tensorflow
+tensorboard==2.21.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/06-tensorflow.in
+tensorboard-data-server==0.7.2
+    # via tensorboard
+tensorflow==2.21.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/06-tensorflow.in
+termcolor==3.3.0
+    # via tensorflow
+typing-extensions==4.16.0
+    # via
+    #   grpcio
+    #   optree
+    #   tensorflow
+urllib3==2.7.0
+    # via requests
+werkzeug==3.1.8
+    # via tensorboard
+wheel==0.47.0
+    # via astunparse
+wrapt==2.3.0
+    # via tensorflow

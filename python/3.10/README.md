@@ -26,8 +26,11 @@ on 3.10 — most notably `backports.strenum` (`enum.StrEnum` is 3.11+). They're 
 (commented) in [`environments/98-legacy.yml`](environments/98-legacy.yml); the curated
 environments here don't require any of them, so nothing was added.
 
-Lockfiles (`lockfiles/linux-64/`) and uv `requirements/*.txt` for 3.10 are generated on
-demand — currently pending (the `requirements/*.in` intent files are present).
+**Lockfiles are generated and committed** — conda `linux-64` explicit locks for all 14
+environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-pinned
+[`requirements/*.txt`](lockfiles/requirements/) (Python 3.10 / linux). Rebuild with
+`conda create --file …` (or `conda-lock install` for locks carrying `# pip` lines) or
+`uv pip install -r …`. `win-64`/`osx-arm64` conda locks are still generated on demand.
 
 ## Contents
 

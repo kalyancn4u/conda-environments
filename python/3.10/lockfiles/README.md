@@ -2,10 +2,8 @@
 
 <sub>📍 [conda-environments](../../../README.md) › [Python 3.10](../README.md) › **lockfiles**</sub>
 
-> ⏳ **Python 3.10 lockfiles are generated on demand** and are currently pending (all
-> environments are [validated as ready](../README.md#-python-310-readiness)). The commands
-> below show the pattern; the fully-locked reference set lives under
-> [`python/3.12/lockfiles/`](../../3.12/lockfiles/).
+> ✅ **`linux-64` conda locks + uv `requirements/` are generated** for all 14
+> environments/templates. `win-64`/`osx-arm64` conda locks are still generated on demand.
 
 Generated, per-platform, **exact-rebuild** artifacts. A lockfile freezes a known-good
 resolution of one environment (exact versions + builds + `sha256` hashes) so a rebuild is

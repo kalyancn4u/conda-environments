@@ -1,0 +1,340 @@
+alembic==1.18.5
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+altair==6.2.2
+    # via streamlit
+amqp==5.3.1
+    # via kombu
+annotated-doc==0.0.5
+    # via
+    #   fastapi
+    #   typer
+annotated-types==0.8.0
+    # via pydantic
+anyio==4.14.2
+    # via
+    #   gradio
+    #   httpx
+    #   starlette
+    #   streamlit
+asgiref==3.12.1
+    # via django
+async-timeout==5.0.1
+    # via redis
+attrs==26.1.0
+    # via
+    #   jsonschema
+    #   referencing
+billiard==4.2.4
+    # via celery
+blinker==1.9.0
+    # via
+    #   flask
+    #   streamlit
+brotli==1.2.0
+    # via gradio
+celery==5.6.3
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+certifi==2026.7.22
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
+charset-normalizer==3.4.9
+    # via requests
+click==8.4.2
+    # via
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
+    #   flask
+    #   huggingface-hub
+    #   streamlit
+    #   uvicorn
+click-didyoumean==0.3.1
+    # via celery
+click-plugins==1.1.1.2
+    # via celery
+click-repl==0.3.0
+    # via celery
+comm==0.2.3
+    # via dash
+dash==4.4.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+django==5.2.16
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+exceptiongroup==1.3.1
+    # via
+    #   anyio
+    #   celery
+fastapi==0.141.1
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+    #   gradio
+filelock==3.32.2
+    # via huggingface-hub
+flask==3.1.3
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+    #   dash
+fsspec==2026.7.0
+    # via
+    #   gradio-client
+    #   huggingface-hub
+gitdb==4.0.12
+    # via gitpython
+gitpython==3.1.57
+    # via streamlit
+gradio==6.21.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+gradio-client==2.6.0
+    # via
+    #   gradio
+    #   hf-gradio
+greenlet==3.5.4
+    # via sqlalchemy
+groovy==0.1.2
+    # via gradio
+gunicorn==26.0.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+h11==0.16.0
+    # via
+    #   httpcore
+    #   uvicorn
+hf-gradio==0.4.1
+    # via gradio
+hf-xet==1.5.2
+    # via huggingface-hub
+httpcore==1.0.9
+    # via httpx
+httptools==0.8.0
+    # via streamlit
+httpx==0.28.1
+    # via
+    #   gradio
+    #   gradio-client
+    #   huggingface-hub
+    #   safehttpx
+huggingface-hub==1.25.1
+    # via
+    #   gradio
+    #   gradio-client
+idna==3.18
+    # via
+    #   anyio
+    #   httpx
+    #   requests
+importlib-metadata==9.0.0
+    # via dash
+itsdangerous==2.2.0
+    # via
+    #   flask
+    #   streamlit
+janus==2.0.0
+    # via dash
+jinja2==3.1.6
+    # via
+    #   altair
+    #   flask
+    #   gradio
+    #   pydeck
+jsonschema==4.26.0
+    # via altair
+jsonschema-specifications==2025.9.1
+    # via jsonschema
+kombu==5.6.2
+    # via celery
+mako==1.3.12
+    # via alembic
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via
+    #   flask
+    #   gradio
+    #   jinja2
+    #   mako
+    #   werkzeug
+mdurl==0.1.2
+    # via markdown-it-py
+narwhals==2.24.0
+    # via
+    #   altair
+    #   plotly
+nest-asyncio==1.6.0
+    # via dash
+numpy==2.2.6
+    # via
+    #   gradio
+    #   pandas
+    #   pydeck
+    #   streamlit
+orjson==3.11.9
+    # via gradio
+packaging==26.2
+    # via
+    #   altair
+    #   gradio
+    #   gradio-client
+    #   gunicorn
+    #   huggingface-hub
+    #   kombu
+    #   plotly
+    #   streamlit
+pandas==2.3.3
+    # via
+    #   gradio
+    #   streamlit
+pillow==12.3.0
+    # via
+    #   gradio
+    #   streamlit
+plotly==6.9.0
+    # via dash
+prompt-toolkit==3.0.53
+    # via click-repl
+protobuf==7.35.1
+    # via streamlit
+pyarrow==24.0.0
+    # via streamlit
+pydantic==2.13.4
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+    #   dash
+    #   fastapi
+    #   gradio
+pydantic-core==2.46.4
+    # via pydantic
+pydeck==0.9.3
+    # via streamlit
+pydub==0.25.1
+    # via gradio
+pygments==2.20.0
+    # via rich
+python-dateutil==2.9.0.post0
+    # via
+    #   celery
+    #   pandas
+python-multipart==0.0.32
+    # via
+    #   gradio
+    #   streamlit
+pytz==2026.3.post1
+    # via
+    #   gradio
+    #   pandas
+pyyaml==6.0.3
+    # via
+    #   gradio
+    #   huggingface-hub
+redis==8.0.1
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+referencing==0.37.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+requests==2.34.2
+    # via
+    #   dash
+    #   streamlit
+retrying==1.4.2
+    # via dash
+rich==15.0.0
+    # via typer
+rpds-py==0.30.0
+    # via
+    #   jsonschema
+    #   referencing
+safehttpx==0.1.7
+    # via gradio
+semantic-version==2.10.0
+    # via gradio
+setuptools==83.0.0
+    # via dash
+shellingham==1.5.4
+    # via typer
+six==1.17.0
+    # via python-dateutil
+smmap==5.0.3
+    # via gitdb
+sqlalchemy==2.0.51
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+    #   alembic
+sqlparse==0.5.5
+    # via django
+starlette==1.3.1
+    # via
+    #   fastapi
+    #   gradio
+    #   streamlit
+streamlit==1.60.0
+    # via -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+tenacity==9.1.4
+    # via streamlit
+toml==0.10.2
+    # via streamlit
+tomli==2.4.1
+    # via alembic
+tomlkit==0.14.0
+    # via gradio
+tqdm==4.70.0
+    # via huggingface-hub
+typer==0.27.0
+    # via
+    #   gradio
+    #   hf-gradio
+typing-extensions==4.16.0
+    # via
+    #   alembic
+    #   altair
+    #   anyio
+    #   asgiref
+    #   dash
+    #   exceptiongroup
+    #   fastapi
+    #   gradio
+    #   gradio-client
+    #   huggingface-hub
+    #   pydantic
+    #   pydantic-core
+    #   referencing
+    #   sqlalchemy
+    #   starlette
+    #   streamlit
+    #   typing-inspection
+    #   uvicorn
+typing-inspection==0.4.2
+    # via
+    #   fastapi
+    #   pydantic
+tzdata==2026.3
+    # via
+    #   kombu
+    #   pandas
+tzlocal==5.4.4
+    # via celery
+urllib3==2.7.0
+    # via requests
+uvicorn==0.52.0
+    # via
+    #   -r /mnt/c/Users/kalya/Downloads/github-repos/conda-environments/python/3.10/lockfiles/requirements/04-web.in
+    #   gradio
+    #   streamlit
+vine==5.1.0
+    # via
+    #   amqp
+    #   celery
+    #   kombu
+watchdog==6.0.0
+    # via streamlit
+wcwidth==0.8.2
+    # via prompt-toolkit
+websockets==16.1.1
+    # via streamlit
+werkzeug==3.1.8
+    # via
+    #   dash
+    #   flask
+zipp==4.1.0
+    # via importlib-metadata
