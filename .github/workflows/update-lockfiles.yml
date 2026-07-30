@@ -25,22 +25,31 @@ permissions:
 
 jobs:
   lock:
-    name: conda-lock ${{ matrix.env }}
+    name: conda-lock ${{ matrix.target }}
     runs-on: ubuntu-latest
     container: condaforge/miniforge3:latest
     strategy:
       fail-fast: false
       matrix:
         # 98-legacy is documentation-only and intentionally not locked.
-        env:
-          - 01-core
-          - 02-ml
-          - 03-deep-learning
-          - 04-web
-          - 05-tools
-          - 06-tensorflow
-          - 07-geospatial
-          - 08-timeseries
+        # NOTE: templates/mlops may fail — its pip `sagemaker` pulls CUDA wheels
+        # (nvidia-cublas) that conda-lock's pip solver can't resolve; that is warned,
+        # not fatal (use its uv requirements.txt instead).
+        target:
+          - environments/01-core
+          - environments/02-ml
+          - environments/03-deep-learning
+          - environments/04-web
+          - environments/05-tools
+          - environments/06-tensorflow
+          - environments/07-geospatial
+          - environments/08-timeseries
+          - templates/minimal
+          - templates/data-science
+          - templates/mlops
+          - templates/llm
+          - templates/all-in-one-pytorch
+          - templates/all-in-one-tflow
 
     defaults:
       run:
@@ -56,42 +65,48 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Resolve target name
+        id: t
+        run: echo "name=$(basename '${{ matrix.target }}')" >> "$GITHUB_OUTPUT"
+
       - name: Install conda-lock
         run: mamba install --yes conda-lock
 
       - name: Generate lockfiles
         run: |
           set -uo pipefail
-          src="python/3.12/environments/${{ matrix.env }}.yml"
+          src="python/3.12/${{ matrix.target }}.yml"
+          name="${{ steps.t.outputs.name }}"
 
           # Manual dispatch supplies platforms; schedule falls back to all three.
           platforms="${{ github.event.inputs.platforms }}"
           [ -z "$platforms" ] && platforms="linux-64 win-64 osx-arm64"
-          echo "Locking ${{ matrix.env }} for: $platforms"
+          echo "Locking $name for: $platforms"
 
           for p in $platforms; do
-            # TensorFlow has no conda-forge win-64 build.
-            if [[ "${{ matrix.env }}" == "06-tensorflow" && "$p" == "win-64" ]]; then
-              echo "::notice::skipping tensorflow on win-64 (no conda-forge build)"
+            # TensorFlow has no conda-forge win-64 build (affects 06-tensorflow and
+            # the all-in-one-tflow template).
+            if [[ ( "$name" == *tensorflow* || "$name" == *tflow* ) && "$p" == "win-64" ]]; then
+              echo "::notice::skipping $name on win-64 (no conda-forge TensorFlow build)"
               continue
             fi
             mkdir -p "python/3.12/lockfiles/$p"
             rm -f "conda-$p.lock"
             # Use conda-lock's default output name, then move it into place.
             if conda-lock lock --file "$src" --platform "$p" --kind explicit; then
-              mv -f "conda-$p.lock" "python/3.12/lockfiles/$p/${{ matrix.env }}.conda.lock"
-              n=$(grep -c '^https' "python/3.12/lockfiles/$p/${{ matrix.env }}.conda.lock" || true)
-              echo "::notice::wrote lockfiles/$p/${{ matrix.env }}.conda.lock ($n packages)"
+              mv -f "conda-$p.lock" "python/3.12/lockfiles/$p/$name.conda.lock"
+              n=$(grep -c '^https' "python/3.12/lockfiles/$p/$name.conda.lock" || true)
+              echo "::notice::wrote lockfiles/$p/$name.conda.lock ($n packages)"
             else
-              echo "::warning::conda-lock failed for ${{ matrix.env }} on $p"
+              echo "::warning::conda-lock failed for $name on $p"
             fi
           done
 
       - name: Upload lockfiles artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lockfiles-${{ matrix.env }}
-          path: python/3.12/lockfiles/**/${{ matrix.env }}.conda.lock
+          name: lockfiles-${{ steps.t.outputs.name }}
+          path: python/3.12/lockfiles/**/${{ steps.t.outputs.name }}.conda.lock
           if-no-files-found: warn
 
   open-pr:

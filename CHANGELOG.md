@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- **conda `linux-64` lockfiles** for all 8 environments under `lockfiles/linux-64/`
-  (explicit `conda-lock` files, 115–380 packages each) for exact reproducible rebuilds.
+- **conda `linux-64` lockfiles** for all 8 environments **and 5 templates** under
+  `lockfiles/linux-64/` (explicit `conda-lock` files) for exact reproducible rebuilds.
+  (`mlops` has no conda lock — its pip `sagemaker` pulls CUDA wheels conda-lock can't
+  resolve; use its uv requirements.txt.) The `update-lockfiles` workflow now covers
+  templates too, and skips TensorFlow templates on win-64.
+- Documented that **uv `requirements.txt` are OS- and Python-version-specific** (compiled
+  for linux + py3.12), with how to recompile for other targets or use `--universal`; and
+  added a novice **mamba vs. micromamba** section and dev/prod **quick-reference** commands.
 - **uv production requirements**: `python/3.12/lockfiles/requirements/` with a
   `requirements.in` (PyPI-name intent) and uv-compiled, fully-pinned `requirements.txt`
   for every environment and template (14 each), for production/CI-CD installs with uv.

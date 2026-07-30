@@ -18,6 +18,20 @@ lockfiles/
 > libs). **[`requirements/`](requirements/)** holds uv-compiled `requirements.txt` for
 > *production* (PyPI wheels only). See [`docs/conda-vs-uv.md`](../../../docs/conda-vs-uv.md).
 
+## Quick reference
+
+```bash
+# DEV — exact conda rebuild (linux-64, incl. native libs):
+conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
+
+# PROD — pinned PyPI install with uv (Python 3.12 / linux target):
+uv pip install -r python/3.12/lockfiles/requirements/04-web.txt
+```
+
+> **Note:** the `mlops` template has **no conda lockfile** — its `pip:` dependency
+> `sagemaker` pulls CUDA wheels (`nvidia-cublas`) that `conda-lock`'s pip solver cannot
+> resolve for linux-64. Use its uv `requirements.txt`, or create it from the YAML directly.
+
 > 🎓 **New to any of this?** Read [**LOCKFILES-EXPLAINED.md**](LOCKFILES-EXPLAINED.md)
 > first — a from-first-principles explainer of what lockfiles are and what each generation
 > step actually does. *This* file is the command reference; that one builds understanding.

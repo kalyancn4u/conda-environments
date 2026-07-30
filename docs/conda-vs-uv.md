@@ -46,6 +46,45 @@ Installing "the dependencies" actually splits into two very different problems:
 > installed Python) and you stock it with Python parts from PyPI. **uv** is the express
 > courier that fills that shelf in seconds.
 
+### conda vs. mamba vs. micromamba — the same family
+
+These three all do the **same job** (create conda environments from conda-forge). They
+differ in **speed** and **footprint**. Pick by *where* you're working:
+
+| | What it is | Footprint | Use it when… |
+|---|---|---|---|
+| **conda** | the original manager | large (Miniconda/Anaconda) | you already have it; fine with the modern libmamba solver |
+| **mamba** | a **faster** drop-in for `conda` | comes with **Miniforge** | **local development** — the everyday driver |
+| **micromamba** | a **single self-contained binary** (~30 MB), no `base` env, no Python needed to run | tiny | **CI/CD, Docker, throwaway/automation** |
+
+Two things to internalize:
+
+1. **`mamba` is `conda`, just faster.** Anywhere you'd type `conda`, type `mamba` — same
+   flags, same result: `mamba env create -f …`, `mamba install …`, `mamba create -n … `.
+   (Modern `conda` ≥ 23.10 already uses the same fast "libmamba" solver under the hood.)
+2. **`micromamba` is a portable executable**, not a full install. It has **no `base`
+   environment** and needs a one-line shell hook to `activate`. It's ideal where you want
+   speed and *nothing left behind* — exactly why this repo's CI image and its lockfile
+   scripts use it.
+
+```bash
+# Recommended local setup: install Miniforge (gives you conda + mamba), then:
+mamba env create -f python/3.12/environments/01-core.yml
+mamba activate py312-core
+
+# Automation / CI / a quick throwaway solve — micromamba, no install:
+curl -Ls -o micromamba \
+  https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+chmod +x micromamba
+export MAMBA_ROOT_PREFIX=./mm
+./micromamba create -y -n core -f python/3.12/environments/01-core.yml
+./micromamba run -n core python -c "import pandas; print(pandas.__version__)"
+```
+
+> **Miniforge** is the minimal installer that ships `conda` + `mamba` pre-pointed at
+> `conda-forge` — the recommended way to get started. **All three tools read the same
+> `environment.yml` and produce the same environment.**
+
 ---
 
 ## 3. `venv` — the built-in baseline (start here)
@@ -188,6 +227,44 @@ environments/04-web.yml          (INTENT, conda names, unpinned)
 They are **not** identical and cannot be — a conda env contains packages that don't exist
 on PyPI (and vice-versa). Each targets a different stage.
 
+### Are the `requirements.txt` OS-specific? **Yes.**
+
+A `uv pip compile` (or `pip-compile`) result is a **resolution for a specific target**:
+a **platform** *and* a **Python version**. The files in this repo were compiled with:
+
+```bash
+uv pip compile <name>.in -o <name>.txt --python-version 3.12 --python-platform linux
+```
+
+so they pin the versions and wheels valid for **linux + CPython 3.12** — the production
+deploy target. Why it matters:
+
+- Many wheels are **platform-specific** (a Linux `manylinux` wheel ≠ a Windows/macOS wheel),
+  and some packages exist on one OS but not another. The resolver bakes in
+  **environment markers** (`sys_platform == "linux"`, `python_version == "3.12"`, …)
+  accordingly.
+- Install the linux file on Windows/macOS, or under a different Python, and you may get
+  wrong/missing wheels or a hash/marker mismatch.
+
+**What to do for another target:** recompile with the matching flags —
+
+```bash
+uv pip compile 04-web.in -o 04-web-win.txt   --python-version 3.12 --python-platform windows
+uv pip compile 04-web.in -o 04-web-mac.txt   --python-version 3.12 --python-platform macos
+```
+
+**…or make one cross-platform file** with uv's **universal** resolution (keeps every
+platform's markers in a single file):
+
+```bash
+uv pip compile 04-web.in -o 04-web.txt --universal --python-version 3.12
+```
+
+This repo ships the **linux / py3.12** files because that's what CD deploys to. This is the
+same reason **conda** lockfiles live in per-OS folders (`linux-64/`, `win-64/`,
+`osx-arm64/`) — platform-specific resolution is unavoidable for exact installs; only the
+loosely-pinned intent files (the conda `*.yml` and the `requirements.in`) are OS-agnostic.
+
 ---
 
 ## 9. Name gotcha: conda name ≠ PyPI name
@@ -231,6 +308,8 @@ You've mastered this when you can explain, in your own words:
 - [ ] How a **conda environment** differs from a **venv** (interpreter + native libs vs.
       PyPI-only).
 - [ ] That `uv venv` is just a faster `venv`, and `uv pip install` a faster `pip install`.
+- [ ] That **mamba** = faster `conda`, and **micromamba** = a tiny standalone binary for
+      CI/automation — all three build the same environment from the same `.yml`.
 - [ ] Why **CD** installs a pinned `requirements.txt` with uv (speed, size, reproducibility)
       — into a venv locally or `--system` in a container.
 - [ ] Which of this repo's envs **must** stay on conda (geospatial, prophet, GPU).
@@ -269,6 +348,10 @@ uv pip compile python/3.12/lockfiles/requirements/04-web.in \
 - **activate / deactivate** — switch your shell into / out of an environment.
 - **PyPI** — the Python Package Index; where pip/uv download from.
 - **conda-forge** — the community conda channel this repo uses.
+- **mamba** — a faster drop-in replacement for the `conda` command (same flags/results).
+- **micromamba** — a tiny standalone conda-env manager (a single binary; no `base` env);
+  ideal for CI/Docker and throwaway solves.
+- **Miniforge** — the minimal installer that ships `conda` + `mamba` pre-set to conda-forge.
 - **wheel** — a pre-built, ready-to-install Python package (no compiler needed).
 - **resolver** — the component that picks a mutually-compatible set of versions.
 - **pin / lock** — record exact versions so installs are reproducible.

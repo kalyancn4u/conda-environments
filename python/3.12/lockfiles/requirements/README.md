@@ -3,8 +3,18 @@
 Fully-pinned, **PyPI-only** `requirements.txt` files — one per environment and template —
 for installing with [uv](https://github.com/astral-sh/uv) (or pip) in production and CI/CD.
 
-- `<name>.in`  — loose **intent** (top-level PyPI package names).
-- `<name>.txt` — the **pinned lock**, produced by `uv pip compile` (Python 3.12, linux).
+- `<name>.in`  — loose **intent** (top-level PyPI package names). **OS-agnostic.**
+- `<name>.txt` — the **pinned lock**, produced by `uv pip compile`. **Target-specific.**
+
+> ⚠️ **These `.txt` files target Python 3.12 + linux** (the CD deploy target). A uv
+> resolution is *always* platform- and Python-version-specific (wheels and environment
+> markers differ per OS). For another target, recompile from the `.in`:
+> ```bash
+> uv pip compile 04-web.in -o 04-web-win.txt --python-version 3.12 --python-platform windows
+> # …or a single cross-platform file:
+> uv pip compile 04-web.in -o 04-web.txt     --python-version 3.12 --universal
+> ```
+> Full explanation: [`docs/conda-vs-uv.md`](../../../../docs/conda-vs-uv.md#are-the-requirementstxt-os-specific-yes).
 
 ```bash
 # create an isolated environment, then install a pinned set into it
