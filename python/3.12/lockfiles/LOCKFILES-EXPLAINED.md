@@ -179,6 +179,18 @@ conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.con
 No `channels`, no solving, no surprises — conda just downloads the listed, hash-verified
 files. This is what makes a result from six months ago rebuildable today.
 
+**One caveat — pip dependencies.** If the source environment had a `pip:` section, those
+packages appear in the lock as `# pip <name> @ <url>#sha256=…` lines. Plain
+`conda create --file` treats them as *comments and skips them*. To install those too, use
+conda-lock's own installer, which understands the pip lines:
+
+```bash
+conda-lock install --name py312-tools python/3.12/lockfiles/linux-64/05-tools.conda.lock
+```
+
+Rule of thumb: **conda-only lock → `conda create --file`; lock with `# pip` lines →
+`conda-lock install`.**
+
 ---
 
 ## 9. The lifecycle: when and how locks change

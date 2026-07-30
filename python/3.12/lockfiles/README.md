@@ -22,11 +22,23 @@ lockfiles/
 
 ```bash
 # DEV — exact conda rebuild (linux-64, incl. native libs):
+#   conda-only locks (01-core, 02-ml, 03-deep-learning, 04-web, 06-tensorflow,
+#   07-geospatial, 08-timeseries, data-science, minimal):
 conda create --name py312-core --file python/3.12/lockfiles/linux-64/01-core.conda.lock
+
+#   locks that ALSO carry pip deps (05-tools, llm, all-in-one-pytorch,
+#   all-in-one-tflow) must use conda-lock, which processes the `# pip …` lines
+#   (plain `conda create --file` silently skips them):
+conda-lock install --name py312-tools python/3.12/lockfiles/linux-64/05-tools.conda.lock
 
 # PROD — pinned PyPI install with uv (Python 3.12 / linux target):
 uv pip install -r python/3.12/lockfiles/requirements/04-web.txt
 ```
+
+> **Why two DEV commands?** These are *explicit* conda locks. Any `pip:` dependency is
+> recorded as a `# pip <pkg> @ …#sha256=` line, which `conda create --file` treats as a
+> comment and ignores — so use **`conda-lock install`** for the four locks above to get the
+> pip packages too. (Verified: installing `05-tools` this way yields a working `playwright`.)
 
 > **Note:** the `mlops` template has **no conda lockfile** — its `pip:` dependency
 > `sagemaker` pulls CUDA wheels (`nvidia-cublas`) that `conda-lock`'s pip solver cannot

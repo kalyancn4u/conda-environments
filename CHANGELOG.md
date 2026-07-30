@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   (`mlops` has no conda lock — its pip `sagemaker` pulls CUDA wheels conda-lock can't
   resolve; use its uv requirements.txt.) The `update-lockfiles` workflow now covers
   templates too, and skips TensorFlow templates on win-64.
+- Verified the linux-64 locks install end-to-end (via micromamba/conda-lock) and
+  documented the install-method nuance: **conda-only locks use `conda create --file`;
+  locks carrying `# pip` lines (05-tools, llm, all-in-one-*) use `conda-lock install`** so
+  the pip packages (e.g. playwright) are included.
 - Documented that **uv `requirements.txt` are OS- and Python-version-specific** (compiled
   for linux + py3.12), with how to recompile for other targets or use `--universal`; and
   added a novice **mamba vs. micromamba** section and dev/prod **quick-reference** commands.
