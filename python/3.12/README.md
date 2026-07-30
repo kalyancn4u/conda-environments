@@ -1,5 +1,7 @@
 # Python 3.12 Environments
 
+<sub>📍 [conda-environments](../../README.md) › **Python 3.12**</sub>
+
 Everything version-specific for **Python 3.12** lives here. See the repository
 [root README](../../README.md) for the big picture and the [docs/](../../docs/) tree
 for architecture and rationale.
@@ -12,10 +14,10 @@ for architecture and rationale.
 
 | Directory | What's inside |
 |-----------|---------------|
-| [`environments/`](environments/) | The seven modular environment definitions + the upgrade report |
+| [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
-| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify helpers |
-| [`lockfiles/`](lockfiles/) | Generated per-platform exact-rebuild lockfiles (CI-maintained) |
+| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers |
+| [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles per platform **and** uv `requirements.txt` for production |
 
 ## Environments at a glance
 

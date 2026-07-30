@@ -1,5 +1,7 @@
 # uv requirements (production / CI-CD)
 
+<sub>📍 [conda-environments](../../../../README.md) › [Python 3.12](../../README.md) › [lockfiles](../README.md) › **requirements**</sub>
+
 Fully-pinned, **PyPI-only** `requirements.txt` files — one per environment and template —
 for installing with [uv](https://github.com/astral-sh/uv) (or pip) in production and CI/CD.
 

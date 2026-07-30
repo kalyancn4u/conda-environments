@@ -1,5 +1,7 @@
 # Lockfiles
 
+<sub>📍 [conda-environments](../../../README.md) › [Python 3.12](../README.md) › **lockfiles**</sub>
+
 Generated, per-platform, **exact-rebuild** artifacts. A lockfile freezes a known-good
 resolution of one environment (exact versions + builds + `sha256` hashes) so a rebuild is
 byte-for-byte reproducible — independent of when or where it runs. They are **explicit**

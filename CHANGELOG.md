@@ -69,6 +69,9 @@ micromamba (no permanent install).
   container also installs `libgl1`/`libglib2.0-0` for `opencv`.)
 
 ### Changed
+- Directory READMEs act as proper landing pages: added breadcrumb navigation to the
+  `python/3.12`, `lockfiles`, and `requirements` READMEs; fixed a stale "seven
+  environments" count and surfaced the uv `requirements.txt` in the `python/3.12` index.
 - Moved `xlrd` from `01-core` to `98-legacy` (reads only the obsolete `.xls` format;
   use `openpyxl`/`pandas` for `.xlsx`). Documented the `feature_engine`↔`feature-engine`
   and other conda-forge/PyPI/import name quirks in `docs/package-selection.md`.
