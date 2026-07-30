@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **conda `linux-64` lockfiles** for all 8 environments under `lockfiles/linux-64/`
+  (explicit `conda-lock` files, 115–380 packages each) for exact reproducible rebuilds.
 - **uv production requirements**: `python/3.12/lockfiles/requirements/` with a
   `requirements.in` (PyPI-name intent) and uv-compiled, fully-pinned `requirements.txt`
   for every environment and template (14 each), for production/CI-CD installs with uv.
