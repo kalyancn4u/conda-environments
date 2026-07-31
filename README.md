@@ -264,12 +264,13 @@ lives at [`docs/README.md`](docs/README.md).
 
 **④ Apply — end-to-end workflows**
 
-9. [Workflows](docs/workflows.md) — a hands-on cookbook: local dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA, security testing, CI/CD, and MLOps — with the helper script for each. Novice → mastery.
+9. [User workflows](docs/user-workflows.md) — a hands-on cookbook: local dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA, security testing, CI/CD, and MLOps — with the helper script for each. Novice → mastery.
+10. [GitHub workflows (CI)](docs/github-workflows.md) — what the `.github/workflows/` automation does — validate, test-environments, update-lockfiles — how each is triggered, and how to run/read them. Novice → mastery.
 
 **⑤ Maintain — keep it healthy**
 
-10. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
-11. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
+11. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
+12. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
 
 ## Contributing
 

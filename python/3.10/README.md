@@ -38,7 +38,7 @@ environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-
 |-----------|---------------|
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
-| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers, plus `doctor`, `setup-venv`, `audit-env`, `micromamba-env`, `register-kernel` (see [docs/workflows.md](../../docs/workflows.md)) |
+| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers, plus `doctor`, `setup-venv`, `audit-env`, `micromamba-env`, `register-kernel` (see [docs/user-workflows.md](../../docs/user-workflows.md)) |
 | [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles per platform **and** uv `requirements.txt` for production |
 
 ## Environments at a glance
@@ -91,7 +91,7 @@ Wider workflows — the venv/uv, micromamba, security, and Jupyter helpers:
 
 > Full, novice-friendly walkthroughs of every scenario (dev, notebooks, production,
 > containers, testing/QA, security, CI/CD, MLOps) live in
-> [docs/workflows.md](../../docs/workflows.md).
+> [docs/user-workflows.md](../../docs/user-workflows.md).
 
 > CI (`test-environments`) builds every environment on the free **Linux** runner inside
 > the `condaforge/miniforge3` container. `test-env.sh` runs that exact job on your

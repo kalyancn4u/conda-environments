@@ -31,10 +31,13 @@ system." No prior knowledge assumed.
   for production / CI-CD.
 
 ## ④ Apply — end-to-end workflows
-- [Workflows](workflows.md) — a **cookbook** tying it all together: local dev,
-  notebooks, production venvs, zero-install/throwaway, containers, testing/QA,
+- [User workflows](user-workflows.md) — a **cookbook** tying it all together: local
+  dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA,
   **security testing**, CI/CD, and MLOps — with the helper scripts for each.
   Written novice → mastery.
+- [GitHub workflows (CI)](github-workflows.md) — how the repo's own automation works:
+  the `.github/workflows/` files (validate · test-environments · update-lockfiles),
+  what triggers each, how to run and read them, and how to extend them. Novice → mastery.
 
 ## ⑤ Maintain — keep it healthy
 - [Upgrade strategy](upgrade-strategy.md) — moving versions forward safely.

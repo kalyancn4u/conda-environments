@@ -79,7 +79,7 @@ Notes:
 The `python/<ver>/scripts/` helpers cover the same ground on a workstation:
 `micromamba-env.sh` (zero-install conda env), `setup-venv.sh` (venv + uv), and
 `test-env.sh` (build + verify in the CI container). See
-[`docs/workflows.md`](../docs/workflows.md).
+[`docs/user-workflows.md`](../docs/user-workflows.md).
 
 ## A minimal CI build check
 

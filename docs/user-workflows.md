@@ -1,13 +1,20 @@
-# Workflows — from a fresh machine to CI/CD, security, and MLOps
+# User workflows — from a fresh machine to CI/CD, security, and MLOps
 
-<sub>📍 [conda-environments](../README.md) › [docs](README.md) › **workflows**</sub>
+<sub>📍 [conda-environments](../README.md) › [docs](README.md) › **user-workflows**</sub>
 
-This is the **hands-on companion** to the rest of the docs. Where
-[architecture](architecture.md) explains *why* the repo is split into modular
-environments and [conda-vs-uv](conda-vs-uv.md) explains the *tools*, this page is a
-**cookbook**: concrete, copy-pasteable workflows for the situations a real project
-runs into — local development, notebooks, production services, throwaway
-automation, containers, testing/QA, **security testing**, CI/CD, and MLOps.
+This is the **hands-on companion** to the rest of the docs — the workflows *you*
+run at the command line. Where [architecture](architecture.md) explains *why* the
+repo is split into modular environments and [conda-vs-uv](conda-vs-uv.md) explains
+the *tools*, this page is a **cookbook**: concrete, copy-pasteable workflows for the
+situations a real project runs into — local development, notebooks, production
+services, throwaway automation, containers, testing/QA, **security testing**, CI/CD,
+and MLOps.
+
+> **Looking for the automated CI?** The workflows that run *inside GitHub* (the
+> `.github/workflows/` YAML that validates, tests, and re-locks the repo on every
+> push) are documented separately in [**github-workflows.md**](github-workflows.md).
+> This page is about the commands you run yourself; that one is about what the robots
+> run for you.
 
 Written **complete-novice → mastery**. No prior knowledge assumed; if a term is new,
 the [glossary in conda-vs-uv.md](conda-vs-uv.md#13-glossary) defines it. Read sections
