@@ -43,8 +43,9 @@ environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-
 
 > The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
 > micromamba-env / register-kernel) are **shared across versions** in the top-level
-> [`scripts/`](../../scripts/) folder — pass `-p 3.10` to target this tree. See
-> [docs/user-workflows.md](../../docs/user-workflows.md).
+> [`scripts/`](../../scripts/) folder — pass `-p 3.10` to target this tree. New to them?
+> Read the [scripts guide](../../docs/scripts.md); for task recipes see the
+> [cookbook](../../docs/user-workflows.md).
 
 ## Environments at a glance
 

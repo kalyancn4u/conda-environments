@@ -105,9 +105,13 @@ curl -LsSf https://astral.sh/uv/install.sh | sh      # Windows: see https://docs
 **Step 1 — see what you have.** This changes nothing:
 
 ```bash
-cd conda-environments
-./scripts/doctor.sh -p 3.12            # Windows: .\scripts\doctor.ps1 -p 3.12
+cd conda-environments                  # run scripts from the repo root
+./scripts/doctor.sh                    # Windows: .\scripts\doctor.ps1
 ```
+
+> `doctor` needs no `-p` — it just inspects your machine. Add `-p 3.12` only if you want
+> the report labelled for a specific tree. Every *other* version-aware script does take
+> `-p <ver>`; see the [scripts guide](scripts.md) for the one-model explanation.
 
 A healthy machine prints something like (yours will differ):
 

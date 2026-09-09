@@ -1,12 +1,18 @@
 # scripts — shared repo-wide tooling
 
-<sub>📍 [conda-environments](../README.md) › **scripts**</sub>
+<sub>📍 [conda-environments](../README.md) › **scripts** · Learning guide:
+[docs/scripts.md](../docs/scripts.md)</sub>
 
 This folder holds **all** the project's cross-platform helper scripts, **shared across
 every Python version**. Scripts that act on a version tree take an explicit
 **`-p/--python <X.Y>`** flag (e.g. `-p 3.12`) — nothing is inferred from your current
 folder. Run them **from the repository root**; use the `.sh` on Linux/macOS and the
 `.ps1` on Windows (`.py` runs anywhere).
+
+> **New here?** This page is the **reference** (the `-p?` table below, every flag, exit
+> codes). For a gentle, complete-novice → mastery walkthrough of the toolset and the `-p`
+> model — what each script is for and why the version is explicit — read
+> **[docs/scripts.md](../docs/scripts.md)** first.
 
 | Script (`.sh` + `.ps1` unless noted) | What it does | `-p`? |
 | :--- | :--- | :--- |

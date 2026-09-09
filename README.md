@@ -73,6 +73,10 @@ Templates for common personas live in [`python/3.12/templates/`](python/3.12/tem
 
 ## Quick start
 
+> The helper scripts live in one shared [`scripts/`](scripts/) folder — run them **from
+> the repo root** and pass **`-p <ver>`** (e.g. `-p 3.12`) to pick the Python tree. New to
+> them? The [scripts guide](docs/scripts.md) explains the model from scratch.
+
 ```bash
 # 1. Ensure conda-forge is your default channel (see docs/compatibility.md)
 conda config --add channels conda-forge
@@ -267,14 +271,15 @@ lives at [`docs/README.md`](docs/README.md).
 
 **④ Apply — end-to-end workflows**
 
-9. [User workflows](docs/user-workflows.md) — a hands-on cookbook: local dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA, security testing, CI/CD, and MLOps — with the helper script for each. Novice → mastery.
-10. [GitHub workflows (CI)](docs/github-workflows.md) — what the `.github/workflows/` automation does — validate, test-environments, update-lockfiles — how each is triggered, and how to run/read them. Novice → mastery.
-11. [uv-to-conda](docs/uv-to-conda.md) — turn a pip `requirements.txt` into a Conda `environment.yml`, with `latest` vs `stable` version strategies. A gentle guide to [`scripts/uv-to-conda.py`](scripts/uv-to-conda.py). Novice → mastery.
+9. [The helper scripts](docs/scripts.md) — the shared `scripts/` toolset and the one `-p <ver>` model that drives all of them, script by script. Read before the cookbook. Novice → mastery.
+10. [User workflows](docs/user-workflows.md) — a hands-on cookbook: local dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA, security testing, CI/CD, and MLOps — with the helper script for each. Novice → mastery.
+11. [GitHub workflows (CI)](docs/github-workflows.md) — what the `.github/workflows/` automation does — validate, test-environments, update-lockfiles — how each is triggered, and how to run/read them. Novice → mastery.
+12. [uv-to-conda](docs/uv-to-conda.md) — turn a pip `requirements.txt` into a Conda `environment.yml`, with `latest` vs `stable` version strategies. A gentle guide to [`scripts/uv-to-conda.py`](scripts/uv-to-conda.py). Novice → mastery.
 
 **⑤ Maintain — keep it healthy**
 
-12. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
-13. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
+13. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
+14. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
 
 ## Contributing
 

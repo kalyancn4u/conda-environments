@@ -31,6 +31,10 @@ system." No prior knowledge assumed.
   for production / CI-CD.
 
 ## ④ Apply — end-to-end workflows
+- [The helper scripts](scripts.md) — the shared `scripts/` toolset and the single
+  **`-p <ver>`** model behind every command, script by script. The gentle on-ramp to the
+  reference in [`scripts/README.md`](../scripts/README.md); read it before the cookbook.
+  Written novice → mastery.
 - [User workflows](user-workflows.md) — a **cookbook** tying it all together: local
   dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA,
   **security testing**, CI/CD, and MLOps — with the helper scripts for each.

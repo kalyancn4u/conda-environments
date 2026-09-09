@@ -21,6 +21,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
     inputs that selects the oldest version *ever published* (e.g. `scikit-learn 0.9`, which
     no longer builds). It instead takes uv's default resolution rolled back by
     `--exclude-newer`, i.e. *the newest release that has had time to prove itself*.
+- **`docs/scripts.md`** — a **novice → mastery** teaching guide to the shared `scripts/`
+  toolset and the `-p <ver>` model introduced by the consolidation: the problem the scripts
+  solve, the one mental model (one folder · pass `-p` · run from repo root), *why* the
+  version is explicit rather than derived, the `-p` cheat (required / shorthand-only /
+  optional / none), a tour grouped by task, a first-session walkthrough, troubleshooting,
+  and a cheat sheet. Slotted into the learning path (§④, before the cookbook) in the root
+  README and [`docs/README.md`](docs/README.md); cross-linked from `scripts/README.md` (the
+  reference) and the version READMEs. The README quick-start gained a one-line `-p` primer.
 - **`docs/uv-to-conda.md`** — a **novice → mastery** teaching guide for the tool: the problem
   told as a story, a pip-vs-conda mental model, a five-word glossary, a step-by-step first run
   (Linux/macOS + PowerShell, with expected output), how to read the generated file, the two
