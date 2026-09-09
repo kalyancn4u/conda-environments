@@ -1,0 +1,411 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# PROJECT CONTEXT — READ THIS FIRST AT THE START OF ANY NEW CONVERSATION / TASK
+# ═══════════════════════════════════════════════════════════════════════════
+#
+# This block is the re-entry primer for `conda-environments`. It exists so that
+# any new session (human or AI assistant) can fetch the project's context in one
+# place before doing anything. The original seed prompt that created the repo is
+# preserved unchanged below the separator — it is history, not current state.
+# When in doubt, the CHANGELOG and the docs learning path are the source of truth.
+#
+# ── What this repository is ──────────────────────────────────────────────────
+# A production-quality reference implementation for maintaining **modular Conda
+# environments** for long-term, reproducible use. Primary target: **Python 3.12**
+# (with a parity **3.10** tree). Single channel: **conda-forge**, strict priority.
+# CPU-only environment definitions; GPU/CUDA documented separately. Minimal
+# pinning by default; lockfiles provide exact reproducibility.
+#
+# ── Where the context lives (read in this order) ─────────────────────────────
+#   1. README.md .................. project overview, quick start, repo layout.
+#   2. docs/README.md ............. THE LEARNING PATH (novice → mastery), the
+#                                   single map of every guide. Start here to
+#                                   understand the docs.
+#   3. CHANGELOG.md ............... source of truth for what has changed and why
+#                                   (Keep a Changelog + SemVer; recent work is
+#                                   under [Unreleased]). Check this first to see
+#                                   the current state.
+#   4. python/3.12/GUIDE.md ....... file-by-file walkthrough of the 3.12 tree.
+#   5. CONTRIBUTING.md ............ how changes are proposed and validated.
+#
+# ── The map of the repo ──────────────────────────────────────────────────────
+#   docs/            conceptual + teaching docs (the learning path)
+#   scripts/         repo-wide tools. NEW: uv-to-conda.py — converts a pip
+#                    requirements.txt into a Conda environment.yml (latest/stable
+#                    version strategies). Guide: docs/uv-to-conda.md ·
+#                    Reference: scripts/README.md
+#   docker/          reference images (Dockerfile.uv slim · Dockerfile.conda)
+#   python/<ver>/    environments/ · templates/ · scripts/ · lockfiles/
+#                    (3.12 primary; 3.10 at parity — add 3.13/3.14 by copying
+#                    3.12 and bumping pins, per the version-prefix design)
+#   .github/workflows/  validate · test-environments · update-lockfiles (CI)
+#
+# ── House conventions (match these; see docs/ for the full rationale) ────────
+#   • Docs are written complete-novice → mastery where they teach; reference
+#     material lives next to the code and is LINKED from the learning path.
+#   • Any user-facing change updates CHANGELOG.md under [Unreleased].
+#   • Scripts are cross-platform: Bash (.sh) + PowerShell (.ps1); Python helpers
+#     use kebab-case filenames (e.g. verify-env.py, uv-to-conda.py). Variant
+#     files use dot-separators (Dockerfile.conda, environment.stable.yml).
+#   • Prefer conda-forge; avoid unnecessary pinning; pin only when justified.
+#   • New teaching docs slot into the docs/README.md learning path AND the root
+#     README's "Documentation — a learning path" section.
+#
+# ── Maintenance note ─────────────────────────────────────────────────────────
+# Keep this primer current when the project's shape changes (a new top-level
+# area, a new tool, a new Python tree). It should always answer, in under a
+# minute, "what is this repo and where do I look?" — nothing more.
+#
+# ═══════════════════════════════════════════════════════════════════════════
+# ↓↓↓  ORIGINAL SEED PROMPT (historical — the repo has since grown well beyond it)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# CO-STAR-A Prompt for Claude Code
+
+## C — Context
+
+I have uploaded an existing Conda environment YAML representing my current **Python 3.12** development environment.
+
+This environment has evolved over several years and now contains:
+
+* direct dependencies
+* transitive dependencies
+* obsolete packages
+* deprecated libraries
+* experimental packages
+* one-off packages
+* packages installed only for historical reasons
+
+It is **not** a clean specification.
+
+Treat the uploaded file as an **inventory of what has existed**, **not** as the desired end state.
+
+Its purpose is to help identify:
+
+* essential packages
+* commonly used packages
+* package versions
+* deprecated packages
+* obsolete libraries
+* migration opportunities
+* upgrade opportunities
+* compatibility concerns
+
+Do **not** mechanically recreate the uploaded environment.
+
+Instead, design a modern replacement.
+
+---
+
+## O — Objective
+
+Create a production-quality open-source Git repository named
+
+`conda-environments`
+
+whose purpose is to maintain modular Conda environments for long-term use.
+
+The repository should target
+
+* Python **3.12**
+* conda-forge
+* reproducibility
+* maintainability
+* modularity
+* long-term upgrades
+* minimal dependency conflicts
+
+The repository should become a reusable reference implementation for managing Conda environments.
+
+---
+
+## S — Style
+
+Act as a
+
+* Senior Software Architect
+* Senior Python Developer
+* Senior MLOps Engineer
+* Senior Packaging Engineer
+* Conda Expert
+
+Be opinionated.
+
+Prefer maintainability over completeness.
+
+Prefer elegant architecture over exhaustive package lists.
+
+Prefer modularity over monolithic environments.
+
+Generate production-quality documentation.
+
+Generate production-quality YAML.
+
+Generate production-quality scripts.
+
+Generate production-quality GitHub workflows.
+
+Use clear comments explaining important design decisions.
+
+Use modern Markdown.
+
+Sort package lists alphabetically where appropriate.
+
+Avoid unnecessary version pinning.
+
+Pin only when technically justified.
+
+---
+
+## T — Tone
+
+Professional.
+
+Architectural.
+
+Production-ready.
+
+Maintainable.
+
+Explain important decisions.
+
+---
+
+## A — Audience
+
+The repository is intended for
+
+* Python Developers
+* Data Scientists
+* Machine Learning Engineers
+* Deep Learning Engineers
+* MLOps Engineers
+* Software Engineers
+* Open Source Contributors
+
+Documentation should be suitable for intermediate to advanced developers.
+
+---
+
+## R — Response
+
+### Step 1 — Repository Planning
+
+Before generating code:
+
+1. Analyze the uploaded environment.
+2. Categorize all discovered packages.
+3. Identify
+
+   * essential packages
+   * optional packages
+   * obsolete packages
+   * legacy packages
+   * packages requiring upgrades
+   * packages that should be removed
+4. Produce an architecture proposal.
+5. Explain your reasoning.
+6. Identify any ambiguities or assumptions.
+7. If you identify better alternatives to my proposed structure, explain them and justify your recommendations.
+
+Only then begin generating the repository.
+
+---
+
+### Repository Name
+
+```
+conda-environments
+```
+
+---
+
+### Repository Structure
+
+```text
+conda-environments/
+│
+├── README.md
+├── LICENSE
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── .gitignore
+│
+├── docs/
+│   ├── architecture.md
+│   ├── package-selection.md
+│   ├── compatibility.md
+│   ├── upgrade-strategy.md
+│   ├── troubleshooting.md
+│   └── faq.md
+│
+├── python/
+│   └── 3.12/
+│       ├── README.md
+│       │
+│       ├── environments/
+│       │   ├── 01-core.yml
+│       │   ├── 02-ml.yml
+│       │   ├── 03-deep-learning.yml
+│       │   ├── 04-web.yml
+│       │   ├── 05-tools.yml
+│       │   ├── 98-legacy.yml
+│       │   └── 99-upgrade-candidates.md
+│       │
+│       ├── scripts/
+│       │   ├── create-env.sh
+│       │   ├── create-env.ps1
+│       │   ├── update-env.sh
+│       │   ├── update-env.ps1
+│       │   ├── export-env.sh
+│       │   ├── clean-env.sh
+│       │   ├── compare-envs.sh
+│       │   ├── compare-envs.ps1
+│       │   └── verify-env.py
+│       │
+│       ├── templates/
+│       │   ├── minimal.yml
+│       │   ├── data-science.yml
+│       │   ├── mlops.yml
+│       │   └── llm.yml
+│       │
+│       └── lockfiles/
+│           ├── linux-64/
+│           ├── win-64/
+│           └── osx-arm64/
+│
+└── .github/
+    └── workflows/
+        ├── validate.yml
+        ├── test-environments.yml
+        └── update-lockfiles.yml
+```
+
+---
+
+### Environment Responsibilities
+
+#### 01-core.yml
+
+The daily driver.
+
+Contains the carefully curated core scientific Python ecosystem for approximately 80–90% of everyday work, including Python 3.12, JupyterLab, NumPy, Pandas, SciPy, Polars, PyArrow, Matplotlib, Seaborn, Plotly, Scikit-learn, Statsmodels, DuckDB, SQLAlchemy, Requests, HTTPX, BeautifulSoup, lxml, Rich, tqdm, PyYAML, python-dotenv, OpenPyXL, and ipywidgets.
+
+#### 02-ml.yml
+
+Contains classical machine learning libraries such as XGBoost, LightGBM, CatBoost, Optuna, MLflow, SHAP, Feature-engine, Category Encoders, imbalanced-learn, and related utilities.
+
+#### 03-deep-learning.yml
+
+Contains TensorFlow, Keras, PyTorch, TorchVision, TorchAudio, Lightning, Transformers, Datasets, Accelerate, Sentence Transformers, spaCy, OpenCV, Albumentations, Pillow, timm, TensorBoard, ONNX, and ONNX Runtime.
+
+Do **not** include CUDA-specific packages. Document GPU installation separately.
+
+#### 04-web.yml
+
+Contains FastAPI, Flask, Django, Streamlit, Gradio, Dash, Gunicorn, Uvicorn, Pydantic, Alembic, Celery, Redis client libraries, and related web-development packages.
+
+#### 05-tools.yml
+
+Contains developer tooling such as pytest, coverage, pytest-cov, ruff, black, mypy, pre-commit, tox, nox, Selenium, Playwright, Scrapy, Docker SDK, Cookiecutter, and other development utilities.
+
+#### 98-legacy.yml
+
+Contains only legacy, obsolete, deprecated, or compatibility packages discovered during analysis.
+
+Document why each package is considered legacy and suggest modern replacements where appropriate.
+
+#### 99-upgrade-candidates.md
+
+Produce a categorized upgrade report listing:
+
+* Safe upgrades
+* Compatibility-sensitive upgrades
+* Deprecated packages
+* End-of-life packages
+* Recommended replacements
+* Packages that should be removed
+
+Explain the rationale for each recommendation.
+
+---
+
+### Documentation
+
+Generate comprehensive documentation covering:
+
+* Repository architecture
+* Package selection philosophy
+* Environment responsibilities
+* Conda-forge vs defaults
+* Creating environments
+* Updating environments
+* Exporting environments
+* Lockfiles
+* Version pinning strategy
+* Cross-platform considerations
+* CUDA installation strategy
+* Upgrade workflow
+* Troubleshooting
+* FAQ
+* Best practices
+
+---
+
+### Scripts
+
+Generate production-quality scripts for Linux/macOS and PowerShell to:
+
+* create environments
+* update environments
+* export environments
+* verify imports
+* clean Conda caches
+* compare environments
+* detect outdated packages
+
+---
+
+### GitHub Actions
+
+Create workflows that:
+
+* validate YAML syntax
+* create each environment
+* verify imports
+* detect dependency conflicts
+* regenerate lockfiles (when appropriate)
+* ensure repository integrity
+
+---
+
+### Package Selection Rules
+
+* Prefer **conda-forge** whenever possible.
+* Use `defaults` only if absolutely necessary.
+* Avoid duplicate packages.
+* Avoid abandoned projects.
+* Avoid obsolete libraries.
+* Avoid unnecessary version pinning.
+* Keep YAML files concise and readable.
+* Include comments for non-obvious package choices.
+
+---
+
+### Analysis Requirements
+
+Perform a thorough analysis of the uploaded environment and produce:
+
+* Essential package inventory
+* Package categorization
+* Dependency rationalization
+* Legacy package inventory
+* Upgrade opportunities
+* Potential incompatibilities
+* Modern replacements
+* Migration recommendations
+
+Where package recommendations depend on current ecosystem support, verify compatibility against the latest available packages on Conda Forge rather than relying solely on the uploaded environment.
+
+Design the repository for **Python 3.12**, while structuring it so that future versions (e.g., `python/3.13/`, `python/3.14/`) can be added without restructuring.
+
+Finally, work iteratively: present the architecture and plan first, refine it if needed, and then generate the repository in logical phases rather than attempting everything in a single step.

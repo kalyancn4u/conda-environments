@@ -46,7 +46,4 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Local prompt/scratch notes (not part of the published repository)
-instructions.txt
-
 # NOTE: lockfiles under python/**/lockfiles/ ARE tracked intentionally.

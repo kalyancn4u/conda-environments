@@ -31,8 +31,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **`instructions.txt` project-context primer** — a "read this first at the start of any new
   conversation/task" block prepended to `instructions.txt`: what the repo is, where the
   context lives (README → docs learning path → CHANGELOG → GUIDE), the repo map, house
-  conventions, and a maintenance note. The original CO-STAR-A seed prompt is preserved
-  unchanged below a separator as history.
+  conventions, and a maintenance note. The original CO-STAR-A seed prompt is preserved below a
+  separator as history. `instructions.txt` is **now tracked** in the repository (previously
+  gitignored) so the primer travels with the repo, and its seed prompt's mojibake — mangled
+  em/en dashes (`C � Context` → `C — Context`) and the corrupted ASCII-art structure tree —
+  was repaired to proper Unicode box-drawing characters.
 - **Workflow scripts** (cross-platform `.sh` + `.ps1`, added to both `python/3.10/scripts/`
   and `python/3.12/scripts/`; version-derived so one file works in every tree):
   `doctor` (read-only toolchain/channel/shell preflight), `setup-venv` (venv + pinned
