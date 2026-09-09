@@ -16,8 +16,13 @@ for architecture and rationale.
 |-----------|---------------|
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
-| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers, plus `doctor`, `setup-venv`, `audit-env`, `micromamba-env`, `register-kernel` (see [docs/user-workflows.md](../../docs/user-workflows.md)) |
+| [`examples/`](examples/) | uv-to-conda sample inputs + the `environment.yml` they generate (`examples/uv-to-conda/`) |
 | [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles per platform **and** uv `requirements.txt` for production |
+
+> The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
+> micromamba-env / register-kernel) are **shared across versions** in the top-level
+> [`scripts/`](../../scripts/) folder — pass `-p 3.12` to target this tree. See
+> [docs/user-workflows.md](../../docs/user-workflows.md).
 
 ## Environments at a glance
 
@@ -35,35 +40,39 @@ for architecture and rationale.
 
 ## Common commands
 
+The helper scripts live in the shared [`scripts/`](../../scripts/) folder at the
+repository root — run these **from the repo root** and pass **`-p 3.12`** to target this
+tree.
+
 ```bash
 # Create (Linux/macOS)
-./scripts/create-env.sh 01-core
+./scripts/create-env.sh -p 3.12 01-core
 
 # Create (Windows PowerShell)
-.\scripts\create-env.ps1 01-core
+.\scripts\create-env.ps1 -p 3.12 01-core
 
 # Update to match the YAML (prunes removed packages)
-./scripts/update-env.sh 01-core
+./scripts/update-env.sh -p 3.12 01-core
 
 # Verify the key packages import
-python scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.12 --env core
 
 # Compare two environments / list upgradable packages
 ./scripts/compare-envs.sh py312-core py312-ds
 ./scripts/compare-envs.sh --outdated py312-core
 
 # Reproduce CI locally: build + verify an env in the Miniforge container (needs Docker)
-./scripts/test-env.sh 01-core        # one env      (Windows: .\scripts\test-env.ps1 01-core)
-./scripts/test-env.sh --all          # every env
+./scripts/test-env.sh -p 3.12 01-core        # one env      (Windows: .\scripts\test-env.ps1 -p 3.12 01-core)
+./scripts/test-env.sh -p 3.12 --all          # every env
 ```
 
 Wider workflows — the venv/uv, micromamba, security, and Jupyter helpers:
 
 ```bash
-./scripts/doctor.sh                   # what's installed & configured? (read-only preflight)
-./scripts/setup-venv.sh 04-web        # venv + pinned requirements (PyPI/production)
-./scripts/micromamba-env.sh 01-core   # zero-install create + verify
-./scripts/audit-env.sh --name py312-web   # security: CVE scan + conda/pip clash check
+./scripts/doctor.sh -p 3.12                   # what's installed & configured? (read-only preflight)
+./scripts/setup-venv.sh -p 3.12 04-web        # venv + pinned requirements (PyPI/production)
+./scripts/micromamba-env.sh -p 3.12 01-core   # zero-install create + verify
+./scripts/audit-env.sh -p 3.12 --name py312-web   # security: CVE scan + conda/pip clash check
 ./scripts/register-kernel.sh py312-ml     # expose an env as a Jupyter kernel
 ```
 

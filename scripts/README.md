@@ -1,36 +1,56 @@
-# uv-to-conda
+# scripts — shared repo-wide tooling
 
-<sub>📍 [conda-environments](../README.md) › **scripts** · Learning guide:
-[docs/uv-to-conda.md](../docs/uv-to-conda.md)</sub>
+<sub>📍 [conda-environments](../README.md) › **scripts**</sub>
 
-Convert a pip `requirements.txt` into a Conda `environment.yml`, resolving any
-**unpinned** packages with [`uv`](https://github.com/astral-sh/uv) — the extremely
-fast Python resolver — while copying **pinned** versions through untouched.
+This folder holds **all** the project's cross-platform helper scripts, **shared across
+every Python version**. Scripts that act on a version tree take an explicit
+**`-p/--python <X.Y>`** flag (e.g. `-p 3.12`) — nothing is inferred from your current
+folder. Run them **from the repository root**; use the `.sh` on Linux/macOS and the
+`.ps1` on Windows (`.py` runs anywhere).
 
-> **New to this?** This page is the **reference** (every flag, exit codes, internals).
-> For a gentle, complete-novice → mastery walkthrough — the problem it solves, the
-> pip-vs-conda mental model, the two strategies explained with a story, and a
-> step-by-step first run — read **[docs/uv-to-conda.md](../docs/uv-to-conda.md)** first.
+| Script (`.sh` + `.ps1` unless noted) | What it does | `-p`? |
+| :--- | :--- | :--- |
+| `doctor` | read-only toolchain / channel / shell preflight | optional |
+| `create-env` | create a conda env from `python/<ver>/environments/<name>.yml` | required |
+| `update-env` | update an env to match its YAML (`--prune`) | required |
+| `verify-env.py` | import-check an env's headline packages | required |
+| `test-env` | reproduce the CI build+verify in a container (needs Docker) | required |
+| `micromamba-env` | zero-install create + verify via micromamba | required |
+| `setup-venv` | venv + pinned `requirements` (PyPI / production) | shorthand only |
+| `audit-env` | security: `pip-audit` CVE scan + conda/pip clash check | shorthand only |
+| `compare-envs` | diff two envs / list outdated packages | — |
+| `export-env.sh` | snapshot an env to `./exports/` | — |
+| `clean-env.sh` | safe conda cache cleanup | — |
+| `register-kernel` | expose a conda env as a Jupyter kernel | — |
+| `uv-to-conda.py` | convert a pip `requirements.txt` → Conda `environment.yml` | `-p` = target |
 
-This is a shared, repo-wide utility for the
-[`conda-environments`](../README.md) project. It lives in `scripts/` alongside the
-other cross-cutting tooling, and complements the per-version helpers under
-`python/3.10/scripts` and `python/3.12/scripts`.
+**Reading the `-p?` column:** *required* — always needs `-p` (its job is tied to a
+tree). *shorthand only* — `-p` is needed only for the repo-relative name shorthand (e.g.
+`04-web`); an explicit path or `--name` target does not. *optional* — runs without `-p`;
+pass it to label the report with a tree context. *—* — version-independent (acts on an
+env name you pass); no `-p`.
 
-```
-scripts/
-├── uv-to-conda.py            # the tool
-├── README.md                 # this file
-└── examples/
-    ├── requirements.latest.txt   # sample input
-    ├── requirements.stable.txt   # sample input
-    ├── environment.latest.yml    # representative output (latest strategy)
-    └── environment.stable.yml    # representative output (stable strategy)
-```
+Hands-on, novice→mastery walkthroughs of these scripts live in
+[**docs/user-workflows.md**](../docs/user-workflows.md); each version's README lists its
+own common commands.
 
 > **Naming note.** File names follow this repo's conventions: kebab-case scripts
 > (`uv-to-conda.py`, like `verify-env.py`) and dot-separated variants
 > (`environment.stable.yml`, like `Dockerfile.conda` and `*.conda.lock`).
+
+---
+
+The rest of this page is the **reference for `uv-to-conda.py`**. For a gentle,
+complete-novice → mastery walkthrough of that tool, read
+[**docs/uv-to-conda.md**](../docs/uv-to-conda.md) first.
+
+## uv-to-conda — pip `requirements.txt` → Conda `environment.yml`
+
+Convert a pip `requirements.txt` into a Conda `environment.yml`, resolving any
+**unpinned** packages with [`uv`](https://github.com/astral-sh/uv) — the extremely
+fast Python resolver — while copying **pinned** versions through untouched. Sample
+inputs and generated outputs live under each tree in
+`python/<ver>/examples/uv-to-conda/`.
 
 ---
 
@@ -200,22 +220,26 @@ Useful building blocks: `parse_requirements`, `resolve_with_uv`,
 
 ## Examples
 
-See [`examples/`](examples/). The two `requirements.*.txt` files share the same
-package set; the difference is which strategy you resolve them with:
+Sample inputs and generated outputs ship under each Python tree, in
+`python/<ver>/examples/uv-to-conda/`. The two `requirements.*.txt` files share the same
+package set; the difference is which strategy you resolve them with (run from the repo
+root):
 
 ```bash
-python scripts/uv-to-conda.py -i scripts/examples/requirements.latest.txt \
-    -o scripts/examples/environment.latest.yml -n ds-latest -s latest
+python scripts/uv-to-conda.py -p 3.12 -s latest \
+    -i python/3.12/examples/uv-to-conda/requirements.latest.txt \
+    -o python/3.12/examples/uv-to-conda/environment.latest.yml -n ds-latest
 
-python scripts/uv-to-conda.py -i scripts/examples/requirements.stable.txt \
-    -o scripts/examples/environment.stable.yml -n ds-stable -s stable
+python scripts/uv-to-conda.py -p 3.12 -s stable \
+    -i python/3.12/examples/uv-to-conda/requirements.stable.txt \
+    -o python/3.12/examples/uv-to-conda/environment.stable.yml -n ds-stable
 ```
 
 The committed `environment.*.yml` files are **genuine `uv` output** (each pins the
-full transitive closure — ~113 packages). Exact versions move with the resolution
+full transitive closure — ~113–115 packages). Exact versions move with the resolution
 date and, for `stable`, the 90-day cutoff; each file's header records when it was
 generated and how to regenerate it. Comparing them shows the strategy effect — e.g.
-`matplotlib` resolves to `3.11.1` under `latest` but `3.10.9` under `stable`.
+`matplotlib` resolves to `3.11.1` under `latest` but `3.10.9` under `stable` (3.12 tree).
 
 ---
 

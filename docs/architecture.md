@@ -16,11 +16,13 @@ structure that stays maintainable for years and across multiple Python versions.
 ## Directory layout & the version prefix
 
 ```text
+scripts/                 # shared, version-agnostic helpers (create/update/verify/
+                         #   doctor/…) + uv-to-conda — pass -p <ver> to target a tree
 python/
 └── 3.12/
     ├── environments/   # modular definitions (the source of truth for intent)
     ├── templates/      # opinionated starting points to fork per project
-    ├── scripts/        # create/update/export/clean/compare/verify helpers
+    ├── examples/       # uv-to-conda sample inputs + generated environment.yml
     └── lockfiles/      # generated, per-platform, exact-rebuild artifacts
 ```
 

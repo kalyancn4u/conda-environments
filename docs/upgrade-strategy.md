@@ -17,14 +17,14 @@ How to move versions forward without breaking environments — and how the two-l
 
 ```bash
 # 1. Re-solve the environment from intent (picks up newer compatible packages)
-./python/3.12/scripts/update-env.sh 01-core     # uses --prune
+./scripts/update-env.sh -p 3.12 01-core     # uses --prune
 
 # 2. Smoke-test imports
 conda activate py312-core
-python python/3.12/scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.12 --env core
 
 # 3. See what actually moved (optional)
-./python/3.12/scripts/compare-envs.sh --outdated py312-core
+./scripts/compare-envs.sh --outdated py312-core
 
 # 4. Refresh the lockfiles (or let the update-lockfiles workflow do it)
 #    conda-lock -f python/3.12/environments/01-core.yml -p linux-64 -p win-64 -p osx-arm64

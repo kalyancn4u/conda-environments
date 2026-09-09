@@ -76,7 +76,7 @@ jobs:
       - name: Verify imports
         run: >
           conda run --no-capture-output -n "${{ steps.resolve.outputs.name }}"
-          python python/3.12/scripts/verify-env.py --env "${{ steps.resolve.outputs.key }}"
+          python scripts/verify-env.py -p 3.12 --env "${{ steps.resolve.outputs.key }}"
 
       - name: Check for conda/pip package clashes
         env:

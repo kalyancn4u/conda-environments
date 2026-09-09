@@ -34,7 +34,7 @@ every platform — the notable gaps are called out here.
 > **Linux only** (inside the `condaforge/miniforge3` container), because Linux CI minutes
 > are free/×1 while Windows is ×2 and macOS ×10 on private repos. The matrix below is the
 > *intended* support; Linux is what CI actively proves. Reproduce it locally with
-> `python/3.12/scripts/test-env.sh`.
+> `scripts/test-env.sh -p 3.12`.
 
 | Package / env | linux-64 | win-64 | osx-arm64 | Note |
 |---|:---:|:---:|:---:|---|

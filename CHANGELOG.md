@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `--prerelease disallow`). Stdlib-only, Python 3.8+, importable for batch use (`convert()`),
   graceful errors with guaranteed temp-file cleanup, and a `--system-certs` passthrough for
   TLS-intercepting proxies. Ships [`scripts/README.md`](scripts/README.md) (reference) and
-  `scripts/examples/` with **genuine, full-closure** outputs for both strategies
-  (`requirements.{latest,stable}.txt` → `environment.{latest,stable}.yml`).
+  per-tree examples (`python/<ver>/examples/uv-to-conda/`) with **genuine, full-closure**
+  outputs for both strategies (`requirements.{latest,stable}.txt` → `environment.{latest,stable}.yml`).
   - Design note: `stable` deliberately does **not** use `--resolution=lowest` — on unpinned
     inputs that selects the oldest version *ever published* (e.g. `scikit-learn 0.9`, which
     no longer builds). It instead takes uv's default resolution rolled back by
@@ -130,6 +130,21 @@ micromamba (no permanent install).
   container also installs `libgl1`/`libglib2.0-0` for `opencv`.)
 
 ### Changed
+- **Consolidated all helper scripts into a single top-level `scripts/`** (previously
+  duplicated under `python/3.10/scripts/` and `python/3.12/scripts/`), so there is now one
+  copy of each. Both old per-version `scripts/` directories were removed. The Python version
+  is now **passed explicitly** via a required **`-p/--python <X.Y>`** flag on the
+  version-aware scripts (`create-env`, `update-env`, `verify-env`, `test-env`,
+  `micromamba-env`, plus `-p` for the repo-relative shorthand of `setup-venv`/`audit-env`,
+  and optional on `doctor`) — replacing the previous "derive the version from the script's
+  own path" scheme, which no longer works from a shared location. Version-independent helpers
+  (`clean-env`, `compare-envs`, `export-env`, `register-kernel`) keep their interface. Every
+  reference was updated — root README, `docs/{user-workflows,github-workflows,troubleshooting,upgrade-strategy,compatibility,architecture}.md`,
+  both version `README`/`GUIDE` trees, `docker/README.md`, `.github/workflows/test-environments.yml`,
+  and `scripts/README.md` (now the **toolset index**). Run scripts from the repo root.
+- **Relocated the uv-to-conda examples** out of `scripts/examples/` into
+  **`python/<ver>/examples/uv-to-conda/`** — a parallel set for **both 3.10 and 3.12**, each
+  `environment.{latest,stable}.yml` regenerated with its own `python=<ver>` pin.
 - Added `docs/README.md` — a landing page/index for the `docs/` folder mirroring the
   learning path, so `docs/` is self-navigating on GitHub (linked from the root README).
 - Directory READMEs act as proper landing pages: added breadcrumb navigation to the

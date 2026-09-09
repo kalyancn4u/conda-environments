@@ -152,8 +152,8 @@ The repo ships example inputs so you can try this immediately. From the reposito
 **Linux / macOS**
 
 ```bash
-python scripts/uv-to-conda.py \
-    -i scripts/examples/requirements.latest.txt \
+python scripts/uv-to-conda.py -p 3.12 \
+    -i python/3.12/examples/uv-to-conda/requirements.latest.txt \
     -o my-first-environment.yml \
     -n my-first-env \
     -v
@@ -162,8 +162,8 @@ python scripts/uv-to-conda.py \
 **Windows PowerShell**
 
 ```powershell
-python scripts\uv-to-conda.py `
-    -i scripts\examples\requirements.latest.txt `
+python scripts\uv-to-conda.py -p 3.12 `
+    -i python\3.12\examples\uv-to-conda\requirements.latest.txt `
     -o my-first-environment.yml `
     -n my-first-env `
     -v
@@ -294,9 +294,10 @@ resolutions looked like this:
 | numpy *(pinned)* | `1.26.0` | `1.26.0` *(pins never move)* |
 
 The committed example outputs
-([`environment.latest.yml`](../scripts/examples/environment.latest.yml) and
-[`environment.stable.yml`](../scripts/examples/environment.stable.yml)) are the genuine,
-full results — open them side by side.
+([`environment.latest.yml`](../python/3.12/examples/uv-to-conda/environment.latest.yml) and
+[`environment.stable.yml`](../python/3.12/examples/uv-to-conda/environment.stable.yml),
+with a parallel set under [`python/3.10/`](../python/3.10/examples/uv-to-conda/)) are the
+genuine, full results — open them side by side.
 
 > **A subtle-but-important design note.** You might expect `stable` to mean "the *oldest*
 > version." It does **not**, and deliberately so. Asking for the oldest version of an

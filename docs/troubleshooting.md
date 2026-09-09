@@ -66,7 +66,7 @@ versions).
 ## Verifier reports an import failure
 
 ```bash
-python python/3.12/scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.12 --env core
 ```
 
 A `!!  <pkg> IMPORT FAILED` line tells you exactly which package is broken. Re-create
@@ -79,8 +79,8 @@ Conda caches build tarballs and index metadata. Reclaim space safely (caches onl
 never your environments):
 
 ```bash
-./python/3.12/scripts/clean-env.sh          # dry run
-./python/3.12/scripts/clean-env.sh --yes    # actually clean
+./scripts/clean-env.sh          # dry run
+./scripts/clean-env.sh --yes    # actually clean
 ```
 
 ## Still stuck?

@@ -23,9 +23,10 @@ then run a full [walkthrough (§6)](#6-two-complete-walkthroughs-from-nothing-to
 to see the pieces combine. Commands come in **Linux/macOS** and **Windows PowerShell**
 forms, and most show the **output you should expect**.
 
-> **New scripts referenced here** live in `python/<ver>/scripts/` alongside the
-> original helpers. Everything works on **Linux/macOS (`.sh`)** and **Windows
-> PowerShell (`.ps1`)**, and adapts automatically to whichever Python version tree
+> **The scripts referenced here** live in one shared `scripts/` folder at the repository
+> root and take a **`-p <ver>`** flag (e.g. `-p 3.12`) to pick the Python tree. Run them
+> **from the repo root**. Everything works on **Linux/macOS (`.sh`)** and **Windows
+> PowerShell (`.ps1`)**, and the `-p` flag — not the folder you're in — selects the tree
 > it lives in (`3.10`, `3.12`, …).
 
 ---
@@ -53,8 +54,9 @@ explanation: [conda-vs-uv §5](conda-vs-uv.md#5-venv--uv--same-idea-much-faster)
 
 ## 2. The toolbox at a glance
 
-All helpers live in `python/<ver>/scripts/`. Run the `.sh` on Linux/macOS, the
-`.ps1` on Windows.
+All helpers live in the shared top-level `scripts/` folder and take `-p <ver>` (e.g.
+`-p 3.12`) to target a Python tree. Run them from the repo root — the `.sh` on
+Linux/macOS, the `.ps1` on Windows.
 
 | Script | World | What it does | Scenario |
 |--------|-------|--------------|----------|
@@ -104,7 +106,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh      # Windows: see https://docs
 
 ```bash
 cd conda-environments
-./python/3.12/scripts/doctor.sh            # Windows: .\python\3.12\scripts\doctor.ps1
+./scripts/doctor.sh -p 3.12            # Windows: .\scripts\doctor.ps1 -p 3.12
 ```
 
 A healthy machine prints something like (yours will differ):
@@ -122,7 +124,7 @@ conda channel configuration
   OK   conda-forge is in your channel list
   !!   channel_priority is not strict — run: conda config --set channel_priority strict
 ...
-Ready for the conda/mamba path. Next: ./scripts/create-env.sh 01-core
+Ready for the conda/mamba path. Next: ./scripts/create-env.sh -p 3.12 01-core
 ```
 
 `OK` = present/good, `!!` = a hint to act on. Two lines above tell you exactly what to
@@ -138,9 +140,9 @@ conda config --set channel_priority strict
 **Step 3 — create, activate, and verify the daily-driver environment:**
 
 ```bash
-./python/3.12/scripts/create-env.sh 01-core     # solves + installs py312-core (a few minutes)
+./scripts/create-env.sh -p 3.12 01-core     # solves + installs py312-core (a few minutes)
 conda activate py312-core                        # your prompt now shows (py312-core)
-python python/3.12/scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.12 --env core
 ```
 
 `verify-env` prints one line per package and a final verdict — this is what a **pass**
@@ -197,21 +199,21 @@ them separate. `create-env`/`update-env` auto-prefer `mamba` when present.
 
 ```bash
 # create the environments you need, one per concern
-./python/3.12/scripts/create-env.sh 01-core      # everyday data work
-./python/3.12/scripts/create-env.sh 02-ml        # gradient boosting, tuning, tracking
-./python/3.12/scripts/create-env.sh 05-tools     # pytest/ruff/mypy/playwright
+./scripts/create-env.sh -p 3.12 01-core      # everyday data work
+./scripts/create-env.sh -p 3.12 02-ml        # gradient boosting, tuning, tracking
+./scripts/create-env.sh -p 3.12 05-tools     # pytest/ruff/mypy/playwright
 
 conda activate py312-ml
 # …work…
 
 # After editing 02-ml.yml, bring the env back in line with its definition:
-./python/3.12/scripts/update-env.sh 02-ml        # note: this PRUNES removed packages
+./scripts/update-env.sh -p 3.12 02-ml        # note: this PRUNES removed packages
 ```
 
 ```powershell
 # Windows PowerShell equivalents
-.\python\3.12\scripts\create-env.ps1 01-core
-.\python\3.12\scripts\update-env.ps1 02-ml
+.\scripts\create-env.ps1 -p 3.12 01-core
+.\scripts\update-env.ps1 -p 3.12 02-ml
 ```
 
 Why separate envs? A broken `numpy` upgrade in `ml` can't take down `web`. See
@@ -225,12 +227,12 @@ immediately** because merged envs are fragile:
 
 ```bash
 # pick ONE deep-learning framework — TF and PyTorch don't reliably coexist
-./python/3.12/scripts/create-env.sh ../templates/all-in-one-pytorch.yml
+./scripts/create-env.sh -p 3.12 ../templates/all-in-one-pytorch.yml
 conda activate py312-all-pytorch
-python python/3.12/scripts/verify-env.py --env allinone-pytorch
+python scripts/verify-env.py -p 3.12 --env allinone-pytorch
 
 # capture the exact working set the moment it solves (snapshot):
-./python/3.12/scripts/export-env.sh py312-all-pytorch
+./scripts/export-env.sh py312-all-pytorch
 ```
 
 The full trade-offs, the manual layering recipe (`conda env update` without
@@ -247,16 +249,16 @@ env as a **kernel**, then pick it per-notebook:
 conda activate py312-core
 
 # expose the ML and DL envs as kernels (installs ipykernel if missing)
-./python/3.12/scripts/register-kernel.sh py312-ml  "ML (py3.12)"
-./python/3.12/scripts/register-kernel.sh py312-dl  "Deep Learning (py3.12)"
-./python/3.12/scripts/register-kernel.sh --list
+./scripts/register-kernel.sh py312-ml  "ML (py3.12)"
+./scripts/register-kernel.sh py312-dl  "Deep Learning (py3.12)"
+./scripts/register-kernel.sh --list
 
 jupyter lab        # New Notebook → choose the kernel you want
 ```
 
 ```powershell
-.\python\3.12\scripts\register-kernel.ps1 py312-ml "ML (py3.12)"
-.\python\3.12\scripts\register-kernel.ps1 -Remove py312-ml   # unregister
+.\scripts\register-kernel.ps1 py312-ml "ML (py3.12)"
+.\scripts\register-kernel.ps1 -Remove py312-ml   # unregister
 ```
 
 This gives the *convenience* of one Jupyter with the *hygiene* of modular envs.
@@ -272,7 +274,7 @@ The full lifecycle — **build → activate → run → leave**:
 
 ```bash
 # 1) build ./.venv from lockfiles/requirements/04-web.txt (uv makes this take seconds)
-./python/3.12/scripts/setup-venv.sh 04-web
+./scripts/setup-venv.sh -p 3.12 04-web
 ```
 
 The script ends by telling you exactly how to activate it:
@@ -299,7 +301,7 @@ deactivate
 
 ```powershell
 # Windows PowerShell
-.\python\3.12\scripts\setup-venv.ps1 04-web
+.\scripts\setup-venv.ps1 -p 3.12 04-web
 .\.venv\Scripts\Activate.ps1
 python -c "import fastapi, uvicorn; print('web stack ready')"
 deactivate
@@ -309,9 +311,9 @@ Other forms — a custom venv directory, an explicit requirements file, or **con
 mode** (install straight into the container's system Python, no venv):
 
 ```bash
-./python/3.12/scripts/setup-venv.sh 04-web .venv-web        # custom venv dir
-./python/3.12/scripts/setup-venv.sh path/to/requirements.txt
-./python/3.12/scripts/setup-venv.sh 04-web --system         # container/CI: no venv
+./scripts/setup-venv.sh -p 3.12 04-web .venv-web        # custom venv dir
+./scripts/setup-venv.sh -p 3.12 path/to/requirements.txt
+./scripts/setup-venv.sh -p 3.12 04-web --system         # container/CI: no venv
 ```
 
 > **Caveat:** a few environments need conda's native libraries and don't translate
@@ -328,17 +330,17 @@ uses it in place. Nothing is installed system-wide.
 
 ```bash
 # create py312-core and verify it, from a clean machine
-./python/3.12/scripts/micromamba-env.sh 01-core
+./scripts/micromamba-env.sh -p 3.12 01-core
 
 # from an explicit template path (no auto-verify):
-./python/3.12/scripts/micromamba-env.sh ../templates/llm.yml
+./scripts/micromamba-env.sh -p 3.12 ../templates/llm.yml
 
 # custom root prefix (where envs are stored); delete the tree to clean up
-MAMBA_ROOT_PREFIX=./mm ./python/3.12/scripts/micromamba-env.sh 01-core
+MAMBA_ROOT_PREFIX=./mm ./scripts/micromamba-env.sh -p 3.12 01-core
 ```
 
 ```powershell
-.\python\3.12\scripts\micromamba-env.ps1 01-core
+.\scripts\micromamba-env.ps1 -p 3.12 01-core
 ```
 
 The script creates the env **and** runs `verify-env` for you, ending with:
@@ -401,12 +403,12 @@ Two levels:
 
 ```bash
 # 1) fast smoke test — do the headline packages import?  (CI-friendly exit code)
-python python/3.12/scripts/verify-env.py --env core
-python python/3.12/scripts/verify-env.py --all
+python scripts/verify-env.py -p 3.12 --env core
+python scripts/verify-env.py -p 3.12 --all
 
 # 2) full reproduction of the CI job — build + verify in the Miniforge container
-./python/3.12/scripts/test-env.sh 01-core      # one env (needs Docker)
-./python/3.12/scripts/test-env.sh --all        # every env
+./scripts/test-env.sh -p 3.12 01-core      # one env (needs Docker)
+./scripts/test-env.sh -p 3.12 --all        # every env
 ```
 
 `test-env` runs the **exact** steps of the `test-environments` GitHub workflow, so a
@@ -425,18 +427,18 @@ green run locally means a green run in CI. Add your project's own `pytest` insid
 
 ```bash
 # audit a pinned requirements set (the reliable, static path — great in CI)
-./python/3.12/scripts/audit-env.sh 04-web
-./python/3.12/scripts/audit-env.sh --requirements python/3.12/lockfiles/requirements/04-web.txt
+./scripts/audit-env.sh -p 3.12 04-web
+./scripts/audit-env.sh -p 3.12 --requirements python/3.12/lockfiles/requirements/04-web.txt
 
 # audit a live environment
-./python/3.12/scripts/audit-env.sh --name py312-web      # conda env (also runs clash check)
-./python/3.12/scripts/audit-env.sh --venv .venv          # a venv
-./python/3.12/scripts/audit-env.sh --name py312-web --json > audit.json
+./scripts/audit-env.sh -p 3.12 --name py312-web      # conda env (also runs clash check)
+./scripts/audit-env.sh -p 3.12 --venv .venv          # a venv
+./scripts/audit-env.sh -p 3.12 --name py312-web --json > audit.json
 ```
 
 ```powershell
-.\python\3.12\scripts\audit-env.ps1 04-web
-.\python\3.12\scripts\audit-env.ps1 -Name py312-web
+.\scripts\audit-env.ps1 -p 3.12 04-web
+.\scripts\audit-env.ps1 -p 3.12 -Name py312-web
 ```
 
 A **clean** run ends like this (exit code `0` — CI stays green):
@@ -494,13 +496,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Preflight (fail fast if the toolchain is missing)
-        run: bash python/3.12/scripts/doctor.sh --strict
+        run: bash scripts/doctor.sh -p 3.12 --strict
 
       - name: Build + verify the web environment (zero-install)
-        run: bash python/3.12/scripts/micromamba-env.sh 04-web
+        run: bash scripts/micromamba-env.sh -p 3.12 04-web
 
       - name: Security gate — CVE scan of the pinned requirements
-        run: bash python/3.12/scripts/audit-env.sh 04-web
+        run: bash scripts/audit-env.sh -p 3.12 04-web
 ```
 
 Each step exits non-zero on failure, so a vulnerable dependency or a broken solve
@@ -509,7 +511,7 @@ project actually uses; add a `pytest` step (inside a `05-tools` env) for functio
 tests.
 
 > **Other CI systems** (GitLab CI, Jenkins, CircleCI) work the same way: run the same
-> `bash python/3.12/scripts/*.sh` commands inside a `condaforge/miniforge3` container
+> `bash scripts/*.sh -p 3.12` commands inside a `condaforge/miniforge3` container
 > (or any image where you first run the micromamba path).
 
 For **deployment**, build the container in [§5F](#5f-containers-docker) from the pinned
@@ -528,17 +530,17 @@ MLOps spans several of the above:
 
 ```bash
 # 1) tracking/orchestration/ops SDKs in a dedicated env (kept out of the core modules)
-./python/3.12/scripts/create-env.sh ../templates/mlops.yml   # mlflow, wandb, airflow, dvc, …
+./scripts/create-env.sh -p 3.12 ../templates/mlops.yml   # mlflow, wandb, airflow, dvc, …
 
 # 2) make experiments reproducible: snapshot or lock the training env
-./python/3.12/scripts/export-env.sh py312-ml
+./scripts/export-env.sh py312-ml
 #    …or generate a conda lockfile (Actions → update-lockfiles), then rebuild exactly.
 
 # 3) notebooks against the ML/DL envs
-./python/3.12/scripts/register-kernel.sh py312-dl "Deep Learning (py3.12)"
+./scripts/register-kernel.sh py312-dl "Deep Learning (py3.12)"
 
 # 4) gate models' dependency supply chain
-./python/3.12/scripts/audit-env.sh --name py312-mlops
+./scripts/audit-env.sh -p 3.12 --name py312-mlops
 ```
 
 Airflow is POSIX-only — run it under WSL2/Docker on Windows (noted in the template).
@@ -557,16 +559,16 @@ trains a gradient-boosted model — without one giant environment.
 
 ```bash
 # 1) confirm the toolchain (install Miniforge first if doctor says so — see §3, step 0)
-./python/3.12/scripts/doctor.sh
+./scripts/doctor.sh -p 3.12
 
 # 2) build the two modular environments you need
-./python/3.12/scripts/create-env.sh 01-core     # data work + JupyterLab
-./python/3.12/scripts/create-env.sh 02-ml       # xgboost / lightgbm / optuna
+./scripts/create-env.sh -p 3.12 01-core     # data work + JupyterLab
+./scripts/create-env.sh -p 3.12 02-ml       # xgboost / lightgbm / optuna
 
 # 3) expose the ML env as a Jupyter kernel (core already has one)
 conda activate py312-core
-./python/3.12/scripts/register-kernel.sh py312-ml "ML (py3.12)"
-./python/3.12/scripts/register-kernel.sh --list        # confirm it's registered
+./scripts/register-kernel.sh py312-ml "ML (py3.12)"
+./scripts/register-kernel.sh --list        # confirm it's registered
 
 # 4) launch Lab from core; create notebooks and pick the kernel per notebook
 jupyter lab
@@ -574,7 +576,7 @@ jupyter lab
 #    Notebook 2 → kernel "ML (py3.12)"          → import xgboost, train
 
 # 5) reproducibility: snapshot whichever env produced a result you care about
-./python/3.12/scripts/export-env.sh py312-ml
+./scripts/export-env.sh py312-ml
 ```
 
 You now have the *convenience* of one Lab and the *hygiene* of small, independent
@@ -587,13 +589,13 @@ has passed a vulnerability scan.
 
 ```bash
 # 1) develop locally in a fast, isolated venv (pure-Python service → PyPI world)
-./python/3.12/scripts/setup-venv.sh 04-web
+./scripts/setup-venv.sh -p 3.12 04-web
 source .venv/bin/activate                       # Windows: .venv\Scripts\Activate.ps1
 python -c "import fastapi, uvicorn; print('web stack ready')"
 deactivate
 
 # 2) security gate BEFORE you ship — scan the exact pinned requirements
-./python/3.12/scripts/audit-env.sh 04-web       # must end in "PASS" / exit 0
+./scripts/audit-env.sh -p 3.12 04-web       # must end in "PASS" / exit 0
 
 # 3) build the slim production image (installs the same pinned requirements)
 docker build -f docker/Dockerfile.uv \

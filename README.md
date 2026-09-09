@@ -28,14 +28,16 @@ is the antidote — a set of **small, single-purpose environments** that are:
 conda-environments/
 ├── docs/                     # Architecture, operational docs & the workflows cookbook
 ├── docker/                   # Reference images: Dockerfile.uv (slim) + Dockerfile.conda
-├── scripts/                  # Repo-wide tools: uv-to-conda (requirements.txt → environment.yml)
+├── scripts/                  # ALL cross-platform helpers, shared across versions:
+│                             #   create/update/verify/doctor/setup-venv/audit-env/
+│                             #   micromamba-env/register-kernel + uv-to-conda.
+│                             #   Pass -p <ver> to target a Python tree.
 ├── python/
 │   ├── 3.10/                 # Python 3.10 (validated; linux-64 locks + uv requirements)
 │   ├── 3.12/                 # Everything targeting Python 3.12 (primary, fully locked)
 │   │   ├── environments/     # The modular environment definitions
 │   │   ├── templates/        # Ready-to-fork starting points
-│   │   ├── scripts/          # Cross-platform helpers: create/update/verify + doctor,
-│   │   │                     #   setup-venv, audit-env, micromamba-env, register-kernel
+│   │   ├── examples/         # uv-to-conda sample inputs + generated environment.yml
 │   │   └── lockfiles/        # conda lockfiles + uv requirements
 │   └── …                     # add python/3.13, 3.14, … by copying 3.12 and bumping pins
 └── .github/workflows/        # Validation, environment tests, lockfile refresh
@@ -83,17 +85,17 @@ conda env create -f python/3.12/environments/01-core.yml
 conda activate py312-core
 
 # 4. Sanity-check the install
-python python/3.12/scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.12 --env core
 ```
 
 Prefer the helper scripts, which apply strict channel settings and friendly errors:
 
 ```bash
 # Linux / macOS
-./python/3.12/scripts/create-env.sh 01-core
+./scripts/create-env.sh -p 3.12 01-core
 
 # Windows PowerShell
-.\python\3.12\scripts\create-env.ps1 01-core
+.\scripts\create-env.ps1 -p 3.12 01-core
 ```
 
 > **Recommendation:** use [`mamba`](https://mamba.readthedocs.io/) (or `conda` ≥ 23.10
@@ -136,9 +138,9 @@ conda env update -n py312-all -f environments/03-deep-learning.yml
 conda env update -n py312-all -f environments/04-web.yml
 conda env update -n py312-all -f environments/05-tools.yml
 
-# 3) Verify everything still imports
+# 3) Verify everything still imports (scripts/ is at the repo root)
 conda activate py312-all
-python scripts/verify-env.py --all
+python ../../scripts/verify-env.py -p 3.12 --all
 ```
 
 ```powershell
@@ -149,7 +151,7 @@ foreach ($f in '02-ml','03-deep-learning','04-web','05-tools') {
     conda env update -n py312-all -f "environments\$f.yml"
 }
 conda activate py312-all
-python scripts\verify-env.py --all
+python ..\..\scripts\verify-env.py -p 3.12 --all
 ```
 
 Or as a loop on Linux/macOS:

@@ -63,19 +63,17 @@ python/3.10/
 │   ├── all-in-one-pytorch.yml kitchen-sink env, PyTorch deep-learning stack
 │   └── all-in-one-tflow.yml   kitchen-sink env, TensorFlow deep-learning stack
 │
-├── scripts/             ← helper programs so you don't memorize conda commands
-│   ├── create-env.sh / .ps1   build an environment from a .yml
-│   ├── update-env.sh / .ps1   update an existing environment to match its .yml
-│   ├── export-env.sh          save an exact snapshot of an environment
-│   ├── clean-env.sh           free disk space (safe cache cleanup)
-│   ├── compare-envs.sh / .ps1 diff two environments / find upgradable packages
-│   ├── verify-env.py          quick check that an environment's packages import
-│   └── test-env.sh / .ps1     reproduce the CI build+verify in a Docker container
+├── examples/            ← uv-to-conda sample inputs + the environment.yml they generate
+│   └── uv-to-conda/           requirements.{latest,stable}.txt + environment.{latest,stable}.yml
 │
 └── lockfiles/           ← auto-generated "exact recipes" for perfect rebuilds
     ├── linux-64/  win-64/  osx-arm64/   (one folder per operating system)
     └── README.md
 ```
+
+> **Where are the scripts?** The helper scripts used to sit inside this tree; they now
+> live in **one shared `scripts/` folder at the repository root** and take a `-p 3.10`
+> flag to target this tree (see [Part 4](#part-4--the-scripts-scripts--your-helpers)).
 
 **`.sh` vs `.ps1`:** `.sh` files are for **Linux and macOS** (they run in a program
 called *bash*). `.ps1` files are for **Windows PowerShell**. They do the *same jobs* —
@@ -161,12 +159,15 @@ you'd use for any environment.
 
 ## Part 4 — The scripts (`scripts/`) — your helpers
 
-Scripts exist so you don't have to memorize conda's flags. Each does one job. Below,
+Scripts exist so you don't have to memorize conda's flags. Each does one job. They now
+live in **one shared `scripts/` folder at the repository root** (not inside each version
+tree), so every command takes **`-p 3.10`** to say which Python tree to act on. Below,
 "run it like this" shows the Linux/macOS (`.sh`) form; on Windows use the matching
-`.ps1` with `.\` in front (e.g. `.\scripts\create-env.ps1 01-core`).
+`.ps1` with `.\` in front (e.g. `.\scripts\create-env.ps1 -p 3.10 01-core`).
 
-> **Where do I run these?** In a terminal, from inside the `python/3.10/` folder (or
-> give full paths). On Windows that's **PowerShell**; on Mac/Linux it's **Terminal**.
+> **Where do I run these?** In a terminal, **from the repository root** (so `./scripts/…`
+> resolves). On Windows that's **PowerShell**; on Mac/Linux it's **Terminal**. The
+> `-p 3.10` flag — not your current folder — is what selects the tree.
 
 ### `create-env.sh` / `create-env.ps1` — build an environment
 
@@ -174,7 +175,7 @@ Scripts exist so you don't have to memorize conda's flags. Each does one job. Be
 brand-new named environment. Uses `mamba` automatically if available.
 
 ```bash
-./scripts/create-env.sh 01-core          # builds the py310-core environment
+./scripts/create-env.sh -p 3.10 01-core          # builds the py310-core environment
 ```
 You can pass a bare name (`01-core`), or a path to any `.yml` (including a template).
 **Result:** a new environment exists; the script prints the `conda activate …` command
@@ -188,7 +189,7 @@ already-built environment match it again. It uses `--prune`, meaning packages yo
 an exact mirror of its recipe.
 
 ```bash
-./scripts/update-env.sh 01-core
+./scripts/update-env.sh -p 3.10 01-core
 ```
 
 ### `export-env.sh` — save an exact snapshot
@@ -238,9 +239,9 @@ catches most broken installs.
 
 ```bash
 conda activate py310-core
-python scripts/verify-env.py --env core     # check the core set
-python scripts/verify-env.py --all          # check every known set
-python scripts/verify-env.py --packages numpy pandas   # check your own list
+python scripts/verify-env.py -p 3.10 --env core     # check the core set
+python scripts/verify-env.py -p 3.10 --all          # check every known set
+python scripts/verify-env.py -p 3.10 --packages numpy pandas   # check your own list
 ```
 Example of what a healthy run looks like:
 ```text
@@ -262,8 +263,8 @@ with an error — which is why the CI can use it as a pass/fail gate.
 machine" means the same thing as "passes in CI." Requires Docker.
 
 ```bash
-./scripts/test-env.sh 01-core      # one environment  (Windows: .\scripts\test-env.ps1 01-core)
-./scripts/test-env.sh --all        # all of them
+./scripts/test-env.sh -p 3.10 01-core      # one environment  (Windows: .\scripts\test-env.ps1 -p 3.10 01-core)
+./scripts/test-env.sh -p 3.10 --all        # all of them
 ```
 A cached Docker volume keeps downloaded packages between runs, so repeats are fast.
 
@@ -347,14 +348,14 @@ Never done any of this? Follow these steps once:
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 
-# 2) Build the daily-driver environment. (Linux/macOS shown; Windows: .\scripts\create-env.ps1 01-core)
-./scripts/create-env.sh 01-core
+# 2) Build the daily-driver environment. (Linux/macOS shown; Windows: .\scripts\create-env.ps1 -p 3.10 01-core)
+./scripts/create-env.sh -p 3.10 01-core
 
 # 3) Switch into it.
 conda activate py310-core
 
 # 4) Confirm it's healthy.
-python scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.10 --env core
 
 # 5) Use it — e.g. launch notebooks:
 jupyter lab

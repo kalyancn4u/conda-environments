@@ -76,9 +76,10 @@ Notes:
 
 ## Reproducing locally without Docker
 
-The `python/<ver>/scripts/` helpers cover the same ground on a workstation:
-`micromamba-env.sh` (zero-install conda env), `setup-venv.sh` (venv + uv), and
-`test-env.sh` (build + verify in the CI container). See
+The shared top-level `scripts/` helpers cover the same ground on a workstation (pass
+`-p <ver>`): `micromamba-env.sh -p 3.12 01-core` (zero-install conda env),
+`setup-venv.sh -p 3.12 04-web` (venv + uv), and `test-env.sh -p 3.12 01-core` (build +
+verify in the CI container). See
 [`docs/user-workflows.md`](../docs/user-workflows.md).
 
 ## A minimal CI build check

@@ -29,12 +29,15 @@
 #
 # ── The map of the repo ──────────────────────────────────────────────────────
 #   docs/            conceptual + teaching docs (the learning path)
-#   scripts/         repo-wide tools. NEW: uv-to-conda.py — converts a pip
-#                    requirements.txt into a Conda environment.yml (latest/stable
-#                    version strategies). Guide: docs/uv-to-conda.md ·
-#                    Reference: scripts/README.md
+#   scripts/         ALL cross-platform helpers, shared across versions and NOT
+#                    duplicated per tree: create/update/verify/doctor/setup-venv/
+#                    audit-env/micromamba-env/register-kernel/compare/export/clean +
+#                    uv-to-conda.py. Version-aware scripts take an explicit
+#                    -p/--python <X.Y> flag (never derived); run from the repo root.
+#                    Index: scripts/README.md · Cookbook: docs/user-workflows.md ·
+#                    uv-to-conda guide: docs/uv-to-conda.md
 #   docker/          reference images (Dockerfile.uv slim · Dockerfile.conda)
-#   python/<ver>/    environments/ · templates/ · scripts/ · lockfiles/
+#   python/<ver>/    environments/ · templates/ · examples/ · lockfiles/
 #                    (3.12 primary; 3.10 at parity — add 3.13/3.14 by copying
 #                    3.12 and bumping pins, per the version-prefix design)
 #   .github/workflows/  validate · test-environments · update-lockfiles (CI)

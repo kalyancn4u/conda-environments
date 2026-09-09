@@ -194,7 +194,7 @@ the full picture (which envs pass, which fail) in a single run. Each leg's short
 
 **Runs inside a container.** The job sets `container: condaforge/miniforge3:latest`, so
 `mamba` (the fast solver) is preinstalled — the same image the local
-[`test-env.sh`](../python/3.12/scripts/test-env.sh) uses, so CI and your laptop match.
+[`test-env.sh`](../scripts/test-env.sh -p 3.12) uses, so CI and your laptop match.
 
 **The steps, in order:**
 
@@ -207,7 +207,7 @@ the full picture (which envs pass, which fail) in a single run. Each leg's short
 3. **Resolve** the env file, env name, and verify key from the matrix value via a `case`
    statement, writing them to `$GITHUB_OUTPUT` for later steps.
 4. **Create environment** — `mamba env create --yes --file <the resolved yml>`.
-5. **Verify imports** — runs [`verify-env.py`](../python/3.12/scripts/verify-env.py)
+5. **Verify imports** — runs [`verify-env.py`](../scripts/verify-env.py -p 3.12)
    with the env's key, which imports each headline package and exits non-zero on any
    failure.
 6. **Check for conda/pip clashes** — an inline Python check that fails if the *same*
@@ -332,11 +332,11 @@ sys.exit(bad)
 PY
 
 # test-environments.yml — build + verify in the SAME miniforge container (needs Docker):
-./python/3.12/scripts/test-env.sh 01-core      # one env   (Windows: .\scripts\test-env.ps1)
-./python/3.12/scripts/test-env.sh --all        # every env
+./scripts/test-env.sh -p 3.12 01-core      # one env   (Windows: .\scripts\test-env.ps1)
+./scripts/test-env.sh -p 3.12 --all        # every env
 
 # …or without Docker, the zero-install path builds + verifies the same way:
-./python/3.12/scripts/micromamba-env.sh 01-core
+./scripts/micromamba-env.sh -p 3.12 01-core
 
 # update-lockfiles.yml — generate a lock locally with conda-lock:
 conda-lock lock --file python/3.12/environments/01-core.yml --platform linux-64 --kind explicit
@@ -397,7 +397,7 @@ suite inside the built env:
 
 ```yaml
 - name: CVE scan
-  run: bash python/3.12/scripts/audit-env.sh 04-web
+  run: bash scripts/audit-env.sh -p 3.12 04-web
 ```
 
 **Change the schedule** — edit the `cron:` expression (e.g. `"0 6 * * *"` for daily 06:00 UTC).

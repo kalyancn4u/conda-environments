@@ -38,8 +38,13 @@ environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-
 |-----------|---------------|
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
-| [`scripts/`](scripts/) | Create / update / export / clean / compare / verify / test helpers, plus `doctor`, `setup-venv`, `audit-env`, `micromamba-env`, `register-kernel` (see [docs/user-workflows.md](../../docs/user-workflows.md)) |
+| [`examples/`](examples/) | uv-to-conda sample inputs + the `environment.yml` they generate (`examples/uv-to-conda/`) |
 | [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles per platform **and** uv `requirements.txt` for production |
+
+> The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
+> micromamba-env / register-kernel) are **shared across versions** in the top-level
+> [`scripts/`](../../scripts/) folder — pass `-p 3.10` to target this tree. See
+> [docs/user-workflows.md](../../docs/user-workflows.md).
 
 ## Environments at a glance
 
@@ -57,35 +62,39 @@ environments/templates in [`lockfiles/linux-64/`](lockfiles/linux-64/), plus uv-
 
 ## Common commands
 
+The helper scripts live in the shared [`scripts/`](../../scripts/) folder at the
+repository root — run these **from the repo root** and pass **`-p 3.10`** to target this
+tree.
+
 ```bash
 # Create (Linux/macOS)
-./scripts/create-env.sh 01-core
+./scripts/create-env.sh -p 3.10 01-core
 
 # Create (Windows PowerShell)
-.\scripts\create-env.ps1 01-core
+.\scripts\create-env.ps1 -p 3.10 01-core
 
 # Update to match the YAML (prunes removed packages)
-./scripts/update-env.sh 01-core
+./scripts/update-env.sh -p 3.10 01-core
 
 # Verify the key packages import
-python scripts/verify-env.py --env core
+python scripts/verify-env.py -p 3.10 --env core
 
 # Compare two environments / list upgradable packages
 ./scripts/compare-envs.sh py310-core py310-ds
 ./scripts/compare-envs.sh --outdated py310-core
 
 # Reproduce CI locally: build + verify an env in the Miniforge container (needs Docker)
-./scripts/test-env.sh 01-core        # one env      (Windows: .\scripts\test-env.ps1 01-core)
-./scripts/test-env.sh --all          # every env
+./scripts/test-env.sh -p 3.10 01-core        # one env      (Windows: .\scripts\test-env.ps1 -p 3.10 01-core)
+./scripts/test-env.sh -p 3.10 --all          # every env
 ```
 
 Wider workflows — the venv/uv, micromamba, security, and Jupyter helpers:
 
 ```bash
-./scripts/doctor.sh                   # what's installed & configured? (read-only preflight)
-./scripts/setup-venv.sh 04-web        # venv + pinned requirements (PyPI/production)
-./scripts/micromamba-env.sh 01-core   # zero-install create + verify
-./scripts/audit-env.sh --name py310-web   # security: CVE scan + conda/pip clash check
+./scripts/doctor.sh -p 3.10                   # what's installed & configured? (read-only preflight)
+./scripts/setup-venv.sh -p 3.10 04-web        # venv + pinned requirements (PyPI/production)
+./scripts/micromamba-env.sh -p 3.10 01-core   # zero-install create + verify
+./scripts/audit-env.sh -p 3.10 --name py310-web   # security: CVE scan + conda/pip clash check
 ./scripts/register-kernel.sh py310-ml     # expose an env as a Jupyter kernel
 ```
 
