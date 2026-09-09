@@ -38,6 +38,9 @@ system." No prior knowledge assumed.
 - [GitHub workflows (CI)](github-workflows.md) — how the repo's own automation works:
   the `.github/workflows/` files (validate · test-environments · update-lockfiles),
   what triggers each, how to run and read them, and how to extend them. Novice → mastery.
+- [uv-to-conda](uv-to-conda.md) — the [`scripts/uv-to-conda.py`](../scripts/uv-to-conda.py)
+  tool: turn a pip `requirements.txt` into a Conda `environment.yml`, keeping your pins and
+  letting uv resolve the rest — with `latest` vs `stable` version strategies. Novice → mastery.
 
 ## ⑤ Maintain — keep it healthy
 - [Upgrade strategy](upgrade-strategy.md) — moving versions forward safely.

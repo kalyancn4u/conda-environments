@@ -1,0 +1,13 @@
+# Example requirements for the `stable` strategy (production-safe).
+# Same package set as requirements.latest.txt, but intended to be resolved with
+# `--strategy stable`, which selects the oldest compatible, battle-tested,
+# non-pre-release versions (releases newer than the exclude window are ignored).
+
+# --- Pinned packages (exact versions preserved) ---
+numpy==1.26.0
+pandas==2.1.0
+
+# --- Unpinned packages (resolved to conservative, stable versions) ---
+scikit-learn
+matplotlib
+jupyter

@@ -28,6 +28,7 @@ is the antidote — a set of **small, single-purpose environments** that are:
 conda-environments/
 ├── docs/                     # Architecture, operational docs & the workflows cookbook
 ├── docker/                   # Reference images: Dockerfile.uv (slim) + Dockerfile.conda
+├── scripts/                  # Repo-wide tools: uv-to-conda (requirements.txt → environment.yml)
 ├── python/
 │   ├── 3.10/                 # Python 3.10 (validated; linux-64 locks + uv requirements)
 │   ├── 3.12/                 # Everything targeting Python 3.12 (primary, fully locked)
@@ -266,11 +267,12 @@ lives at [`docs/README.md`](docs/README.md).
 
 9. [User workflows](docs/user-workflows.md) — a hands-on cookbook: local dev, notebooks, production venvs, zero-install/throwaway, containers, testing/QA, security testing, CI/CD, and MLOps — with the helper script for each. Novice → mastery.
 10. [GitHub workflows (CI)](docs/github-workflows.md) — what the `.github/workflows/` automation does — validate, test-environments, update-lockfiles — how each is triggered, and how to run/read them. Novice → mastery.
+11. [uv-to-conda](docs/uv-to-conda.md) — turn a pip `requirements.txt` into a Conda `environment.yml`, with `latest` vs `stable` version strategies. A gentle guide to [`scripts/uv-to-conda.py`](scripts/uv-to-conda.py). Novice → mastery.
 
 **⑤ Maintain — keep it healthy**
 
-11. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
-12. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
+12. [Upgrade strategy](docs/upgrade-strategy.md) — moving versions forward safely.
+13. [Troubleshooting](docs/troubleshooting.md) — when solves fail · [FAQ](docs/faq.md) — quick answers.
 
 ## Contributing
 

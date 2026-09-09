@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`scripts/uv-to-conda.py`** — a repo-wide tool (new top-level `scripts/`) that converts
+  a pip `requirements.txt` into a Conda `environment.yml`: pinned lines are copied through
+  verbatim, **unpinned** lines are resolved with **uv**, and PyPI→conda name differences are
+  mapped (built-in table + optional `-m` JSON). Two version strategies — **`latest`** (newest
+  compatible) and **`stable`** (battle-tested: `--exclude-newer <~90 days>` +
+  `--prerelease disallow`). Stdlib-only, Python 3.8+, importable for batch use (`convert()`),
+  graceful errors with guaranteed temp-file cleanup, and a `--system-certs` passthrough for
+  TLS-intercepting proxies. Ships [`scripts/README.md`](scripts/README.md) (reference) and
+  `scripts/examples/` with **genuine, full-closure** outputs for both strategies
+  (`requirements.{latest,stable}.txt` → `environment.{latest,stable}.yml`).
+  - Design note: `stable` deliberately does **not** use `--resolution=lowest` — on unpinned
+    inputs that selects the oldest version *ever published* (e.g. `scikit-learn 0.9`, which
+    no longer builds). It instead takes uv's default resolution rolled back by
+    `--exclude-newer`, i.e. *the newest release that has had time to prove itself*.
+- **`docs/uv-to-conda.md`** — a **novice → mastery** teaching guide for the tool: the problem
+  told as a story, a pip-vs-conda mental model, a five-word glossary, a step-by-step first run
+  (Linux/macOS + PowerShell, with expected output), how to read the generated file, the two
+  strategies explained with a real before/after comparison, package-name mapping, a
+  troubleshooting table, programmatic/batch use, and how the tool fits the repo's
+  authoring → curate → lock pipeline. Slotted into the learning path (§④ Apply) in the root
+  README and [`docs/README.md`](docs/README.md); cross-linked from `scripts/README.md`.
+- **`instructions.txt` project-context primer** — a "read this first at the start of any new
+  conversation/task" block prepended to `instructions.txt`: what the repo is, where the
+  context lives (README → docs learning path → CHANGELOG → GUIDE), the repo map, house
+  conventions, and a maintenance note. The original CO-STAR-A seed prompt is preserved
+  unchanged below a separator as history.
 - **Workflow scripts** (cross-platform `.sh` + `.ps1`, added to both `python/3.10/scripts/`
   and `python/3.12/scripts/`; version-derived so one file works in every tree):
   `doctor` (read-only toolchain/channel/shell preflight), `setup-venv` (venv + pinned
