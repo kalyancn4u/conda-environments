@@ -7,9 +7,10 @@
 > as a reference.
 
 > ℹ️ **Read the [readiness note](README.md) first.** This is a parity tree of the primary
-> `python/3.12/`; its generated **lockfiles are produced on demand** (not committed yet), so
-> a few walkthrough steps that use a `.conda.lock` won't have a file to point at until you
-> generate one. Everything else works exactly as described.
+> `python/3.12/`. Its **`linux-64` conda locks are committed for 12 of 14 targets** (all but
+> `06-tensorflow` / `all-in-one-tflow` — TensorFlow isn't on conda-forge for 3.13 yet);
+> `win-64`/`osx-arm64` and the uv `requirements/*.txt` are still generated on demand.
+> Everything below works exactly as described.
 
 If you only remember one sentence: **the `.yml` files describe environments you *want*,
 the scripts *build and manage* them for you, the lockfiles *freeze* them for perfect
