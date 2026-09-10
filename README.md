@@ -39,15 +39,20 @@ conda-environments/
 │   │   ├── templates/        # Ready-to-fork starting points
 │   │   ├── examples/         # uv-to-conda sample inputs + generated environment.yml
 │   │   └── lockfiles/        # conda lockfiles + uv requirements
-│   └── …                     # add python/3.13, 3.14, … by copying 3.12 and bumping pins
+│   ├── 3.13/                 # Python 3.13 (structure at parity; locks generated on demand)
+│   ├── 3.14/                 # Python 3.14 (structure at parity; heavy stacks may lag; locks on demand)
+│   └── …                     # add a version by copying 3.12 and bumping pins
 └── .github/workflows/        # Validation, environment tests, lockfile refresh
 ```
 
-The `python/<version>/` prefix is intentional: [`python/3.10/`](python/3.10/) was added by
-**copying `3.12` and bumping the pins — no restructuring** (see
-[docs/architecture.md](docs/architecture.md)). All 8 environments + 6 templates solve on
-conda-forge, and it now ships **`linux-64` conda lockfiles + uv `requirements.txt`** (at
-parity with 3.12); 3.12 remains the primary reference.
+The `python/<version>/` prefix is intentional: sibling trees are added by **copying `3.12`
+and bumping the pins — no restructuring** (see [docs/architecture.md](docs/architecture.md)).
+[`python/3.10/`](python/3.10/) is validated at full parity (all 8 environments + 6 templates
+solve on conda-forge; ships `linux-64` conda locks + uv `requirements.txt`).
+[`python/3.13/`](python/3.13/) and [`python/3.14/`](python/3.14/) ship the same structure
+with pins bumped; their **generated lockfiles are produced on demand**, and — because 3.14 is
+new — some **heavy stacks (e.g. TensorFlow) may not yet solve on 3.14** (see each tree's
+readiness note). **3.12 remains the primary, fully-locked reference.**
 
 ## The environments
 

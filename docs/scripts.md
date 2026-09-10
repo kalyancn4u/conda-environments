@@ -101,8 +101,8 @@ merits:
   matter where you run it from or how the repo is arranged.
 - **It's self-documenting.** `-p 3.12` states your intent; the script even checks that
   `python/3.12/` exists and stops with a clear error if you mistype it.
-- **One file, every version.** Adding `python/3.13/` later needs **zero** script changes —
-  you just start passing `-p 3.13`.
+- **One file, every version.** Adding a new tree like `python/3.15/` needs **zero** script
+  changes — you just start passing `-p 3.15`. (That's how `3.13` and `3.14` were added.)
 
 This is the same spirit as pinning a version in a lockfile: *say what you mean, don't let
 the tool guess.*

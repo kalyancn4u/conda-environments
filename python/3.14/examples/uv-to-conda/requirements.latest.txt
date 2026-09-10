@@ -1,0 +1,12 @@
+# Example requirements for the `latest` strategy.
+# Pinned packages are copied verbatim into environment.yml; unpinned packages
+# are resolved by uv to the newest compatible versions.
+
+# --- Pinned packages (exact versions preserved) ---
+numpy==1.26.0
+pandas==2.1.0
+
+# --- Unpinned packages (resolved to latest) ---
+scikit-learn
+matplotlib
+jupyter

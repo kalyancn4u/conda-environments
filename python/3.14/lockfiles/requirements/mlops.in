@@ -1,0 +1,10 @@
+# PyPI intent for the mlops template (uv).
+# NOTE: apache-airflow is POSIX-oriented; on Windows run it under WSL2/Docker.
+apache-airflow
+boto3
+dvc
+evidently
+mlflow
+s3fs
+sagemaker
+wandb

@@ -11,7 +11,8 @@
 # ── What this repository is ──────────────────────────────────────────────────
 # A production-quality reference implementation for maintaining **modular Conda
 # environments** for long-term, reproducible use. Primary target: **Python 3.12**
-# (with a parity **3.10** tree). Single channel: **conda-forge**, strict priority.
+# (with parity trees for **3.10, 3.13, 3.14**). Single channel: **conda-forge**, strict
+# priority.
 # CPU-only environment definitions; GPU/CUDA documented separately. Minimal
 # pinning by default; lockfiles provide exact reproducibility.
 #
@@ -38,8 +39,10 @@
 #                    uv-to-conda guide: docs/uv-to-conda.md
 #   docker/          reference images (Dockerfile.uv slim · Dockerfile.conda)
 #   python/<ver>/    environments/ · templates/ · examples/ · lockfiles/
-#                    (3.12 primary; 3.10 at parity — add 3.13/3.14 by copying
-#                    3.12 and bumping pins, per the version-prefix design)
+#                    (3.12 primary & fully locked; 3.10 validated at parity; 3.13 & 3.14
+#                    at structural parity with locks on demand — 3.14 heavy stacks may lag.
+#                    Add a version by copying 3.12 and bumping pins, per the version-prefix
+#                    design.)
 #   .github/workflows/  validate · test-environments · update-lockfiles (CI)
 #
 # ── House conventions (match these; see docs/ for the full rationale) ────────

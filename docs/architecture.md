@@ -19,24 +19,32 @@ structure that stays maintainable for years and across multiple Python versions.
 scripts/                 # shared, version-agnostic helpers (create/update/verify/
                          #   doctor/…) + uv-to-conda — pass -p <ver> to target a tree
 python/
-└── 3.12/
-    ├── environments/   # modular definitions (the source of truth for intent)
-    ├── templates/      # opinionated starting points to fork per project
-    ├── examples/       # uv-to-conda sample inputs + generated environment.yml
-    └── lockfiles/      # generated, per-platform, exact-rebuild artifacts
+├── 3.10/               # validated parity tree (linux-64 locks + uv requirements)
+├── 3.12/               # primary, fully-locked reference
+│   ├── environments/   # modular definitions (the source of truth for intent)
+│   ├── templates/      # opinionated starting points to fork per project
+│   ├── examples/       # uv-to-conda sample inputs + generated environment.yml
+│   └── lockfiles/      # generated, per-platform, exact-rebuild artifacts
+├── 3.13/               # structural parity; lockfiles generated on demand
+└── 3.14/               # structural parity; heavy stacks may lag; locks on demand
 ```
 
 The `python/<version>/` prefix is the key structural decision. Everything that is
-version-specific lives under it, so introducing Python 3.13 is a **copy + re-solve**:
+version-specific lives under it, so introducing a new Python version is a **copy + re-solve**
+— exactly how [`3.10`](../python/3.10/), [`3.13`](../python/3.13/), and
+[`3.14`](../python/3.14/) were each added:
 
 ```bash
-cp -r python/3.12 python/3.13
-# bump `python=3.12.*` -> `python=3.13.*` in each YAML, then re-solve
+cp -r python/3.12 python/3.15
+# bump `python=3.12.*` -> `python=3.15.*` and `py312-*` -> `py315-*`, then re-solve
 ```
 
 No shared/global files need to change, and multiple Python versions coexist without
 interfering. Cross-cutting documentation (this `docs/` tree) stays version-agnostic
-and references version-specific details where needed.
+and references version-specific details where needed. **A newer Python only reaches
+parity once conda-forge has builds for the whole stack** — so a very fresh version (3.14
+today) ships the structure with pins bumped, while its heaviest environments wait on
+upstream and its lockfiles are generated on demand.
 
 ## The environment matrix
 

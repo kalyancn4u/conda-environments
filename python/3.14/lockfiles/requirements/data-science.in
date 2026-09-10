@@ -1,0 +1,26 @@
+# PyPI intent for the data-science template (uv). Core scientific stack + key ML.
+duckdb
+ipykernel
+ipywidgets
+jupyterlab
+lightgbm
+matplotlib
+mlflow
+numpy
+openpyxl
+optuna
+pandas
+plotly
+polars
+pyarrow
+python-dotenv
+requests
+rich
+scikit-learn
+scipy
+seaborn
+shap
+SQLAlchemy
+statsmodels
+tqdm
+xgboost

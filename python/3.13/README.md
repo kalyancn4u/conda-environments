@@ -1,0 +1,125 @@
+# Python 3.13 Environments
+
+<sub>📍 [conda-environments](../../README.md) › **Python 3.13**</sub>
+
+Everything version-specific for **Python 3.13** lives here. See the repository
+[root README](../../README.md) for the big picture and the [docs/](../../docs/) tree
+for architecture and rationale.
+
+> 🔰 **New to conda?** Read [**GUIDE.md**](GUIDE.md) first — a complete, plain-English
+> walkthrough of *every* file in this folder, what it does, when to use it, and what
+> each command produces. No prior knowledge assumed.
+
+## ✅ Python 3.13 readiness
+
+Python 3.13 (released Oct 2024) is mature, and conda-forge has broad 3.13 coverage. This
+tree is at **structural parity with [`python/3.12`](../3.12/)** — created by copying it and
+bumping the version pins (`python=3.13.*`, `py313-*`), the version-prefix design the repo is
+built for (see [docs/architecture.md](../../docs/architecture.md)).
+
+> **Validation status.** These environments were **not** solved in the session that created
+> this tree (no conda-forge network access at the time), so they are **not yet marked
+> verified**. Broad 3.13 support means parity is *expected*, but validate before relying on
+> it — a dry-run solve is enough:
+>
+> ```bash
+> conda env create --dry-run -f environments/01-core.yml   # one env
+> ./scripts/test-env.sh -p 3.13 --all                      # or reproduce CI in a container
+> ```
+
+**Lockfiles are generated on demand.** The committed `linux-64/` conda locks and uv
+`requirements/*.txt` are **not** shipped for this tree yet — only the version-neutral
+`requirements/*.in` intent files and the docs are. Produce them with the
+[`update-lockfiles`](../../.github/workflows/update-lockfiles.yml) workflow (or `conda-lock`
+/ `uv pip compile` locally), exactly as `win-64`/`osx-arm64` locks are produced on demand.
+
+## Contents
+
+| Directory | What's inside |
+|-----------|---------------|
+| [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
+| [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
+| [`examples/`](examples/) | uv-to-conda sample inputs + the `environment.yml` they generate (`examples/uv-to-conda/`) |
+| [`lockfiles/`](lockfiles/) | Per-platform conda lockfiles + uv `requirements.txt` — **generated on demand** for this tree (so far only the `requirements/*.in` intent files + docs are committed; see the readiness note above) |
+
+> The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
+> micromamba-env / register-kernel) are **shared across versions** in the top-level
+> [`scripts/`](../../scripts/) folder — pass `-p 3.13` to target this tree. New to them?
+> Read the [scripts guide](../../docs/scripts.md); for task recipes see the
+> [cookbook](../../docs/user-workflows.md).
+
+## Environments at a glance
+
+| File | Env name | Create it when you need… |
+|------|----------|--------------------------|
+| `environments/01-core.yml` | `py313-core` | Everyday data analysis & notebooks |
+| `environments/02-ml.yml` | `py313-ml` | Gradient boosting, tuning, tracking |
+| `environments/03-deep-learning.yml` | `py313-dl` | PyTorch + Hugging Face (CPU) |
+| `environments/04-web.yml` | `py313-web` | Web APIs / data apps |
+| `environments/05-tools.yml` | `py313-tools` | Testing, linting, automation |
+| `environments/06-tensorflow.yml` | `py313-tf` | TensorFlow + Keras (isolated) |
+| `environments/07-geospatial.yml` | `py313-geo` | Geospatial vector/raster analysis |
+| `environments/08-timeseries.yml` | `py313-ts` | Forecasting & change-point detection |
+| `environments/98-legacy.yml` | `py313-legacy` | Reference only (deprecated packages) |
+
+## Common commands
+
+The helper scripts live in the shared [`scripts/`](../../scripts/) folder at the
+repository root — run these **from the repo root** and pass **`-p 3.13`** to target this
+tree.
+
+```bash
+# Create (Linux/macOS)
+./scripts/create-env.sh -p 3.13 01-core
+
+# Create (Windows PowerShell)
+.\scripts\create-env.ps1 -p 3.13 01-core
+
+# Update to match the YAML (prunes removed packages)
+./scripts/update-env.sh -p 3.13 01-core
+
+# Verify the key packages import
+python scripts/verify-env.py -p 3.13 --env core
+
+# Compare two environments / list upgradable packages
+./scripts/compare-envs.sh py313-core py313-ds
+./scripts/compare-envs.sh --outdated py313-core
+
+# Reproduce CI locally: build + verify an env in the Miniforge container (needs Docker)
+./scripts/test-env.sh -p 3.13 01-core        # one env      (Windows: .\scripts\test-env.ps1 -p 3.13 01-core)
+./scripts/test-env.sh -p 3.13 --all          # every env
+```
+
+Wider workflows — the venv/uv, micromamba, security, and Jupyter helpers:
+
+```bash
+./scripts/doctor.sh -p 3.13                   # what's installed & configured? (read-only preflight)
+./scripts/setup-venv.sh -p 3.13 04-web        # venv + pinned requirements (PyPI/production)
+./scripts/micromamba-env.sh -p 3.13 01-core   # zero-install create + verify
+./scripts/audit-env.sh -p 3.13 --name py313-web   # security: CVE scan + conda/pip clash check
+./scripts/register-kernel.sh py313-ml     # expose an env as a Jupyter kernel
+```
+
+> Full, novice-friendly walkthroughs of every scenario (dev, notebooks, production,
+> containers, testing/QA, security, CI/CD, MLOps) live in
+> [docs/user-workflows.md](../../docs/user-workflows.md).
+
+> CI (`test-environments`) builds every environment on the free **Linux** runner inside
+> the `condaforge/miniforge3` container. `test-env.sh` runs that exact job on your
+> machine. See [docs/compatibility.md](../../docs/compatibility.md) for why CI is
+> Linux-only.
+
+## Before you start
+
+Set conda-forge as the default channel with strict priority (once per machine):
+
+```bash
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+```
+
+Platform caveats (full matrix in [docs/compatibility.md](../../docs/compatibility.md)):
+
+- **TensorFlow** has no conda-forge **win-64** build — install via pip on Windows.
+- **gunicorn** (in `04-web`) is POSIX-only — use `uvicorn`/`waitress` on Windows.
+- All environments are **CPU-only**; see the CUDA section for GPU.

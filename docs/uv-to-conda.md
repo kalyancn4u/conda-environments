@@ -416,8 +416,9 @@ the bigger picture this repo teaches:
 
 Practical tips for using it *inside* this project:
 
-- **Match the Python version** to the tree you're targeting: `-p 3.10` or `-p 3.12`
-  (default). See [`python/3.12/`](../python/3.12/) and [`python/3.10/`](../python/3.10/).
+- **Match the Python version** to the tree you're targeting: `-p 3.12` (default), or
+  `-p 3.10` / `-p 3.13` / `-p 3.14`. See the version trees under
+  [`python/`](../python/) — each has its own `examples/uv-to-conda/`.
 - **The draft is a starting point, not the finished file.** System-level and non-Python
   pieces (`cudatoolkit`, compilers, `openssl`) don't live in `requirements.txt` and won't
   appear — add them by hand, the way the curated

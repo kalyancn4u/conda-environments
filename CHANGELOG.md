@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **`python/3.13/` and `python/3.14/` trees** — added per the version-prefix design (copy
+  `3.12` + bump `python=3.1X.*` and `py31X-*`). Each ships all 8 environments, 6 templates,
+  the uv-to-conda examples, `GUIDE.md`/`README.md`, and the lockfile docs + version-neutral
+  `requirements/*.in` intent files. Every environment/template differs from `3.12` **only**
+  by the version pin and env-name prefix.
+  - **Lockfiles are generated on demand** for these trees (per that decision): the
+    `linux-64/*.conda.lock` and uv `requirements/*.txt` are **not** committed yet — produce
+    them via the `update-lockfiles` workflow / `uv pip compile`, exactly as `win-64` /
+    `osx-arm64` are. Each README carries an honest **readiness note**.
+  - **Validation is honest, not assumed.** The environments were **not** solved in the
+    session that created the trees (no conda-forge network access there), so nothing is
+    marked "verified". **3.13** (mature) is expected to reach parity pending a dry-run solve;
+    **3.14** is new — conda-forge coverage is still catching up, so the **heaviest stacks
+    (notably TensorFlow, and possibly parts of deep-learning/geospatial) may not solve yet**,
+    documented plainly rather than claimed as parity. The uv-to-conda example
+    `environment.*.yml` are marked **representative** (adapted from 3.12; regenerate for exact
+    pins). CI remains on the **3.12** primary (as it was for 3.10). Root README,
+    `docs/architecture.md`, and the `instructions.txt` primer updated to list the new trees.
 - **`scripts/uv-to-conda.py`** — a repo-wide tool (new top-level `scripts/`) that converts
   a pip `requirements.txt` into a Conda `environment.yml`: pinned lines are copied through
   verbatim, **unpinned** lines are resolved with **uv**, and PyPI→conda name differences are

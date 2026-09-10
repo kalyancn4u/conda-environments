@@ -72,8 +72,11 @@ provides — that ABI clash was the top defect in the source environment.
 
 ### How do I add support for a new Python version?
 
-Copy `python/3.12/` to `python/3.13/`, bump the `python=` pin, and re-solve. Nothing
-else needs to change. See [upgrade-strategy.md](upgrade-strategy.md).
+Copy `python/3.12/` to `python/<new>/`, bump the `python=` pin and `py312-*` env names, and
+re-solve. Nothing else needs to change — that's exactly how `3.10`, `3.13`, and `3.14` were
+added. (A brand-new Python only reaches full parity once conda-forge has builds for the whole
+stack; until then ship the structure and generate lockfiles on demand.) See
+[upgrade-strategy.md](upgrade-strategy.md).
 
 ### What is `98-legacy.yml` for?
 
