@@ -56,10 +56,27 @@
 #   • New teaching docs slot into the docs/README.md learning path AND the root
 #     README's "Documentation — a learning path" section.
 #
+# ── PENDING ACTION ITEMS (revisit these; not yet done) ───────────────────────
+#   [ ] Enable repo setting: Settings → Actions → General → Workflow permissions →
+#       "Allow GitHub Actions to create and approve pull requests". Until this is on,
+#       the `update-lockfiles` workflow's PR step fails (locks are still produced as
+#       run artifacts), and the weekly scheduled 3.12 lock run shows red. One-time.
+#   [ ] Backfill the still-missing lockfiles once conda-forge ships the builds — the
+#       gaps are UPSTREAM, not repo bugs. Re-run per tree, e.g.:
+#         gh workflow run update-lockfiles.yml -f version=3.13 -f platforms="linux-64"
+#       Missing conda linux-64 locks: 3.13 → 06-tensorflow, all-in-one-tflow (TensorFlow
+#       has no conda-forge 3.13 build); 3.14 → those two PLUS 08-timeseries, llm,
+#       all-in-one-pytorch. Missing uv requirements: only 3.14 06-tensorflow &
+#       all-in-one-tflow (no TensorFlow wheel on PyPI for 3.14). When a target now
+#       solves, commit its lock and update that tree's README readiness note + CHANGELOG.
+#   [ ] Optional: generate win-64 / osx-arm64 conda locks for any tree (all currently
+#       ship linux-64 only) when a consumer needs them.
+#
 # ── Maintenance note ─────────────────────────────────────────────────────────
 # Keep this primer current when the project's shape changes (a new top-level
 # area, a new tool, a new Python tree). It should always answer, in under a
-# minute, "what is this repo and where do I look?" — nothing more.
+# minute, "what is this repo and where do I look?" — nothing more. When a pending
+# action item above is completed, remove it from the list.
 #
 # ═══════════════════════════════════════════════════════════════════════════
 # ↓↓↓  ORIGINAL SEED PROMPT (historical — the repo has since grown well beyond it)

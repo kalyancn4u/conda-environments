@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+> **Pending follow-ups (tracked in `instructions.txt`):**
+> - Enable the repo setting *Settings → Actions → General → "Allow GitHub Actions to create
+>   and approve pull requests"* so `update-lockfiles` can open PRs (and the weekly 3.12 lock
+>   run stops failing). Until then, generated locks are available as run artifacts.
+> - Backfill the missing lockfiles once conda-forge / PyPI ship the builds (all **upstream**
+>   gaps, not repo bugs): conda `linux-64` — 3.13 `06-tensorflow` + `all-in-one-tflow`;
+>   3.14 those two **plus** `08-timeseries`, `llm`, `all-in-one-pytorch`. uv `requirements` —
+>   only 3.14 `06-tensorflow` + `all-in-one-tflow` (no TensorFlow wheel on PyPI for 3.14).
+>   Re-run `update-lockfiles` per tree, then commit + update the tree's readiness note.
+
 ### Added
 - **uv `requirements/*.txt` for Python 3.13 (14/14) and 3.14 (12/14)** — compiled with
   `uv pip compile --python-version <ver> --python-platform linux` from each tree's
