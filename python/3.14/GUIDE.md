@@ -7,10 +7,10 @@
 > as a reference.
 
 > ⚠️ **Read the [readiness note](README.md) first.** Python 3.14 is new: this is a parity
-> tree of `python/3.12/`, but conda-forge builds for the **heaviest stacks (e.g. TensorFlow)
-> may not exist yet**, so some environments won't solve on 3.14 today. Its generated
-> **lockfiles are produced on demand** (not committed). The lighter environments and every
-> concept below still work as described.
+> tree of `python/3.12/`. **`linux-64` locks are committed for 9 of 14 targets**; the other 5
+> (`06-tensorflow`, `08-timeseries`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow`) don't
+> solve on conda-forge for 3.14 yet — use `python/3.12` for those. `win-64`/`osx-arm64` and
+> the uv `requirements/*.txt` are on demand. Every concept below still works as described.
 
 If you only remember one sentence: **the `.yml` files describe environments you *want*,
 the scripts *build and manage* them for you, the lockfiles *freeze* them for perfect

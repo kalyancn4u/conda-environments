@@ -2,11 +2,11 @@
 
 <sub>📍 [conda-environments](../../../README.md) › [Python 3.14](../README.md) › **lockfiles**</sub>
 
-> **Status for this tree:** the generated `linux-64/*.conda.lock` and `requirements/*.txt`
-> are **not committed yet** — only the version-neutral `requirements/*.in` intent files and
-> these docs are. Generate the locks on demand once the needed 3.14 builds exist (see the
-> [readiness note](../README.md)). This page explains the artifacts
-> and how to produce them.
+> **Status for this tree:** `linux-64/` conda locks are **committed for 9 of 14 targets**;
+> the other 5 (`06-tensorflow`, `08-timeseries`, `llm`, `all-in-one-pytorch`,
+> `all-in-one-tflow`) don't solve on conda-forge for 3.14 yet — see the
+> [readiness note](../README.md). `win-64`/`osx-arm64` locks and the uv `requirements/*.txt`
+> are still generated on demand. This page explains the artifacts and how to produce them.
 
 Generated, per-platform, **exact-rebuild** artifacts. A lockfile freezes a known-good
 resolution of one environment (exact versions + builds + `sha256` hashes) so a rebuild is
