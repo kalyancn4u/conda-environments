@@ -29,11 +29,12 @@ conda-forge and committed under [`lockfiles/linux-64/`](lockfiles/linux-64/). A 
 > repo issue**. Use [`python/3.12`](../3.12/) for TensorFlow until 3.13 builds land, then
 > re-run the workflow.
 
-**Other platforms & uv requirements are on demand.** Only `linux-64` conda locks are
-committed (matching `3.10`/`3.12`); produce `win-64`/`osx-arm64` locks or the uv
-`requirements/*.txt` with the
-[`update-lockfiles`](../../.github/workflows/update-lockfiles.yml) workflow (or `conda-lock`
-/ `uv pip compile`) when you need them.
+**uv `requirements/*.txt` are committed for all 14 targets** (PyPI wheels, `linux`,
+Python 3.13) under [`lockfiles/requirements/`](lockfiles/requirements/) — the production/CI
+path. PyPI has full 3.13 coverage, so even the two stacks that lack conda-forge builds
+(`06-tensorflow`, `all-in-one-tflow`) resolve here. Only the `win-64`/`osx-arm64` **conda**
+locks remain on demand — produce them with the
+[`update-lockfiles`](../../.github/workflows/update-lockfiles.yml) workflow when you need them.
 
 ## Contents
 
@@ -42,7 +43,7 @@ committed (matching `3.10`/`3.12`); produce `win-64`/`osx-arm64` locks or the uv
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
 | [`examples/`](examples/) | uv-to-conda sample inputs + the `environment.yml` they generate (`examples/uv-to-conda/`) |
-| [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles + uv `requirements.txt`. **`linux-64/` is committed for 12/14 targets** (TensorFlow pending on 3.13); `win-64`/`osx-arm64` and uv `requirements/*.txt` are on demand (see the readiness note) |
+| [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles + uv `requirements.txt`. **`linux-64/` conda locks committed for 12/14** (TensorFlow pending on 3.13) and **uv `requirements/*.txt` for all 14**; `win-64`/`osx-arm64` conda locks on demand (see the readiness note) |
 
 > The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
 > micromamba-env / register-kernel) are **shared across versions** in the top-level

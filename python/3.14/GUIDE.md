@@ -10,7 +10,8 @@
 > tree of `python/3.12/`. **`linux-64` locks are committed for 9 of 14 targets**; the other 5
 > (`06-tensorflow`, `08-timeseries`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow`) don't
 > solve on conda-forge for 3.14 yet — use `python/3.12` for those. `win-64`/`osx-arm64` and
-> the uv `requirements/*.txt` are on demand. Every concept below still works as described.
+> the uv `requirements/*.txt` are committed for 12/14 (no TF wheel on PyPI for 3.14), and
+> `win-64`/`osx-arm64` conda locks are on demand. Every concept below still works as described.
 
 If you only remember one sentence: **the `.yml` files describe environments you *want*,
 the scripts *build and manage* them for you, the lockfiles *freeze* them for perfect

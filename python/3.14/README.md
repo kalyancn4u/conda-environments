@@ -38,10 +38,12 @@ upstream conda-forge builds — expected for such a new Python.
 > gh workflow run update-lockfiles.yml -f version=3.14 -f platforms="linux-64"
 > ```
 
-**Other platforms & uv requirements are on demand.** Only `linux-64` conda locks are
-committed (matching `3.10`/`3.12`); produce `win-64`/`osx-arm64` locks or the uv
-`requirements/*.txt` with the
-[`update-lockfiles`](../../.github/workflows/update-lockfiles.yml) workflow when you need them.
+**uv `requirements/*.txt` are committed for 12 of 14 targets** (PyPI wheels, `linux`,
+Python 3.14) under [`lockfiles/requirements/`](lockfiles/requirements/) — the production/CI
+path, and it fills several conda-forge gaps: `08-timeseries`, `llm`, and `all-in-one-pytorch`
+resolve fine from **PyPI** even though they don't yet solve on conda-forge. The only two
+without a uv lock are `06-tensorflow` and `all-in-one-tflow` — **TensorFlow has no PyPI wheel
+for 3.14** either. Only the `win-64`/`osx-arm64` **conda** locks remain on demand.
 
 ## Contents
 
@@ -50,7 +52,7 @@ committed (matching `3.10`/`3.12`); produce `win-64`/`osx-arm64` locks or the uv
 | [`environments/`](environments/) | The modular environment definitions (`01`–`08` + `98-legacy`) + the upgrade report |
 | [`templates/`](templates/) | Persona starting points: `minimal`, `data-science`, `mlops`, `llm`, `all-in-one-pytorch`, `all-in-one-tflow` |
 | [`examples/`](examples/) | uv-to-conda sample inputs + the `environment.yml` they generate (`examples/uv-to-conda/`) |
-| [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles + uv `requirements.txt`. **`linux-64/` is committed for 9/14 targets** (5 pending upstream 3.14 builds — see the readiness note); `win-64`/`osx-arm64` and uv `requirements/*.txt` are on demand |
+| [`lockfiles/`](lockfiles/) | Exact-rebuild conda lockfiles + uv `requirements.txt`. **`linux-64/` conda locks committed for 9/14** (5 pending upstream 3.14 builds) and **uv `requirements/*.txt` for 12/14** (TF has no PyPI 3.14 wheel); `win-64`/`osx-arm64` conda locks on demand (see the readiness note) |
 
 > The helper scripts (create / update / verify / doctor / setup-venv / audit-env /
 > micromamba-env / register-kernel) are **shared across versions** in the top-level

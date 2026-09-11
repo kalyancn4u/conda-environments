@@ -4,9 +4,9 @@
 
 > **Status for this tree:** `linux-64/` conda locks are **committed for 12 of 14 targets**
 > (all except `06-tensorflow` / `all-in-one-tflow` — TensorFlow isn't solvable on conda-forge
-> for 3.13 yet). `win-64`/`osx-arm64` locks and the uv `requirements/*.txt` are still
-> generated on demand (see the [readiness note](../README.md)). This page explains the
-> artifacts and how to produce them.
+> for 3.13 yet). The uv `requirements/*.txt` are **committed for all 14 targets**
+> (PyPI/linux/py3.13); only the `win-64`/`osx-arm64` conda locks remain on demand (see the
+> [readiness note](../README.md)). This page explains the artifacts and how to produce them.
 
 Generated, per-platform, **exact-rebuild** artifacts. A lockfile freezes a known-good
 resolution of one environment (exact versions + builds + `sha256` hashes) so a rebuild is
