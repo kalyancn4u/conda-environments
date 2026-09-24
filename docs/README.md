@@ -15,6 +15,10 @@ system." No prior knowledge assumed.
 - [Environments & installers: conda / mamba / micromamba vs. venv + pip / uv](conda-vs-uv.md)
   — the tools themselves: virtual environments from scratch, which to use when,
   development vs. production, why CD uses uv, and how to keep uv from clobbering a conda env.
+- [The conda manual](conda-manual.md) — a user manual for **every conda / mamba / micromamba /
+  conda-lock command** this repo uses, from install to lockfiles. Novice → mastery.
+- [The uv manual](uv-manual.md) — a user manual for **every uv command** this repo uses
+  (`venv`, `pip install/compile/sync`, `uvx`), and how to use uv safely beside conda. Novice → mastery.
 
 ## ② Understand — the design
 - [Architecture](architecture.md) — why the repo is split this way; the environment matrix.

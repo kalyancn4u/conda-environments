@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 >   Re-run `update-lockfiles` per tree, then commit + update the tree's readiness note.
 
 ### Added
+- **`docs/conda-manual.md` and `docs/uv-manual.md`** — novice-friendly user manuals covering
+  every conda / mamba / micromamba / conda-lock command and every uv command used in the repo
+  (scripts, workflows, Dockerfiles), with a script-to-command map, troubleshooting tables and
+  cheat sheets. Commands and flags were validated against the official conda, mamba, conda-lock
+  and uv documentation and the installed tools' `--help` output. Linked from the docs and
+  root-README learning paths.
 - **uv `requirements/*.txt` for Python 3.13 (14/14) and 3.14 (12/14)** — compiled with
   `uv pip compile --python-version <ver> --python-platform linux` from each tree's
   `requirements/*.in`, committed under `python/3.1{3,4}/lockfiles/requirements/`. Because

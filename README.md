@@ -261,6 +261,7 @@ lives at [`docs/README.md`](docs/README.md).
 
 1. [Beginner's guide](python/3.12/GUIDE.md) — what every file & generated artifact is, in plain English, with a first-session walkthrough.
 2. [Environments & installers: conda / mamba / micromamba vs. venv + pip / uv](docs/conda-vs-uv.md) — the tools themselves: virtual environments from scratch, which to use when, dev-vs-production, why CD uses uv, and how to keep uv from clobbering a conda env.
+   - Command manuals: [conda manual](docs/conda-manual.md) and [uv manual](docs/uv-manual.md) — user manuals for **every command this repo uses** (conda / mamba / micromamba / conda-lock, and uv), explained for novices and validated against the official docs.
 
 **② Understand — the design**
 
